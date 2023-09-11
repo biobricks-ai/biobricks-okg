@@ -66,32 +66,32 @@
 
   rr:predicateObjectMap [
     rr:predicate ex:exposureResult ;
-    rr:objectMap <#BlankNodeMap_Record_ID__CASRN>
+    rr:objectMap <#NodeMap_Record_ID__CASRN>
   ] .
 
-<#BlankNodeMap_Record_ID__CASRN>
-      rr:template "RecordToExposureResult{Record ID}{CASRN}";
-      rr:termType rr:BlankNode;
+<#NodeMap_Record_ID__CASRN>
+      rr:template "http://example.com/ICE/RecordToExposureResult/{Record ID}{CASRN}";
+      rr:termType rr:IRI;
   .
-<#BlankNodeMap_Record_ID__CASRN_EndPoint>
-      rr:template "ExposureResult_to_EndPoint{Record ID}{CASRN}{Endpoint}";
-      rr:termType rr:BlankNode;
+<#NodeMap_Record_ID__CASRN_EndPoint>
+      rr:template "http://example.com/ICE/ExposureResult_to_EndPoint/{Record ID}{CASRN}{Endpoint}";
+      rr:termType rr:IRI;
   .
 
 <TriplesMap2_ExposureResult> a rr:TriplesMap;
   rml:logicalSource :ls;
 
-  rr:subjectMap <#BlankNodeMap_Record_ID__CASRN>;
+  rr:subjectMap <#NodeMap_Record_ID__CASRN>;
 
   rr:predicateObjectMap [
     rr:predicate ex:endPoint ;
-    rr:objectMap <#BlankNodeMap_Record_ID__CASRN_EndPoint>
+    rr:objectMap <#NodeMap_Record_ID__CASRN_EndPoint>
   ].
 
 <TriplesMap_ExposureResultToEndPoint> a rr:TriplesMap;
   rml:logicalSource :ls;
 
-  rr:subjectMap <#BlankNodeMap_Record_ID__CASRN_EndPoint>;
+  rr:subjectMap <#NodeMap_Record_ID__CASRN_EndPoint>;
 
   rr:predicateObjectMap [
     rr:predicate ex:endpointName ;
