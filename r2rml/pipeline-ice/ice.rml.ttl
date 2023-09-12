@@ -99,10 +99,6 @@
   ] ;
   rr:predicateObjectMap [
     rr:predicate ex:endpointResponseModifier ;
-    rr:objectMap [ rml:reference "Endpoint" ]
-  ] ;
-  rr:predicateObjectMap [
-    rr:predicate ex:endpointResponseModifier ;
     rr:objectMap [ rml:reference "Response Modifier" ]
   ] ;
   rr:predicateObjectMap [
