@@ -68,4 +68,4 @@ SELECT
 }
 GROUP BY ?cosing_ref ?cosing_inci
 ORDER BY DESC(?gene_count)
-LIMIT 100
+LIMIT 1000
