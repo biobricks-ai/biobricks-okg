@@ -1,7 +1,7 @@
 ARG APT_PKGS_DEV="build-essential autoconf automake libtool pkg-config zlib1g-dev libserd-dev curl ca-certificates"
 ARG APT_PKGS_RUN="libserd-0-0 zlib1g"
 
-FROM debian:trixie AS builder
+FROM builder-base AS builder
 
 ARG APT_PKGS_DEV
 ARG APT_PKGS_RUN
@@ -31,7 +31,7 @@ RUN curl -L $HDT_CPP_TARBALL_URL              \
 	  && make -j$(nproc)                  \
 	  && make install )
 
-FROM debian:trixie-slim AS base
+FROM runtime-base AS runtime
 
 ARG APT_PKGS_RUN
 
