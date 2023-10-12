@@ -1,0 +1,178 @@
+#!/usr/bin/env perl
+# PODNAME: load-rdf-dir
+# ABSTRACT: Load RDF recursively from directory into Virtuoso database
+
+use strict;
+use warnings;
+use feature qw(say signatures);
+no warnings qw(experimental::signatures);
+
+# Only using core modules inside of Docker
+use File::Find;
+use File::Basename qw(fileparse);
+use File::Copy qw(copy);
+use File::Temp qw(tempfile);
+use IPC::Cmd qw(can_run); # can_run like File::Which, but core
+
+# From <https://vos.openlinksw.com/owiki/wiki/VOS/VirtBulkRDFLoader>:
+my %rdf_exts = (
+	'.grdf' =>  'Geospatial RDF',
+	'.nq'   =>  'N-Quads',
+	'.nt'   =>  'N-Triples',
+	'.owl'  =>  'OWL',
+	'.rdf'  =>  'RDF/XML',
+	'.trig' =>  'TriG',
+	'.ttl'  =>  'Turtle',
+	'.xml'  =>  'RDF/XML',
+);
+my @compress_exts = qw( .gz .bz2 .xz );
+
+my $rdf_exts_qr      = join '|', map quotemeta, keys %rdf_exts;
+my $compress_exts_qr = join '|', map quotemeta, @compress_exts;
+my $hdt_ext_qr       = qr/\.hdt/;
+
+my $all_qr = qr/
+	(?:
+		$rdf_exts_qr (?:$compress_exts_qr)?
+		|
+		$hdt_ext_qr
+	)
+	$
+/x;
+
+sub sql_escape($x) { $x =~ s/'/''/gr; }
+
+sub graph_file($rdf_file) {
+	my $file_no_compress = $rdf_file =~ s/(?:$compress_exts_qr)$//r;
+	my $file_graph = "${file_no_compress}.graph";
+	return $file_graph;
+}
+
+sub check_for_graph($file) {
+	my $file_graph = graph_file($file);
+	if( ! -r $file_graph ) {
+		die "No graph file for $file: must be $file_graph";
+	}
+}
+
+sub load_single_file_sql($file) {
+	check_for_graph($file);
+	my ($file_base, $file_dir) = fileparse( $file );
+	my $sql = <<~SQL;
+
+	ld_dir('@{[ sql_escape $file_dir ]}', '@{[ sql_escape $file_base ]}', NULL) ;
+
+	SQL
+
+	return $sql;
+}
+
+sub rdf_loader_sql($sql_statements) {
+	return <<~SQL;
+	DELETE FROM DB.DBA.load_list;
+
+	@{[ join "\n", @$sql_statements ]}
+
+	SELECT * FROM DB.DBA.load_list;
+
+	-- NOTE: log_enable = 2 disables triggers
+	rdf_loader_run(log_enable=>2) ;
+	SQL
+}
+
+sub run_sql($sql) {
+	my ($fh, $sql_filename) = tempfile( SUFFIX => '.sql' );
+
+	print $fh $sql;
+
+	system( qw(isql), "exec=LOAD $sql_filename" ) == 0 or die "Could not run $sql_filename: $sql";
+}
+
+sub main {
+	my @dirs = @ARGV;
+
+	my @files;
+	find( {
+			wanted => sub {
+				return unless -f;
+				return unless /$all_qr/;
+				push @files, $File::Find::name;
+			},
+			follow   => 1,
+			no_chdir => 1,
+		}, @dirs, );
+
+	for my $bin (qw(isql hdt2rdf)) {
+		die "Unable to find executable $bin" unless can_run($bin);
+	}
+
+	my @sql_ld_dirs;
+	for my $file (@files) {
+		my $graph_file = graph_file( $file );
+		if( ! -r $graph_file ) {
+			warn "Skipping $file: No graph file $graph_file for RDF input $file";
+			next;
+		}
+		if( $file =~ /(?:$hdt_ext_qr)$/ ) {
+			# NOTE Based on testing, `hdt2rdf` gives the same
+			# output N-Triple file across multiple runs, i.e. it is
+			# a pure command.
+			my $hdt_file = $file;
+			my $nt_file  = "$hdt_file.nt"; # append .nt to file
+			# Format flag:
+			# -f [ntriples, n3, turtle]
+			system(
+				qw(hdt2rdf),
+					qw(-f ntriples),
+					$hdt_file,
+					$nt_file,
+			) == 0 or die "Could not convert $hdt_file to $nt_file";
+
+			copy( graph_file($hdt_file), graph_file($nt_file) );
+
+			push @sql_ld_dirs, load_single_file_sql($nt_file);
+		} else {
+			# any other type of RDF file
+			push @sql_ld_dirs, load_single_file_sql($file);
+		}
+	}
+
+	say rdf_loader_sql( \@sql_ld_dirs );
+}
+
+main;
+
+=head1 NAME
+
+load-rdf-dir - Load RDF recursively from directory into Virtuoso database
+
+=head1 DESCRIPTION
+
+The following script goes through the directories recursively and loads them
+into a Virtuoso Database. This is similar to how L<bulk loading|https://vos.openlinksw.com/owiki/wiki/VOS/VirtBulkRDFLoader>
+works with Virtuoso already using C<ld_dir_all()>.
+
+The main differences is that this script:
+
+=over 4
+
+=item *
+
+Supports RDF HDT files by converting them to N-Triples;
+
+=item *
+
+TODO
+
+Update graphs that change.
+
+This is done by dropping any existing graph with a different checksum.
+
+This could be done more efficiently with L<Delta-aware bulk loading of datasets
+into Virtuoso|https://vos.openlinksw.com/owiki/wiki/VOS/VirtRDFBulkLoaderWithDelete>,
+but this is not available with Virtuoso Open Source Edition (VOS).
+
+=back
+
+
+=cut

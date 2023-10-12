@@ -1,6 +1,9 @@
-# From hdt-cpp/Dockerfile
+# Deps from
+#   - hdt-cpp/Dockerfile
+#   - scripts
 ARG APT_PKGS_RUN=" \
 libserd-0-0 zlib1g \
+perl-modules       \
 "
 
 FROM virtuoso-base AS db
