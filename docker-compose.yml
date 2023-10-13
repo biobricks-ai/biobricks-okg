@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+  db-virtuoso:
+    image: db-virtuoso-deploy
+    volumes:
+      - $DB_PATH/database:/database
+      - $DB_PATH/data:/data
+      - ./db-virtuoso/initdb.d:/opt/virtuoso-opensource/initdb.d
+      - ./db-virtuoso/script:/script
+    environment:
+      - DBA_PASSWORD=dba
+      # Add '/data' to `DirsAllowed` in `virtuoso.ini` file
+      - 'VIRT_Parameters_DirsAllowed=., ../vad, /usr/share/proj, /data'
+    ports:
+      - "1111:1111"
+      - "8890:8890"
