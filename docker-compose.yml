@@ -1,3 +1,6 @@
+# Environment variables:
+#
+# DB_PATH  : directory for top-level of database storage
 version: "3.3"
 services:
   db-virtuoso:
