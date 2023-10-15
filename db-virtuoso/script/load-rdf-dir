@@ -9,7 +9,7 @@ no warnings qw(experimental::signatures);
 
 # Only using core modules inside of Docker
 use File::Find;
-use File::Basename qw(fileparse);
+use File::Basename qw(fileparse basename dirname);
 use File::Copy qw(copy);
 use File::Temp qw(tempfile);
 use IPC::Cmd qw(can_run); # can_run like File::Which, but core
@@ -57,7 +57,7 @@ sub check_for_graph($file) {
 
 sub load_single_file_sql($file) {
 	check_for_graph($file);
-	my ($file_base, $file_dir) = fileparse( $file );
+	my ($file_base, $file_dir) = ( basename( $file ), dirname( $file ) );
 	my $sql = <<~SQL;
 
 	ld_dir('@{[ sql_escape $file_dir ]}', '@{[ sql_escape $file_base ]}', NULL) ;
