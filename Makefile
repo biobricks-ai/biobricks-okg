@@ -5,8 +5,13 @@ DB_PATH_DEFAULT := /mnt/ssd/biobricks/virtuoso-database
 
 DB_PATH := ${DB_PATH_DEFAULT}
 
-.PHONY: docker-build docker-compose-up docker-compose-down
-
+.PHONY: \
+	docker-build                                   \
+	docker-compose-up docker-compose-down          \
+	docker-compose-logs                            \
+	docker-compose-exec-db-virtuoso                \
+	docker-compose-exec-db-virtuoso-load-rdf-data  \
+	docker-compose-exec-db-virtuoso-isql-load-list #
 
 ### Platform helper
 MKDIR_P := mkdir -p
@@ -47,3 +52,9 @@ docker-compose-logs:
 
 docker-compose-exec-db-virtuoso:
 	docker compose exec db-virtuoso bash
+
+docker-compose-exec-db-virtuoso-load-rdf-data:
+	docker compose exec db-virtuoso isql bash -c '/script/load-rdf-dir /data > /tmp/load-rdf-dir.sql; isql "exec=LOAD /tmp/load-rdf-dir.sql"'
+
+docker-compose-exec-db-virtuoso-isql-load-list:
+	docker compose exec db-virtuoso isql 'exec=SELECT * FROM DB.DBA.load_list;'
