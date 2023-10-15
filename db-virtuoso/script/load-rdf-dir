@@ -10,7 +10,7 @@ no warnings qw(experimental::signatures);
 # Only using core modules inside of Docker
 use File::Find;
 use File::Basename qw(fileparse basename dirname);
-use File::Copy qw(copy);
+use File::Copy qw(copy move);
 use File::Temp qw(tempfile);
 use IPC::Cmd qw(can_run); # can_run like File::Which, but core
 
@@ -88,6 +88,10 @@ sub run_sql($sql) {
 	system( qw(isql), "exec=LOAD $sql_filename" ) == 0 or die "Could not run $sql_filename: $sql";
 }
 
+sub _log(@msg) {
+	say STDERR @msg;
+}
+
 sub main {
 	my @dirs = @ARGV;
 
@@ -96,6 +100,7 @@ sub main {
 			wanted => sub {
 				return unless -f;
 				return unless /$all_qr/;
+				return if /\Q.hdt.nt\E$/; # converted
 				push @files, $File::Find::name;
 			},
 			follow   => 1,
@@ -108,6 +113,7 @@ sub main {
 
 	my @sql_ld_dirs;
 	for my $file (@files) {
+		_log "$file: Processing...";
 		my $graph_file = graph_file( $file );
 		if( ! -r $graph_file ) {
 			warn "Skipping $file: No graph file $graph_file for RDF input $file";
@@ -121,14 +127,27 @@ sub main {
 			my $nt_file  = "$hdt_file.nt"; # append .nt to file
 			# Format flag:
 			# -f [ntriples, n3, turtle]
-			system(
-				qw(hdt2rdf),
-					qw(-f ntriples),
-					$hdt_file,
-					$nt_file,
-			) == 0 or die "Could not convert $hdt_file to $nt_file";
+			if( ! -f $nt_file || -M $hdt_file < -M $nt_file ) {
+				_log "$file: Converting from $hdt_file to $nt_file";
 
-			copy( graph_file($hdt_file), graph_file($nt_file) );
+				my (undef, $nt_file_temp) = tempfile( OPEN => 0, DIR => dirname($file),
+					SUFFIX => '.tmp.hdt.nt' );
+				system(
+					qw(hdt2rdf),
+						qw(-f ntriples),
+						$hdt_file,
+						$nt_file_temp,
+				) == 0 or do {
+					unlink $nt_file_temp;
+					die "Could not convert $hdt_file to $nt_file";
+				};
+
+				move( $nt_file_temp, $nt_file );
+
+				copy( graph_file($hdt_file), graph_file($nt_file) );
+			} else {
+				_log "$file: Skipping conversion from $hdt_file to $nt_file: $nt_file exists and is newer than $hdt_file";
+			}
 
 			push @sql_ld_dirs, load_single_file_sql($nt_file);
 		} else {
