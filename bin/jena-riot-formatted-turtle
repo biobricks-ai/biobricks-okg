@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z "$JENA_HOME" ]; then
+	cat <<EOF >&2
+Need to set \$JENA_HOME to path to Jena package.
+EOF
+	exit 1
+fi
+
+set -eu
+
+$JENA_HOME/bin/riot --formatted=Turtle "$@"
