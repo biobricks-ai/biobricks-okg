@@ -1,0 +1,72 @@
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX aop: <https://identifiers.org/aop/>
+PREFIX aop.events: <https://identifiers.org/aop.events/>
+PREFIX aop.relationships: <https://identifiers.org/aop.relationships/>
+PREFIX aop.stressor: <https://identifiers.org/aop.stressor/>
+PREFIX aopo: <http://aopkb.org/aop_ontology#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX cas: <https://identifiers.org/cas/>
+PREFIX inchikey: <https://identifiers.org/inchikey/>
+PREFIX pato: <http://purl.obolibrary.org/obo/PATO_>
+PREFIX ncbitaxon: <http://purl.bioontology.org/ontology/NCBITAXON/>
+PREFIX cl: <http://purl.obolibrary.org/obo/CL_>
+PREFIX uberon: <http://purl.obolibrary.org/obo/UBERON_>
+PREFIX go: <http://purl.obolibrary.org/obo/GO_>
+PREFIX mi: <http://purl.obolibrary.org/obo/MI_>
+PREFIX mp: <http://purl.obolibrary.org/obo/MP_>
+PREFIX mesh: <http://purl.org/commons/record/mesh/>
+PREFIX hp: <http://purl.obolibrary.org/obo/HP_>
+PREFIX pco: <http://purl.obolibrary.org/obo/PCO_>
+PREFIX nbo: <http://purl.obolibrary.org/obo/NBO_>
+PREFIX vt: <http://purl.obolibrary.org/obo/VT_>
+PREFIX pr: <http://purl.obolibrary.org/obo/PR_>
+PREFIX chebio: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX fma: <http://purl.org/sig/ont/fma/fma>
+PREFIX cheminf: <http://semanticscience.org/resource/CHEMINF_>
+PREFIX nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX comptox: <https://identifiers.org/comptox/>
+PREFIX mmo: <http://purl.obolibrary.org/obo/MMO_>
+PREFIX chebi: <https://identifiers.org/chebi/>
+PREFIX chemspider: <https://identifiers.org/chemspider/>
+PREFIX wikidata: <https://identifiers.org/wikidata/>
+PREFIX chembl.compound: <https://identifiers.org/chembl.compound/>
+PREFIX pubchem.compound: <https://identifiers.org/pubchem.compound/>
+PREFIX drugbank: <https://identifiers.org/drugbank/>
+PREFIX kegg.compound: <https://identifiers.org/kegg.compound/>
+PREFIX lipidmaps: <https://identifiers.org/lipidmaps/>
+PREFIX hmdb: <https://identifiers.org/hmdb/>
+PREFIX ensembl: <https://identifiers.org/ensembl/>
+PREFIX edam: <http://edamontology.org/>
+PREFIX hgnc: <https://identifiers.org/hgnc/>
+PREFIX ncbigene: <https://identifiers.org/ncbigene/>
+PREFIX uniprot: <https://identifiers.org/uniprot/>
+
+# nci:C54571 rdfs:label "Stressor" .
+SELECT DISTINCT
+  ?initial_organ_context
+  ?initial_organ_context_name
+  (COUNT(DISTINCT ?cas) AS ?cas_count)
+  (GROUP_CONCAT(DISTINCT ?cas; SEPARATOR='|') AS ?cas_list)
+{
+  ?pathway a          aopo:AdverseOutcomePathway ;
+           dc:title   ?pathway_title ;
+           nci:C54571 ?stressor ;
+           aopo:has_molecular_initiating_event ?initial_event ;
+           aopo:has_key_event_relationship ?initial_event_rel .
+
+  ?initial_event dc:title                    ?initial_event_title ;
+                 aopo:OrganContext           ?initial_organ_context ;
+                 aopo:OrganContext/dc:title  ?initial_organ_context_name .
+
+  ?stressor  a                        nci:C54571 ;
+             dc:title                 ?stressor_title ;
+             aopo:has_chemical_entity ?cas .
+}
+GROUP BY
+  ?initial_organ_context
+  ?initial_organ_context_name
+ORDER BY DESC(?cas_count)
