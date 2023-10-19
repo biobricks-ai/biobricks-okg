@@ -19,13 +19,30 @@ ECHO    := echo
 
 
 define MESSAGE
-Targets for $(MAKE):
-  - docker-build        : build Docker image
-  - docker-compose-up   : run Docker Compose
-  - docker-compose-down : run Docker Compose
+# Targets for $(MAKE):
 
-Variables:
+## Build
+
+  - docker-build        : build Docker image
+
+## Docker Compose
+
+### Service
+
+  - docker-compose-up   : start Docker Compose (in background)
+  - docker-compose-down : stop Docker Compose
+  - docker-compose-logs : show logs of Docker Compose
+
+### Exec
+
+  - docker-compose-exec-db-virtuoso                 : start bash inside of `db-virtuoso`
+  - docker-compose-exec-db-virtuoso-load-rdf-data   : load RDF data from `/data` mount
+  - docker-compose-exec-db-virtuoso-isql-load-list  : show the current load list (status of loading)
+
+# Variables
+
   - DB_PATH  : directory for top-level of database storage (default: ${DB_PATH_DEFAULT})
+
 endef
 
 export MESSAGE
