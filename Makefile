@@ -1,4 +1,8 @@
 # Note: GNU Makefile
+#
+# Requires (on Ubuntu):
+#  - apt:docker-compose-v2
+#  - apt:docker-buildx
 ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
 DB_PATH_DEFAULT := /mnt/ssd/biobricks/virtuoso-database
