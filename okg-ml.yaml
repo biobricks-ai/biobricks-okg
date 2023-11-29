@@ -2,6 +2,21 @@
 _meta:
   name: OKG-ML
   version: 1.0.0
+classes:
+  Assay:
+    description: bioassay
+    types:
+      - BAO:0000015
+  CAS RN:
+    description: CAS registry number.
+    prefix: cas
+    types:
+      - CHEMINF:000446
+  DSSTOX SID:
+    description: DSSTOX substance identifier
+    types:
+      - CHEMINF:000568
+    uri: 'https://comptox.epa.gov/dashboard/chemical/details/{value}'
 datasets:
   bindingdb:
     data-source/bindingdb/full_tsv_dump.parquet:
@@ -17883,4 +17898,8 @@ datasets:
             columns:
               - flag.length
             mapper: {}
-
+prefixes:
+  CHEMINF:
+    uri: http://purl.obolibrary.org/obo/CHEMINF_
+  cas:
+    uri: http://identifiers.org/cas/
