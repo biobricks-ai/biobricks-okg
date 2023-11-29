@@ -15,6 +15,13 @@ mkdir -p $datapath
 cd $datapath;
 
 # Define brick names to process
-brick_names='ice'
+brick_names='
+	bindingdb
+	chembl
+	ctdbase
+	ice
+	tox21
+	toxcast
+'
 
 biobrick-setup-source --output-dir $datapath $brick_names
