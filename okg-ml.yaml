@@ -13606,32 +13606,33 @@ datasets:
             _mapper_alts:
               Class:
                 class: ~
-              Value: ~
               ValueLabel:
                 class: ~
             columns:
               - Chemical Name
-            mapper: {}
+            mapper:
+              Value:
+                value: Chemical Name
         - CASRN:
             _mapper_alts:
-              Class:
-                class: ~
               Value: ~
               ValueLabel:
                 class: ~
             columns:
               - CASRN
-            mapper: {}
+            mapper:
+              Class:
+                class: CAS RN
         - DTXSID:
             _mapper_alts:
-              Class:
-                class: ~
               Value: ~
               ValueLabel:
                 class: ~
             columns:
               - DTXSID
-            mapper: {}
+            mapper:
+              Class:
+                class: DSSTOX SID
         - Study ID:
             _mapper_alts:
               Class:
@@ -13686,12 +13687,13 @@ datasets:
             _mapper_alts:
               Class:
                 class: ~
-              Value: ~
               ValueLabel:
                 class: ~
             columns:
               - Route
-            mapper: {}
+            mapper:
+              Value:
+                value: Route
         - Critical Effect:
             _mapper_alts:
               Class:
@@ -13701,17 +13703,19 @@ datasets:
                 class: ~
             columns:
               - Critical Effect
-            mapper: {}
+            mapper:
+              Value:
+                value: Critical Effect
         - Assay:
             _mapper_alts:
               Class:
                 class: ~
               Value: ~
-              ValueLabel:
-                class: ~
             columns:
               - Assay
-            mapper: {}
+            mapper:
+              ValueLabel:
+                class: Assay
         - Endpoint:
             _mapper_alts:
               Class:
@@ -13721,27 +13725,31 @@ datasets:
                 class: ~
             columns:
               - Endpoint
-            mapper: {}
+            mapper:
+              Value:
+                value: Endpoint
         - Response:
             _mapper_alts:
               Class:
                 class: ~
-              Value: ~
               ValueLabel:
                 class: ~
             columns:
               - Response
-            mapper: {}
+            mapper:
+              Value:
+                value: Response
         - Response Unit:
             _mapper_alts:
               Class:
                 class: ~
-              Value: ~
               ValueLabel:
                 class: ~
             columns:
               - Response Unit
-            mapper: {}
+            mapper:
+              Value:
+                value: Response Unit
         - Unified Medical Language System:
             _mapper_alts:
               Class:
@@ -17898,8 +17906,17 @@ datasets:
             columns:
               - flag.length
             mapper: {}
+mappings:
+  - ~
 prefixes:
-  CHEMINF:
-    uri: http://purl.obolibrary.org/obo/CHEMINF_
   CAS:
     uri: http://identifiers.org/cas/
+  CHEMINF:
+    uri: http://purl.obolibrary.org/obo/CHEMINF_
+values:
+  Chemical Name: ~
+  Critical Effect: ~
+  Endpoint: ~
+  Response: ~
+  Response Unit: ~
+  Route: ~
