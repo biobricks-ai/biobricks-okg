@@ -9,7 +9,7 @@ classes:
       - BAO:0000015
   CAS RN:
     description: CAS registry number.
-    prefix: cas
+    prefix: CAS
     types:
       - CHEMINF:000446
   DSSTOX SID:
@@ -17901,5 +17901,5 @@ datasets:
 prefixes:
   CHEMINF:
     uri: http://purl.obolibrary.org/obo/CHEMINF_
-  cas:
+  CAS:
     uri: http://identifiers.org/cas/
