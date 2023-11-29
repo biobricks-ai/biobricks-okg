@@ -1,0 +1,10 @@
+SPARQL_UPDATE_FILES := $(wildcard model/*.ru)
+SPARQL_UPDATE_ARGS  := $(foreach I,$(SPARQL_UPDATE_FILES),--update $I)
+
+stages/ice.rml.ttl: model/ice.rml.ttl    \
+		$(SPARQL_UPDATE_FILES)
+	$(JENA_HOME)/bin/jena arq.update --dump           \
+			--data model/ice.rml.ttl          \
+			$(SPARQL_UPDATE_ARGS) \
+		| grep -v 'ERROR StatusConsoleListener'   \
+		> stages/ice.rml.ttl
