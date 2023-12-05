@@ -3,6 +3,10 @@ _meta:
   name: OKG-ML
   version: 1.0.0
 classes:
+  RecordPK:
+    description: A record in the dataset
+    types:
+      - 'http://example.com/RecordPK' # measure group?
   Assay:
     description: bioassay
     types:
@@ -17907,8 +17911,21 @@ datasets:
               - flag.length
             mapper: {}
 mappings:
-  - ~
+  - >-
+    <(RecordPK)>
+      ex:has_assay <(Assay)>;
+      ex:has_chemical <(CAS RN)>, <(DTXSID)>
+      .
+
+    <(Assay)>
+      ex:has_critical_effect "(Critical Effect)" ;
+      ex:has_endpoint        "(Endpoint)"        ;
+      ex:has_response        "(Response)"        ;
+      ex:has_response_unit   "(Response Unit)"   ;
+      ex:has_route           "(Route)"           .
 prefixes:
+  BAO:
+    uri: http://www.bioassayontology.org/bao#BAO_
   CAS:
     uri: http://identifiers.org/cas/
   CHEMINF:
