@@ -7,6 +7,14 @@ classes:
     description: A record in the dataset
     types:
       - 'http://example.com/RecordPK' # measure group?
+  Chemical_Entity:
+    description: A chemical entity
+    types:
+      - CHEMINF:000000
+  Endpoint:
+    description: Endpoint result
+    types:
+      - BAO:0000179
   Assay:
     description: bioassay
     types:
@@ -17929,17 +17937,30 @@ datasets:
               mapper: {}
 mappings:
   - >-
-    <(RecordPK)>
-      ex:has_assay <(Assay)>;
-      ex:has_chemical <(CAS RN)>, <(DTXSID)>
-      .
-
     <(Assay)>
-      ex:has_critical_effect "(Critical Effect)" ;
-      ex:has_endpoint        "(Endpoint)"        ;
-      ex:has_response        "(Response)"        ;
-      ex:has_response_unit   "(Response Unit)"   ;
-      ex:has_route           "(Route)"           .
+      BAO:0000209 <(Measure_Group)>. # (has measure group)
+
+    <(Measure_Group)>
+      OBI:0000299 <(Endpoint)>.      # (has specified output)
+
+    <(Chemical_Entity)>
+      dce:title           "(Chemical Name)" ;
+      RO:0000056          <(Measure_Group)> ; # (participates in)
+      EDAM:has_identifier <(CAS_RN)>        ;
+      EDAM:has_identifier <(DSSTOX_SID)>    .
+
+    <(Endpoint)>
+      SIO:has-value "(Response)"      ;
+      SIO:has-unit  "(Response_Unit)" ;
+      ExO:0000055   "(Route)"         . # route
+
+    <(CAS_RN)>
+      dce:title  "(Chemical_Name)";
+      dce:source "CAS"            .
+
+    <(DSSTOX_SID)>
+      dce:title  "(Chemical_Name)";
+      dce:source "CompTox"        .
 prefixes:
   BAO:
     uri: http://www.bioassayontology.org/bao#BAO_
@@ -17947,6 +17968,20 @@ prefixes:
     uri: http://identifiers.org/cas/
   CHEMINF:
     uri: http://purl.obolibrary.org/obo/CHEMINF_
+  SIO:
+    uri: http://semanticscience.org/resource/SIO_
+  OBI:
+    uri: http://purl.obolibrary.org/obo/OBI_
+  RO:
+    uri: http://purl.obolibrary.org/obo/RO_
+  ExO:
+    uri: http://purl.obolibrary.org/obo/ExO_
+  EDAM:
+    uri: http://edamontology.org/
+  dce:
+    uri: http://purl.org/dc/elements/1.1/
+  dcterms:
+    uri: http://purl.org/dc/terms/
 values:
   Chemical_Name: ~
   Critical_Effect: ~
