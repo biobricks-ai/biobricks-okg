@@ -11,12 +11,12 @@ classes:
     description: bioassay
     types:
       - BAO:0000015
-  CAS RN:
+  CAS_RN:
     description: CAS registry number.
     prefix: CAS
     types:
       - CHEMINF:000446
-  DSSTOX SID:
+  DSSTOX_SID:
     description: DSSTOX substance identifier
     types:
       - CHEMINF:000568
@@ -13641,7 +13641,7 @@ datasets:
                 - CASRN
               mapper:
                 Class:
-                  class: CAS RN
+                  class: CAS_RN
           - DTXSID:
               _mapper_alts:
                 Value: ~
@@ -13651,7 +13651,7 @@ datasets:
                 - DTXSID
               mapper:
                 Class:
-                  class: DSSTOX SID
+                  class: DSSTOX_SID
           - Study ID:
               _mapper_alts:
                 Class:
@@ -17948,9 +17948,9 @@ prefixes:
   CHEMINF:
     uri: http://purl.obolibrary.org/obo/CHEMINF_
 values:
-  Chemical Name: ~
-  Critical Effect: ~
+  Chemical_Name: ~
+  Critical_Effect: ~
   Endpoint: ~
   Response: ~
-  Response Unit: ~
+  Response_Unit: ~
   Route: ~
