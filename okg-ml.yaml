@@ -11635,6 +11635,8 @@ datasets:
                 - MT_NCIm_term_ID
               mapper: {}
       data-source/ice/Acute_Dermal_Toxicity_Data.parquet:
+        _note: >-
+          Skipping this until the Mixture / Chemical can be separated.
         elements:
           - Data Name:
               _mapper_alts:
@@ -11841,6 +11843,8 @@ datasets:
                 - Reference
               mapper: {}
       data-source/ice/Acute_Inhalation_Toxicity_Data.parquet:
+        _note: >-
+          Skipping this until the Mixture / Chemical can be separated.
         elements:
           - Data Name:
               _mapper_alts:
@@ -12255,6 +12259,8 @@ datasets:
                 - URL
               mapper: {}
       data-source/ice/Acute_Oral_Toxicity_Data.parquet:
+        _note: >-
+          Skipping this until the Mixture / Chemical can be separated.
         elements:
           - Data Name:
               _mapper_alts:
@@ -14747,6 +14753,8 @@ datasets:
                 - MT_NCIm_term_ID
               mapper: {}
       data-source/ice/Exposure_Predictions_Data.parquet:
+        _note: >-
+          Skipping this until the Mixture / Chemical can be separated.
         elements:
           - Data Name:
               _mapper_alts:
@@ -14885,6 +14893,8 @@ datasets:
                 - URL
               mapper: {}
       data-source/ice/Eye_Irritation_Data.parquet:
+        _note: >-
+          Skipping this until the Mixture / Chemical can be separated.
         elements:
           - Data Name:
               _mapper_alts:
