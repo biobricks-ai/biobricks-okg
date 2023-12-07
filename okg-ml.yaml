@@ -13465,7 +13465,43 @@ datasets:
                 - 'Unnamed: 2'
               mapper: {}
       data-source/ice/Chemical_Functional_Use_Categories_Data.parquet:
+        _note: >-
+          No Assay in this data table. Is modelling it as a Measure_Group +
+          Endpoint useful?
         elements:
+          - _ChemicalEntity:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+              mapper:
+                Class:
+                  class: Chemical_Entity
+          - _MeasureGroup:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+              mapper:
+                Class:
+                  class: Measure_Group
+          - _Endpoint:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - Record ID
+                - DTXSID
+                - Endpoint
+              mapper:
+                ValueLabel:
+                  class: Endpoint
+                  label_column: Endpoint
           - Data Name:
               _mapper_alts:
                 Class:
