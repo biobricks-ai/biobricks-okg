@@ -7,6 +7,10 @@ classes:
     description: A record in the dataset
     types:
       - 'http://example.com/RecordPK' # measure group?
+  Measure_Group:
+    description: Measure group (connects assay with endpoint)
+    types:
+      - BAO:0000040
   Chemical_Entity:
     description: A chemical entity
     types:
@@ -13578,7 +13582,28 @@ datasets:
               mapper: {}
       data-source/ice/DART_Data.parquet:
         elements:
-          - _RecordPK:
+          - _ChemicalEntity:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+              mapper:
+                Class:
+                  class: Chemical_Entity
+          - _MeasureGroup:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+                - Assay
+              mapper:
+                Class:
+                  class: Measure_Group
+          - _Endpoint:
               _mapper_alts:
                 Value: ~
                 ValueLabel:
@@ -13586,9 +13611,11 @@ datasets:
               columns:
                 - Record ID
                 - DTXSID
+                - Endpoint
               mapper:
-                Class:
-                  class: RecordPK
+                ValueLabel:
+                  class: Endpoint
+                  label_column: Endpoint
           - Data Name:
               _mapper_alts:
                 Class:
@@ -13639,7 +13666,7 @@ datasets:
                 - Chemical Name
               mapper:
                 Value:
-                  value: Chemical Name
+                  value: Chemical_Name
           - CASRN:
               _mapper_alts:
                 Value: ~
@@ -13732,7 +13759,7 @@ datasets:
                 - Critical Effect
               mapper:
                 Value:
-                  value: Critical Effect
+                  value: Critical_Effect
           - Assay:
               _mapper_alts:
                 Class:
@@ -13752,9 +13779,7 @@ datasets:
                   class: ~
               columns:
                 - Endpoint
-              mapper:
-                Value:
-                  value: Endpoint
+              mapper: {}
           - Response:
               _mapper_alts:
                 Class:
@@ -13776,7 +13801,7 @@ datasets:
                 - Response Unit
               mapper:
                 Value:
-                  value: Response Unit
+                  value: Response_Unit
           - Unified Medical Language System:
               _mapper_alts:
                 Class:
@@ -17941,10 +17966,11 @@ mappings:
       BAO:0000209 <(Measure_Group)>. # (has measure group)
 
     <(Measure_Group)>
-      OBI:0000299 <(Endpoint)>.      # (has specified output)
+      OBI:0000299 <(Endpoint)>        ; # (has specified output)
+      RO:0000057  <(Chemical_Entity)> . # (has participant)
 
     <(Chemical_Entity)>
-      dce:title           "(Chemical Name)" ;
+      rdfs:label          "(Chemical_Name)" ;
       RO:0000056          <(Measure_Group)> ; # (participates in)
       EDAM:has_identifier <(CAS_RN)>        ;
       EDAM:has_identifier <(DSSTOX_SID)>    .
@@ -17955,11 +17981,11 @@ mappings:
       ExO:0000055   "(Route)"         . # route
 
     <(CAS_RN)>
-      dce:title  "(Chemical_Name)";
+      rdfs:label "(Chemical_Name)";
       dce:source "CAS"            .
 
     <(DSSTOX_SID)>
-      dce:title  "(Chemical_Name)";
+      rdfs:label "(Chemical_Name)";
       dce:source "CompTox"        .
 prefixes:
   BAO:
@@ -17982,10 +18008,11 @@ prefixes:
     uri: http://purl.org/dc/elements/1.1/
   dcterms:
     uri: http://purl.org/dc/terms/
+  rdfs:
+    uri: http://www.w3.org/2000/01/rdf-schema#
 values:
   Chemical_Name: ~
   Critical_Effect: ~
-  Endpoint: ~
   Response: ~
   Response_Unit: ~
   Route: ~
