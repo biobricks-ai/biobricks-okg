@@ -11356,6 +11356,40 @@ datasets:
     inputs:
       data-source/ice/ADME_Parameters_Data.parquet:
         elements:
+          - _ChemicalEntity:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+              mapper:
+                Class:
+                  class: Chemical_Entity
+          - _MeasureGroup:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+                - Assay
+              mapper:
+                Class:
+                  class: Measure_Group
+          - _Endpoint:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - Record ID
+                - DTXSID
+                - Endpoint
+              mapper:
+                ValueLabel:
+                  class: Endpoint
+                  label_column: Endpoint
           - Data Name:
               _mapper_alts:
                 Class:
@@ -13918,6 +13952,40 @@ datasets:
               mapper: {}
       data-source/ice/Endocrine_In_Vitro_Endocrine.parquet:
         elements:
+          - _ChemicalEntity:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+              mapper:
+                Class:
+                  class: Chemical_Entity
+          - _MeasureGroup:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+                - Assay
+              mapper:
+                Class:
+                  class: Measure_Group
+          - _Endpoint:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - Record ID
+                - DTXSID
+                - Endpoint
+              mapper:
+                ValueLabel:
+                  class: Endpoint
+                  label_column: Endpoint
           - Data Name:
               _mapper_alts:
                 Class:
@@ -14172,6 +14240,40 @@ datasets:
               mapper: {}
       data-source/ice/Endocrine_In_Vivo_Endocrine.parquet:
         elements:
+          - _ChemicalEntity:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+              mapper:
+                Class:
+                  class: Chemical_Entity
+          - _MeasureGroup:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+                - Assay
+              mapper:
+                Class:
+                  class: Measure_Group
+          - _Endpoint:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - Record ID
+                - DTXSID
+                - Endpoint
+              mapper:
+                ValueLabel:
+                  class: Endpoint
+                  label_column: Endpoint
           - Data Name:
               _mapper_alts:
                 Class:
