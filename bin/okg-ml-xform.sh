@@ -1,11 +1,18 @@
 #!/bin/sh
 
+
+if [ -z "$1" ]; then
+	cat <<EOF
+Usage:
+
+  $0 dataset
+EOF
+	exit 1;
+fi
+
 set -eu
 
-CURDIR=`dirname "$0"`
-#CURDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" # works in sourced files, only works for bash
-
-export DATASET='ice';
+export DATASET="$1";
 
 json_xs -f yaml < okg-ml.yaml  | jq '[ .datasets[$ENV.DATASET].inputs | to_entries| .[] | {
 	(.key): 
