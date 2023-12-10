@@ -7,3 +7,5 @@ raw/
 brick/
 
 stages/*.gen.ini
+/raw
+/brick

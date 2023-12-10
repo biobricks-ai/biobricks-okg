@@ -30,9 +30,13 @@ stages:
       - stages/02_rml.sh
       - data-source/brick-manifest
       - data-processed
-      - stages/ice.ini
+      - stages/bindingdb.rml.ttl
+      - stages/chembl.rml.ttl
+      - stages/ctdbase.rml.ttl
       - stages/ice.rml.ttl
-      - stages/ice-udfs.py
+      - stages/okg-ml.rml.ttl
+      - stages/tox21.rml.ttl
+      - stages/toxcast.rml.ttl
     outs:
       - raw:
           push: false
