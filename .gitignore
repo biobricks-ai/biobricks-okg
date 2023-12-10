@@ -9,3 +9,4 @@ brick/
 stages/*.gen.ini
 /raw
 /brick
+/data-processed
