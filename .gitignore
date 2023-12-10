@@ -1,2 +1,9 @@
 r2rml/pipeline-*/brick-data
 r2rml/pipeline-*/knowledge-graph.*
+
+data-source/
+data-processed/
+raw/
+brick/
+
+stages/*.gen.ini

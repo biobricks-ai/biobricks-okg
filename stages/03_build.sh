@@ -15,5 +15,7 @@ brickpath="$localpath/brick"
 mkdir -p $brickpath
 echo "Brick path: $brickpath"
 
-base_uri='https://ice.ntp.niehs.nih.gov/'
-rdf2hdt -i -p -B "$base_uri" $rawpath/knowledge-graph.nt brick/ice.hdt
+for NAME in $(cd stages && ls *.graph | sed 's/\.graph$//' ); do
+base_uri="$(cat stages/$NAME.graph)"
+rdf2hdt -i -p -B "$base_uri" $rawpath/$NAME.nt brick/$NAME.hdt
+done
