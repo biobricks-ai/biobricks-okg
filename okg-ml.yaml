@@ -18295,6 +18295,12 @@ mappings:
     <(DSSTOX_SID)>
       rdfs:label "(Chemical_Name)";
       dce:source "CompTox"        .
+
+    ExO:0000055 a puml:Inline; skos:prefLabel "route".
+    RO:0000056  a puml:Inline; skos:prefLabel "participates in".
+    BAO:0000209 a puml:Inline; skos:prefLabel "has measure group".
+    OBI:0000299 a puml:Inline; skos:prefLabel "has specified output".
+    RO:0000057  a puml:Inline; skos:prefLabel "has participant".
 prefixes:
   BAO:
     uri: http://www.bioassayontology.org/bao#BAO_
@@ -18318,6 +18324,10 @@ prefixes:
     uri: http://purl.org/dc/terms/
   rdfs:
     uri: http://www.w3.org/2000/01/rdf-schema#
+  skos:
+    uri: http://www.w3.org/2004/02/skos/core#
+  puml:
+    uri: http://plantuml.com/ontology#
 values:
   Chemical_Name: ~
   Critical_Effect: ~
