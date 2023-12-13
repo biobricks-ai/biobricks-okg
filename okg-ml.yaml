@@ -17527,7 +17527,9 @@ datasets:
                   class: ~
               columns:
                 - casn
-              mapper: {}
+              mapper:
+                Class:
+                  class: CAS_RN
           - chnm:
               _mapper_alts:
                 Class:
@@ -17537,7 +17539,9 @@ datasets:
                   class: ~
               columns:
                 - chnm
-              mapper: {}
+              mapper:
+                Value:
+                  value: Chemical_Name
           - dsstox_substance_id:
               _mapper_alts:
                 Class:
@@ -17547,7 +17551,9 @@ datasets:
                   class: ~
               columns:
                 - dsstox_substance_id
-              mapper: {}
+              mapper:
+                Class:
+                  class: DSSTOX_SID
           - code:
               _mapper_alts:
                 Class:
