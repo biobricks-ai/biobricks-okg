@@ -79,3 +79,6 @@ docker-compose-exec-db-virtuoso-load-rdf-data:
 
 docker-compose-exec-db-virtuoso-isql-load-list:
 	docker compose exec db-virtuoso isql 'exec=SELECT * FROM DB.DBA.load_list;'
+
+fuseki-start:
+	./run-fuseki.sh --port 8080 --config=fuseki_config.ttl
