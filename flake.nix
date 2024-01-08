@@ -1,5 +1,5 @@
 {
-  description = "ICE-kg BioBrick";
+  description = "biobricks-okg BioBrick";
 
   inputs = { dev-shell.url = "github:biobricks-ai/dev-shell"; };
 
