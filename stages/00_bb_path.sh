@@ -19,9 +19,13 @@ brick_names='
 	bindingdb
 	chembl
 	ctdbase
+	hgnc
 	ice
+	mesh-kg
 	tox21
 	toxcast
+	toxrefdb
+	uniprot-kg
 '
 
 biobrick-setup-source --output-dir $datapath $brick_names

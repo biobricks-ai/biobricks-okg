@@ -1,6 +1,10 @@
 https://github.com/biobricks-ai/bindingdb#896b200af3e3ba2cabd566efc824714a8b3fee98
 https://github.com/biobricks-ai/chembl#aca66df234c5721f6d777a33950a55d67ed6c5c9
 https://github.com/biobricks-ai/ctdbase#7ff45fac905951febda25e2ab26e014990adcc0e
+https://github.com/biobricks-ai/hgnc#215c7a2a8f015ac1d1757cae35c08d19159eb087
 https://github.com/biobricks-ai/ice#f247c13d1e93feb5e8d7b46a4036f4485a8b5a43
+https://github.com/biobricks-ai/mesh-kg#9020f9cda0a90dd63d03cd1550a64c8ef827a524
 https://github.com/biobricks-ai/tox21#4f060e70d6882029b08a7aed64042aac2c6cf651
-https://github.com/biobricks-ai/toxcast#c75bbd9ed5c8e9cdaf3e46df8ccc69f51b445fd2
+https://github.com/biobricks-ai/toxcast#4e94de783db2f818ba345baa13343abc2ddd3874
+https://github.com/biobricks-ai/toxrefdb#8de5cd0d4a4073fbb8a23aafa3cfd151eb6e23b2
+https://github.com/biobricks-ai/uniprot-kg#d180c6e6e3537ef93ff9902d189e19c9e3af00b6
