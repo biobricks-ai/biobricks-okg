@@ -15,7 +15,7 @@
       [%- INCLUDE hdtgraph dir=item -%]
    [% ELSIF item.ext == 'hdt' AND item.name.match(nameFilter) %]
 ja:namedGraph [
-  ja:graphName <[% graphName.replace('/$', '') %]/[% item.path %]>;
+  ja:graphName <[% graphName %]?file=[% item.path %]>;
   ja:graph [
     a hdt:HDTGraph ;
     hdt:fileName """[% item.path %]"""
