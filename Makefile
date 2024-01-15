@@ -80,5 +80,11 @@ docker-compose-exec-db-virtuoso-load-rdf-data:
 docker-compose-exec-db-virtuoso-isql-load-list:
 	docker compose exec db-virtuoso isql 'exec=SELECT * FROM DB.DBA.load_list;'
 
-fuseki-start:
+# - `tpage` requires <pkg:cpan/Template-Toolkit>
+#     $ cpanm Template::Toolkit
+# - `sponge` requires <pkg:deb/debian/moreutils>
+fuseki_config.ttl: fuseki_config.ttl.tt2
+	tpage $< | perl -lpe 's/\s+$$//' | sponge $@
+
+fuseki-start: fuseki_config.ttl
 	./run-fuseki.sh --port 8080 --config=fuseki_config.ttl
