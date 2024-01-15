@@ -29,3 +29,11 @@ brick_names='
 '
 
 biobrick-setup-source --output-dir $datapath $brick_names
+
+### Temporary set up for tox21 and hgnc
+for d in tox21 hgnc; do
+	(
+	cd $( realpath $datapath/$d/.. ) && dvc pull -r s3.biobricks.ai rml
+	);
+	ln -sT $( realpath $datapath/$d/.. )/rdf $datapath/internal-$d-kg
+done

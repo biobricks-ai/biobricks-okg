@@ -91,4 +91,14 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 [% INCLUDE hdtgraph graphName=toxcast_graphName dir=brick_path nameFilter='toxcast' FILTER indent(4) %]
     # }}}
 
+    # Tox21 {{{
+[% USE tox21_path = Directory('data-source/internal-tox21-kg') %]
+[% INCLUDE hdtgraph graphName="https://tripod.nih.gov/tox21/pubdata/" dir=tox21_path FILTER indent(4) %]
+    # }}}
+
+    # HGNC {{{
+[% USE hgnc_path = Directory('data-source/internal-hgnc-kg') %]
+[% INCLUDE hdtgraph graphName="https://www.genenames.org/" dir=hgnc_path FILTER indent(4) %]
+    # }}}
+
     .

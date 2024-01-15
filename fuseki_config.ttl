@@ -4641,4 +4641,28 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
     ] ;
     # }}}
 
+    # Tox21 {{{
+
+
+    ja:namedGraph [
+      ja:graphName <https://tripod.nih.gov/tox21/pubdata/?file=data-source/internal-tox21-kg/tox21.hdt>;
+      ja:graph [
+        a hdt:HDTGraph ;
+        hdt:fileName """data-source/internal-tox21-kg/tox21.hdt"""
+      ]
+    ] ;
+    # }}}
+
+    # HGNC {{{
+
+
+    ja:namedGraph [
+      ja:graphName <https://www.genenames.org/?file=data-source/internal-hgnc-kg/hgnc_complete_set.hdt>;
+      ja:graph [
+        a hdt:HDTGraph ;
+        hdt:fileName """data-source/internal-hgnc-kg/hgnc_complete_set.hdt"""
+      ]
+    ] ;
+    # }}}
+
     .
