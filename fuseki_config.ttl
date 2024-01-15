@@ -9,6 +9,8 @@
 
 
 
+
+
 @prefix :        <#> .
 @prefix fuseki:  <http://jena.apache.org/fuseki#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -48,6 +50,30 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 <#dataset> rdf:type ja:RDFDataset ;
     rdfs:label "Dataset" ;
 
+    # HGNC {{{
+
+
+    ja:namedGraph [
+      ja:graphName <https://www.genenames.org/?file=data-source/internal-hgnc-kg/hgnc_complete_set.hdt>;
+      ja:graph [
+        a hdt:HDTGraph ;
+        hdt:fileName """data-source/internal-hgnc-kg/hgnc_complete_set.hdt"""
+      ]
+    ] ;
+    # }}}
+
+    # ICE {{{
+
+
+    ja:namedGraph [
+      ja:graphName <https://ice.ntp.niehs.nih.gov/?file=brick/ice.hdt>;
+      ja:graph [
+        a hdt:HDTGraph ;
+        hdt:fileName """brick/ice.hdt"""
+      ]
+    ] ;
+    # }}}
+
     # MeSH {{{
 
 
@@ -56,6 +82,30 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
       ja:graph [
         a hdt:HDTGraph ;
         hdt:fileName """data-source/mesh-kg/mesh.hdt"""
+      ]
+    ] ;
+    # }}}
+
+    # Tox21 {{{
+
+
+    ja:namedGraph [
+      ja:graphName <https://tripod.nih.gov/tox21/pubdata/?file=data-source/internal-tox21-kg/tox21.hdt>;
+      ja:graph [
+        a hdt:HDTGraph ;
+        hdt:fileName """data-source/internal-tox21-kg/tox21.hdt"""
+      ]
+    ] ;
+    # }}}
+
+    # ToxCast {{{
+
+
+    ja:namedGraph [
+      ja:graphName <https://www.epa.gov/chemical-research/toxicity-forecasting?file=brick/toxcast.hdt>;
+      ja:graph [
+        a hdt:HDTGraph ;
+        hdt:fileName """brick/toxcast.hdt"""
       ]
     ] ;
     # }}}
@@ -4612,55 +4662,6 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
       ja:graph [
         a hdt:HDTGraph ;
         hdt:fileName """data-source/uniprot-kg/uniref90_9.hdt"""
-      ]
-    ] ;
-    # }}}
-
-
-    # ICE {{{
-
-
-    ja:namedGraph [
-      ja:graphName <https://ice.ntp.niehs.nih.gov/?file=brick/ice.hdt>;
-      ja:graph [
-        a hdt:HDTGraph ;
-        hdt:fileName """brick/ice.hdt"""
-      ]
-    ] ;
-    # }}}
-
-    # ToxCast {{{
-
-
-    ja:namedGraph [
-      ja:graphName <https://www.epa.gov/chemical-research/toxicity-forecasting?file=brick/toxcast.hdt>;
-      ja:graph [
-        a hdt:HDTGraph ;
-        hdt:fileName """brick/toxcast.hdt"""
-      ]
-    ] ;
-    # }}}
-
-    # Tox21 {{{
-
-
-    ja:namedGraph [
-      ja:graphName <https://tripod.nih.gov/tox21/pubdata/?file=data-source/internal-tox21-kg/tox21.hdt>;
-      ja:graph [
-        a hdt:HDTGraph ;
-        hdt:fileName """data-source/internal-tox21-kg/tox21.hdt"""
-      ]
-    ] ;
-    # }}}
-
-    # HGNC {{{
-
-
-    ja:namedGraph [
-      ja:graphName <https://www.genenames.org/?file=data-source/internal-hgnc-kg/hgnc_complete_set.hdt>;
-      ja:graph [
-        a hdt:HDTGraph ;
-        hdt:fileName """data-source/internal-hgnc-kg/hgnc_complete_set.hdt"""
       ]
     ] ;
     # }}}

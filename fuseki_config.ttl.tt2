@@ -7,6 +7,8 @@
 ## Remember that you need hdt-java.jar and hdt-jena.jar when you launch Fuseki.
 ##
 
+[% USE brick_path = Directory('brick/') %]
+
 [% BLOCK hdtgraph -%]
 [%- DEFAULT nameFilter='.' -%]
 [% FOREACH item = dir.list -%]
@@ -69,26 +71,19 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 <#dataset> rdf:type ja:RDFDataset ;
     rdfs:label "Dataset" ;
 
-    # MeSH {{{
-[% USE mesh_path = Directory('data-source/mesh-kg') %]
-[% INCLUDE hdtgraph graphName="https://nlmpubs.nlm.nih.gov/projects/mesh/rdf/mesh.nt.gz" dir=mesh_path FILTER indent(4) %]
+    # HGNC {{{
+[% USE hgnc_path = Directory('data-source/internal-hgnc-kg') %]
+[% INCLUDE hdtgraph graphName="https://www.genenames.org/" dir=hgnc_path FILTER indent(4) %]
     # }}}
 
-    # UniProt {{{
-    # $ find -L data-source/uniprot-kg/ -type f -name '*.hdt' | parallel --bar 'hdtSearch -q 0 {}'
-[% USE uniprot_path = Directory('data-source/uniprot-kg') %]
-[% INCLUDE hdtgraph graphName="https://www.uniprot.org/" dir=uniprot_path FILTER indent(4) %]
-    # }}}
-
-[% USE brick_path = Directory('brick/') %]
     # ICE {{{
 [% ice_graphName = INCLUDE graphFromFile file="stages/ice.graph" %]
 [% INCLUDE hdtgraph graphName=ice_graphName dir=brick_path nameFilter='ice' FILTER indent(4) %]
     # }}}
 
-    # ToxCast {{{
-[% toxcast_graphName = INCLUDE graphFromFile file="stages/toxcast.graph" %]
-[% INCLUDE hdtgraph graphName=toxcast_graphName dir=brick_path nameFilter='toxcast' FILTER indent(4) %]
+    # MeSH {{{
+[% USE mesh_path = Directory('data-source/mesh-kg') %]
+[% INCLUDE hdtgraph graphName="https://nlmpubs.nlm.nih.gov/projects/mesh/rdf/mesh.nt.gz" dir=mesh_path FILTER indent(4) %]
     # }}}
 
     # Tox21 {{{
@@ -96,9 +91,15 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 [% INCLUDE hdtgraph graphName="https://tripod.nih.gov/tox21/pubdata/" dir=tox21_path FILTER indent(4) %]
     # }}}
 
-    # HGNC {{{
-[% USE hgnc_path = Directory('data-source/internal-hgnc-kg') %]
-[% INCLUDE hdtgraph graphName="https://www.genenames.org/" dir=hgnc_path FILTER indent(4) %]
+    # ToxCast {{{
+[% toxcast_graphName = INCLUDE graphFromFile file="stages/toxcast.graph" %]
+[% INCLUDE hdtgraph graphName=toxcast_graphName dir=brick_path nameFilter='toxcast' FILTER indent(4) %]
+    # }}}
+
+    # UniProt {{{
+    # $ find -L data-source/uniprot-kg/ -type f -name '*.hdt' | parallel --bar 'hdtSearch -q 0 {}'
+[% USE uniprot_path = Directory('data-source/uniprot-kg') %]
+[% INCLUDE hdtgraph graphName="https://www.uniprot.org/" dir=uniprot_path FILTER indent(4) %]
     # }}}
 
     .
