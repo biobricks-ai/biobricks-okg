@@ -1,0 +1,6 @@
+#!/bin/sh
+
+DIR="$1"
+export BY="$2"
+
+find -L $DIR -type f -name '*.hdt' | parallel 'hdtInfo {}' | perl -alne 'next unless /$ENV{BY}/; $sum += $F[2] =~ y/"//dr ; }{ print $sum '
