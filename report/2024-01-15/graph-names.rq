@@ -1,3 +1,6 @@
+## DESCRIPTION:
+##
+## List of graph names with the `file` suffix removed.
 SELECT DISTINCT ?g_prefix
 WHERE {
   GRAPH ?g { }
