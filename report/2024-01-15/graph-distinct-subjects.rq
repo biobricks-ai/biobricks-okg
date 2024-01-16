@@ -1,0 +1,12 @@
+SELECT ?g_prefix ?count
+WHERE
+{
+  {
+    SELECT ?g (COUNT(DISTINCT ?s) as ?count)
+    WHERE {
+      GRAPH ?g { ?s ?_p ?_o }
+    }
+    GROUP BY ?g
+  }
+  BIND( URI(STRBEFORE(STR(?g), '?file=')) AS ?g_prefix )
+}
