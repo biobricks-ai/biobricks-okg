@@ -1,4 +1,8 @@
-SELECT ?g_prefix ?count
+## DESCRIPTION:
+##
+## Count of distinct subjects in each graph (uses the graph prefix so that all
+## files in a graph are aggregated).
+SELECT ?g_prefix (SUM(?count) AS ?subject_count)
 WHERE
 {
   {
@@ -10,3 +14,4 @@ WHERE
   }
   BIND( URI(STRBEFORE(STR(?g), '?file=')) AS ?g_prefix )
 }
+GROUP BY ?g_prefix
