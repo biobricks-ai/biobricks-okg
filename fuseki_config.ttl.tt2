@@ -99,7 +99,7 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
     # UniProt {{{
     # $ find -L data-source/uniprot-kg/ -type f -name '*.hdt' | parallel --bar 'hdtSearch -q 0 {}'
 [% USE uniprot_path = Directory('data-source/uniprot-kg') %]
-[% INCLUDE hdtgraph graphName="https://www.uniprot.org/" dir=uniprot_path FILTER indent(4) %]
+[%# INCLUDE hdtgraph graphName="https://www.uniprot.org/" dir=uniprot_path FILTER indent(4) %]
     # }}}
 
     .
