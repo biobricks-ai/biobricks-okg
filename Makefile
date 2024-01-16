@@ -88,3 +88,7 @@ fuseki_config.ttl: fuseki_config.ttl.tt2
 
 fuseki-start: fuseki_config.ttl
 	./run-fuseki.sh --port 8080 --config=fuseki_config.ttl
+
+plantuml-generate: okg-ml.yaml
+	./vendor/biobricks-okg-tool/bin/okg.pl yaml plantuml --file okg-ml.yaml --output-dir puml
+	find puml -type f -name '*.puml' -exec plantuml {} \;
