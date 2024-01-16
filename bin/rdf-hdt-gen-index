@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DIR="$1"
+
+find -L $DIR -type f -name '*.hdt' | parallel --bar 'hdtSearch -q 0 {}'
