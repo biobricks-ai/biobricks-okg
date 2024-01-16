@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ -z "$JENA_HOME" ]; then
+	cat <<EOF >&2
+Need to set \$JENA_HOME to path to Jena package.
+EOF
+	exit 1
+fi
+
+set -eu
+
+if [ "$#" -eq 0 ]; then
+	cat <<EOF >&2
+Usage:
+  $0 [args]
+EOF
+	exit 1
+fi
+
+SPARQL_ENDPOINT='http://localhost:8080/hdtservice/'
+
+$JENA_HOME/bin/jena arq.rsparql \
+	--service "$SPARQL_ENDPOINT" \
+	"$@"
