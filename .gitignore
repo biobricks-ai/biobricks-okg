@@ -10,3 +10,5 @@ stages/*.gen.ini
 /raw
 /brick
 /data-processed
+
+/_jena-fuseki-run/

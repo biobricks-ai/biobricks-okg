@@ -3,7 +3,7 @@
 export HDT_JAVA_PATH=$( perl -MAlien::hdt_java -e 'print Alien::hdt_java->dist_dir' );
 export JENA_FUSEKI_PATH=$( perl -MAlien::Jena::Fuseki -e 'print Alien::Jena::Fuseki->dist_dir' );
 export FUSEKI_HOME=$JENA_FUSEKI_PATH;
-export FUSEKI_BASE=$PWD/run;
+export FUSEKI_BASE=$PWD/_jena-fuseki-run;
 
 exec /usr/bin/java -Xmx128G \
 	-Dlog4j.configurationFile=$JENA_FUSEKI_PATH/log4j2.properties \
