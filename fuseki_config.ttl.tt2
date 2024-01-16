@@ -102,3 +102,5 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
     # }}}
 
     .
+
+# vim: fdm=marker ft=tt2
