@@ -1,0 +1,8 @@
+@startuml
+hide empty members
+hide circle
+skinparam classAttributeIconSize 0
+class _HitcallEndpoint_ as "<(HitcallEndpoint)>"
+_HitcallEndpoint_ : {field} <http://semanticscience.org/resource/SIO_has-value> "(HitcallResponse)"
+_HitcallEndpoint_ : {field} rdfs:label "hitcall"
+@enduml
