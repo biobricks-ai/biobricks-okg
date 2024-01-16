@@ -1,0 +1,6 @@
+SELECT DISTINCT ?g_prefix
+WHERE {
+  GRAPH ?g { }
+  BIND( URI(STRBEFORE(STR(?g), '?file=')) AS ?g_prefix )
+}
+ORDER BY ?g_prefix
