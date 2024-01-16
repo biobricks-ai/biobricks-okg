@@ -18302,11 +18302,17 @@ mappings:
       rdfs:label "(Chemical_Name)";
       dce:source "CompTox"        .
 
-    ExO:0000055 a puml:Inline; skos:prefLabel "route".
-    RO:0000056  a puml:Inline; skos:prefLabel "participates in".
-    BAO:0000209 a puml:Inline; skos:prefLabel "has measure group".
-    OBI:0000299 a puml:Inline; skos:prefLabel "has specified output".
-    RO:0000057  a puml:Inline; skos:prefLabel "has participant".
+    ExO:0000055    a puml:Inline; skos:prefLabel "route".
+    RO:0000056     a puml:Inline; skos:prefLabel "participates in".
+    BAO:0000209    a puml:Inline; skos:prefLabel "has measure group".
+    OBI:0000299    a puml:Inline; skos:prefLabel "has specified output".
+    RO:0000057     a puml:Inline; skos:prefLabel "has participant".
+    CHEMINF:000000 a puml:Inline; skos:prefLabel "chemical entity".
+    BAO:0000040    a puml:Inline; skos:prefLabel "measure group".
+    BAO:0000179    a puml:Inline; skos:prefLabel "result".
+    BAO:0000015    a puml:Inline; skos:prefLabel "bioassay".
+    CHEMINF:000446 a puml:Inline; skos:prefLabel "CAS registry number".
+    CHEMINF:000568 a puml:Inline; skos:prefLabel "DSSTOX substance identifier".
 prefixes:
   BAO:
     uri: http://www.bioassayontology.org/bao#BAO_
