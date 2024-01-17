@@ -141,7 +141,7 @@ irritation/corrosion, acute inhalation).
 
 # List of Endpoints for EPA or GHS classification systems
 ```shell
-./report/2024-01-15/ice-dump-endpoint.sh | grep -P 'EPA|GHS'
+./report/2024-01-15/ice-endpoint-values-csv.sh | awk 'NR == 1 || /EPA|GHS/'
 ```
 
 -->
