@@ -139,3 +139,19 @@ irritation/corrosion, acute inhalation).
 ```
 
 -->
+
+# Issues
+
+Slower query speed:
+
+Using Jena with `hdt-java` to load the `.hdt` files can be slow.  This is
+exacerbated With the addition of `uniprot-kg` which in some cases either
+
+  - Takes a long time to load on server startup.
+  - Crashes with OOM on server startup or during queries.
+
+Solutions:
+
+  - 1. Split RDF HDT files into even smaller files.
+  - 2. Experiment with other triplestores.
+  - 3. FedX federated querying.
