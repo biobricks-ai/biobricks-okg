@@ -2,10 +2,6 @@
 
 set -eu
 
-export PARALLEL_QUERY="$(cat <<'EOF'
-EOF
-)"
-
 duckdb -csv -c "$(cat <<'EOF'
 SELECT DISTINCT file_name, name
 FROM parquet_schema('data-source/ice/*.parquet')
