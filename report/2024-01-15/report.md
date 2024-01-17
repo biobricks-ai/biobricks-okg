@@ -154,4 +154,4 @@ Solutions:
 
   1. Split RDF HDT files into even smaller files.
   2. Experiment with other triplestores.
-  3. FedX federated querying.
+  3. FedX federated querying: <https://rdf4j.org/documentation/programming/federation/>.
