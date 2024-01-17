@@ -10,7 +10,9 @@ Currently using a selection of ontologies for the schema:
  - [__ExO__: Exposure ontology](https://purl.bioontology.org/ontology/EXO)
  - [__BAO__: BioAssay Ontology](https://purl.bioontology.org/ontology/BAO)
  - [__CHEMINF__: Chemical Information Ontology](https://purl.bioontology.org/ontology/CHEMINF)
+ - [__EDAM__: Ontology of bioscientific data analysis and data management](https://purl.bioontology.org/ontology/EDAM)
  - [__OBI__: Ontology for Biomedical Investigations](https://purl.bioontology.org/ontology/OBI)
+ - [__SIO__: Semanticscience Integrated Ontology](https://purl.bioontology.org/ontology/SIO)
  - [__RO__: OBO Relation Ontology](https://purl.bioontology.org/ontology/OBOREL)
 
 Many of these are from the Open Biological and Biomedical Ontology (OBO) Foundry.
