@@ -26,10 +26,20 @@ directly to existing terms:
 <!---
 
 ```shell
+# Remote
 $ runoak -i bioportal: info BAO:0002145 BAO:0002117 BAO:0000186
 BAO:0002145 ! LC50
 BAO:0002117 ! LD50
 BAO:0000186 ! AC50
+
+# Local
+$ eval $(./vendor/biobricks-script-lib/activate.sh); \
+  export B=$( biobrick-path semsql ); \
+  export E=$( realpath $B/../extract ); \
+  mkdir -p $E; \
+  ls $B/bao.db.gz | parallel '[ -f $E/{/.} ] || gunzip -vck {} > $E/{/.}'; \
+  \
+  runoak -i $E/bao.db info BAO:0002145 BAO:0002117 BAO:0000186 ;
 ```
 
 --->
