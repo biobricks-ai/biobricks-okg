@@ -17,6 +17,8 @@ Currently using a selection of ontologies for the schema:
 
 Many of these are from the Open Biological and Biomedical Ontology (OBO) Foundry.
 
+## Exact matches
+
 These already contain a large number of the entities that are needed to model
 the data. For example, in ICE, the following terms for assay endpoints map
 directly to existing terms:
@@ -53,12 +55,14 @@ http://www.cea.fr/ontotoxnuc#DL50 ! LD50
 BAO:0002117 ! LD50
 ```
 
+## Close matches
+
 There are however some concepts in particular datasets that do not yet have
 exact terms in any ontology.
 
 For example, [ __MEDDRA__: Medical Dictionary for Regulatory Activities
 Terminology ](https://purl.bioontology.org/ontology/MEDDRA) does contain
-something the is close to one of the endpoints in `ice/DART_Data.parquet`
+something that is close to one of the endpoints in `ice/DART_Data.parquet`
 
 <!--
 
@@ -81,6 +85,8 @@ EOF
 
 However because __MEDDRA__ is for human organisms while DART describes the
 total bilirubin in rabbits, this is not appropriate.
+
+## No matches
 
 There are also places where no close terms are available. For example,
 `ice/Eye_Irritation_Data`, the following ocular irritation classification
