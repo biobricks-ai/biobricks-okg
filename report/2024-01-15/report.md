@@ -151,7 +151,7 @@ irritation/corrosion, acute inhalation).
 Slower query speed:
 
 Using Jena with `hdt-java` to load the `.hdt` files can be slow.  This is
-exacerbated With the addition of `uniprot-kg` which in some cases either
+exacerbated by the addition of `uniprot-kg` which in some cases either
 
   - Takes a long time to load on server startup.
   - Crashes with OOM on server startup or during queries.
