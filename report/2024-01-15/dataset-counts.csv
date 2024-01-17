@@ -1,0 +1,7 @@
+dataset,graph IRI,triples,log(triples),distinct subjects,log(distinct subjects)
+tox21,https://tripod.nih.gov/tox21/pubdata/,131338727,8.118392803,6983530,6.844075003
+toxcast,https://www.epa.gov/chemical-research/toxicity-forecasting,23544190,7.371883754,6718851,6.82729501
+hgnc,https://www.genenames.org/,952076,5.978671618,184210,5.265313203
+mesh-kg,https://nlmpubs.nlm.nih.gov/projects/mesh/rdf/mesh.nt.gz,18194276,7.259934779,2437645,6.386970459
+ice,https://ice.ntp.niehs.nih.gov/,6850568,6.835726582,1892297,6.276989301
+uniprot-kg,https://www.uniprot.org/,144142816159,11.158793,NA,#VALUE!
