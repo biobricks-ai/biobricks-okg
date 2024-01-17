@@ -27,4 +27,4 @@ duckdb -csv -c "$(cat <<EOF
 SELECT DISTINCT '\''{1}'\'',  '\"'{2}'\"' FROM "{1}";
 EOF
 )" | awk "NR>1"
-'
+'  | awk 'BEGIN { print "File,Value" } { print }'
