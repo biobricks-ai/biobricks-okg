@@ -17169,7 +17169,9 @@ datasets:
                   class: ~
               columns:
                 - SAMPLE_NAME
-              mapper: {}
+              mapper:
+                Value:
+                  value: Chemical_Name
           - SMILES:
               _mapper_alts:
                 Class:
@@ -17423,7 +17425,9 @@ datasets:
                   class: ~
               columns:
                 - CAS
-              mapper: {}
+              mapper:
+                Class:
+                  class: CAS_RN
           - PUBCHEM_SID:
               _mapper_alts:
                 Class:
