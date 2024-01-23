@@ -12,9 +12,35 @@
 @prefix fnml:    <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno:     <https://w3id.org/function/ontology#> .
 @prefix grel:    <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix puml:    <http://plantuml.com/ontology#> .
 @prefix ql:      <http://semweb.mmlab.be/ns/ql#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rml:     <http://semweb.mmlab.be/ns/rml#> .
 @prefix rr:      <http://www.w3.org/ns/r2rml#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema> .
+
+:ls_tox21_data-source_tox21_tox21lib.parquet
+        rdf:type                  rml:LogicalSource;
+        dce:source                "tox21";
+        dce:title                 "data-source/tox21/tox21lib.parquet";
+        rml:referenceFormulation  ql:CSV;
+        rml:source                "data-source/tox21/tox21lib.parquet" .
+
+[ rdf:type               rr:TriplesMap;
+  rml:logicalSource      :ls_tox21_data-source_tox21_tox21lib.parquet;
+  rr:predicateObjectMap  [ rr:objectMap  [ rr:constant  "CAS" ];
+                           rr:predicate  dce:source
+                         ];
+  rr:subjectMap          [ rr:class     CHEMINF:000446;
+                           rr:template  "http://identifiers.org/cas/{CAS}"
+                         ]
+] .
+
+:ls_tox21_data-source_tox21_tox21.parquet
+        rdf:type                  rml:LogicalSource;
+        dce:source                "tox21";
+        dce:title                 "data-source/tox21/tox21.parquet";
+        rml:referenceFormulation  ql:CSV;
+        rml:source                "data-source/tox21/tox21.parquet" .
