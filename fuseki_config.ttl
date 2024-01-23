@@ -111,9 +111,10 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
     # }}}
 
     # UniProt {{{
-    # $ find -L data-source/uniprot-kg/ -type f -name '*.hdt' | parallel --bar 'hdtSearch -q 0 {}'
 
 
     # }}}
 
     .
+
+# vim: fdm=marker ft=turtle
