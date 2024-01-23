@@ -103,4 +103,11 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 
     .
 
+[%
+# Modeline for generated file.
+'# vim'_': '_'fdm=marker ft=turtle'
+-%]
+[%#
+# Modeline for template file
 # vim: fdm=marker ft=tt2
+%]
