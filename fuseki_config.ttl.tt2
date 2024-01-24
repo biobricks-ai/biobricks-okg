@@ -6,31 +6,23 @@
 ##
 ## Remember that you need hdt-java.jar and hdt-jena.jar when you launch Fuseki.
 ##
+[%#-
+# View docs for template:
 
-[% USE brick_path = Directory('brick/') %]
+  perldoc fuseki_config.ttl.tt2
 
-[% BLOCK hdtgraph -%]
-[%- DEFAULT nameFilter='.' -%]
-[% FOREACH item = dir.list -%]
-   [% IF item.isdir %]
-      [%- item.scan -%]
-      [%- INCLUDE hdtgraph dir=item -%]
-   [% ELSIF item.ext == 'hdt' AND item.name.match(nameFilter) %]
-ja:namedGraph [
-  ja:graphName <[% graphName %]?file=[% item.path %]>;
-  ja:graph [
-    a hdt:HDTGraph ;
-    hdt:fileName """[% item.path %]"""
-  ]
-] ;
-   [%- END -%]
-[% END -%]
-[% END %]
+=head1 NOTE
 
-[%- BLOCK graphFromFile -%]
-[%- input = INSERT "$file" -%]
-[%- input.trim -%]
-[%- END -%]
+Surround the following directives in the examples with the tags (default: C<< [E<0x25> >> and
+C<< E<0x25>] >>):
+
+To comment out a directive, use
+
+C<< [E<0x25># ... E<0x25>] >>
+
+=cut
+
+-%]
 
 @prefix :        <#> .
 @prefix fuseki:  <http://jena.apache.org/fuseki#> .
@@ -71,6 +63,8 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 <#dataset> rdf:type ja:RDFDataset ;
     rdfs:label "Dataset" ;
 
+[%- USE brick_path = Directory('brick/') -%]
+
     # HGNC {{{
 [% USE hgnc_path = Directory('data-source/internal-hgnc-kg') %]
 [% INCLUDE hdtgraph graphName="https://www.genenames.org/" dir=hgnc_path FILTER indent(4) %]
@@ -98,12 +92,132 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 
     # UniProt {{{
 [% USE uniprot_path = Directory('data-source/uniprot-kg') %]
-[%# INCLUDE hdtgraph graphName="https://www.uniprot.org/" dir=uniprot_path FILTER indent(4) %]
+[% INCLUDE hdtgraph graphName="https://www.uniprot.org/" dir=uniprot_path FILTER indent(4) %]
     # }}}
 
     .
 
-[%
+[% BLOCK hdtgraph # {{{
+-%]
+[%#- hdtgraph docs {{{
+
+=head1 BLOCK hdtgraph
+
+=head2 SYNOPSIS
+
+  USE hgnc_path = Directory('data-source/hgnc-kg')
+  INCLUDE hdtgraph graphName="https://www.genenames.org/" dir=hgnc_path FILTER indent(4)
+
+=head2 DESCRIPTION
+
+Generate C<ja:namedGraph> predicate-object pairs that reference C<.hdt> files
+from a directory recursively.
+
+=head2 PARAMETERS
+
+=head3 C<graphName>
+
+Type: String
+
+[B<Required>]
+
+The base IRI that is used for the named graph. The parameter C<< ?file= >> and
+HDT filename is appended to this to create the final IRI for the named graph.
+
+=head3 C<dir>
+
+Type: C<Directory>
+
+[B<Required>]
+
+The top-level path used for processing files recursively.
+
+See L<Template::Plugin::Directory>.
+
+=head3 C<nameFilter>
+
+Type: C<Regexp>
+
+Filter that adds a graph for any matching files.
+
+Default: Matches all C<.hdt> files.
+
+=head3 C<keepInMemory_nameFilter>
+
+Type: C<Regexp>
+
+Filter that enables C<hdt:keepInMemory> for any matching file names.
+
+Default: Does not match any C<.hdt> files.
+
+=cut
+
+}}}
+%]
+[%- DEFAULT
+    nameFilter='(*ACCEPT)'
+    keepInMemory_nameFilter='(*FAIL)'
+-%]
+[% FOREACH item = dir.list -%]
+   [% IF item.isdir %]
+      [%- item.scan -%]
+      [%- INCLUDE hdtgraph dir=item -%]
+   [% ELSIF item.ext == 'hdt' AND item.name.match(nameFilter) %]
+ja:namedGraph [
+  ja:graphName <[% graphName %]?file=[% item.path %]>;
+  ja:graph [
+    a hdt:HDTGraph ;
+    rdfs:label """Graph of dataset <[% graphName %]> from HDT file <[% item.path %]>""" ;
+    hdt:fileName """[% item.path %]""" ;
+    [%- IF item.name.match(keepInMemory_nameFilter) -%]
+    [%-#
+        # Optional: Keep the HDT and index in memory at all times.
+        # Uses more memory but it is potentially faster because avoids IO.
+    %]
+    hdt:keepInMemory "true" ;
+    [%- END %]
+  ]
+] ;
+   [%- END -%]
+[% END -%]
+[% END %]
+[%# }}} %]
+[%- BLOCK graphFromFile #{{{
+-%]
+[%#- graphFromFile docs {{{
+
+=head1 BLOCK graphFromFile
+
+=head2 SYNOPSIS
+
+  # toxcast_graphName contains contents of file C<stages/toxcast.graph> (a
+  # single line file containing an IRI) with newline removed
+  toxcast_graphName = INCLUDE graphFromFile file="stages/toxcast.graph"
+
+=head2 DESCRIPTION
+
+Read file contents to obtain named graph IRI.
+
+=head2 PARAMETERS
+
+=head3 C<file>
+
+Type: String
+
+[B<Required>]
+
+The file name that is used for reading. It should only contain a single line
+with an IRI.
+
+=cut
+
+}}}
+%]
+[%- input = INSERT "$file" -%]
+[%- input.trim -%]
+[%- END -%]
+[%# }}} %]
+[% # Modelines {{{
 # Modeline for generated file.
 '# vim'_': '_'fdm=marker ft=turtle'
 -%]
