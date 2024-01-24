@@ -72,7 +72,7 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 
     # ICE {{{
 [% ice_graphName = INCLUDE graphFromFile file="stages/ice.graph" %]
-[% INCLUDE hdtgraph graphName=ice_graphName dir=brick_path nameFilter='ice' FILTER indent(4) %]
+[% INCLUDE hdtgraph graphName=ice_graphName dir=brick_path nameFilter='ice' keepInMemory_nameFilter='(*ACCEPT)' FILTER indent(4) %]
     # }}}
 
     # MeSH {{{
