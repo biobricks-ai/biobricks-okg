@@ -5,7 +5,11 @@ export JENA_FUSEKI_PATH=$( perl -MAlien::Jena::Fuseki -e 'print Alien::Jena::Fus
 export FUSEKI_HOME=$JENA_FUSEKI_PATH;
 export FUSEKI_BASE=$PWD/_jena-fuseki-run;
 
-exec /usr/bin/java -Xmx128G \
+export JAVA_OPTIONS=${JENA_FUSEKI_JAVA_OPTIONS:-"-Xmx128G"}
+# -Xmx192G
+# -Xss256k
+
+exec /usr/bin/java $JAVA_OPTIONS \
 	-Dlog4j.configurationFile=$JENA_FUSEKI_PATH/log4j2.properties \
 	-cp $JENA_FUSEKI_PATH/fuseki-server.jar:$HDT_JAVA_PATH/lib/hdt-api-3.0.10.jar:$HDT_JAVA_PATH/lib/hdt-java-core-3.0.10.jar:$HDT_JAVA_PATH/lib/hdt-jena-3.0.10.jar \
 	org.apache.jena.fuseki.cmd.FusekiCmd "$@"
