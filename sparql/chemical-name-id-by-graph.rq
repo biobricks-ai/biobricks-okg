@@ -1,0 +1,43 @@
+## DESCRIPTION:
+##
+## Look up the names of chemical entities and optionally their CAS RN and
+## DSSTOX SID if available. Indicate which graph the data come from.
+##
+## NOTE: differnce from <report/2024-01-15/chemical-name-id.rq> is that the
+## named graph is filtered using a subquery.
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
+prefix CAS:     <http://identifiers.org/cas/>
+PREFIX EDAM:    <http://edamontology.org/>
+
+SELECT ?g_prefix ?name ?cas ?dsstox
+WHERE {
+  {
+    # Only look at non UniProt graphs.
+    SELECT ?g ?g_prefix
+    WHERE {
+      GRAPH ?g { }
+      BIND( URI(STRBEFORE(STR(?g), '?file=')) AS ?g_prefix )
+      FILTER( ! STRSTARTS(STR(?g), 'https://www.uniprot.org/'))
+    }
+  }
+  {
+    SELECT *
+    WHERE {
+      graph ?g {
+        ?s a          CHEMINF:000000;
+           rdfs:label ?name .
+        OPTIONAL {
+          ?s      EDAM:has_identifier ?dsstox.
+          ?dsstox a                   CHEMINF:000568. # DSSTOX SID
+        }
+        OPTIONAL {
+          ?s   EDAM:has_identifier ?cas.
+          ?cas a                   CHEMINF:000446.    # CAS RN
+        }
+      }
+    }
+  }
+}
+ORDER BY ?dsstox
