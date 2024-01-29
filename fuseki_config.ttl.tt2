@@ -66,33 +66,37 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 [%- USE brick_path = Directory('brick/') -%]
 
     # HGNC {{{
-[% USE hgnc_path = Directory('data-source/internal-hgnc-kg') %]
-[% INCLUDE hdtgraph graphName="https://www.genenames.org/" dir=hgnc_path FILTER indent(4) %]
+[% USE hgnc_path = Directory('data-source/internal-hgnc-kg') -%]
+[% hgnc_graphName = INCLUDE graphFromFile file="graph-meta/hgnc.graph" -%]
+[% INCLUDE hdtgraph graphName=hgnc_graphName dir=hgnc_path FILTER indent(4) %]
     # }}}
 
     # ICE {{{
-[% ice_graphName = INCLUDE graphFromFile file="stages/ice.graph" %]
+[% ice_graphName = INCLUDE graphFromFile file="graph-meta/ice.graph" -%]
 [% INCLUDE hdtgraph graphName=ice_graphName dir=brick_path nameFilter='ice' keepInMemory_nameFilter='(*ACCEPT)' FILTER indent(4) %]
     # }}}
 
     # MeSH {{{
-[% USE mesh_path = Directory('data-source/mesh-kg') %]
-[% INCLUDE hdtgraph graphName="https://nlmpubs.nlm.nih.gov/projects/mesh/rdf/mesh.nt.gz" dir=mesh_path FILTER indent(4) %]
+[% USE mesh_path = Directory('data-source/mesh-kg') -%]
+[% mesh_kg_graphName = INCLUDE graphFromFile file="graph-meta/mesh-kg.graph" -%]
+[% INCLUDE hdtgraph graphName=mesh_kg_graphName dir=mesh_path FILTER indent(4) %]
     # }}}
 
     # Tox21 {{{
-[% USE tox21_path = Directory('data-source/internal-tox21-kg') %]
-[% INCLUDE hdtgraph graphName="https://tripod.nih.gov/tox21/pubdata/" dir=tox21_path FILTER indent(4) %]
+[% USE tox21_path = Directory('data-source/internal-tox21-kg') -%]
+[% tox21_graphName = INCLUDE graphFromFile file="graph-meta/tox21.graph" -%]
+[% INCLUDE hdtgraph graphName=tox21_graphName dir=tox21_path FILTER indent(4) %]
     # }}}
 
     # ToxCast {{{
-[% toxcast_graphName = INCLUDE graphFromFile file="stages/toxcast.graph" %]
+[% toxcast_graphName = INCLUDE graphFromFile file="graph-meta/toxcast.graph" -%]
 [% INCLUDE hdtgraph graphName=toxcast_graphName dir=brick_path nameFilter='toxcast' FILTER indent(4) %]
     # }}}
 
     # UniProt {{{
-[% USE uniprot_path = Directory('data-source/uniprot-kg') %]
-[% INCLUDE hdtgraph graphName="https://www.uniprot.org/" dir=uniprot_path FILTER indent(4) %]
+[% USE uniprot_path = Directory('data-source/uniprot-kg') -%]
+[% uniprot_kg_graphName = INCLUDE graphFromFile file="graph-meta/uniprot-kg.graph" -%]
+[% INCLUDE hdtgraph graphName=uniprot_kg_graphName dir=uniprot_path FILTER indent(4) %]
     # }}}
 
     .
