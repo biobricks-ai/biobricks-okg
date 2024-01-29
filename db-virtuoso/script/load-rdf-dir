@@ -26,6 +26,11 @@ my %rdf_exts = (
 	'.xml'  =>  'RDF/XML',
 );
 my @compress_exts = qw( .gz .bz2 .xz );
+# NOTE: Inside of Docker:
+#
+#     $ which gzip bzip2 xz
+#     /usr/bin/gzip
+#     /usr/bin/bzip2
 
 my $rdf_exts_qr      = join '|', map quotemeta, keys %rdf_exts;
 my $compress_exts_qr = join '|', map quotemeta, @compress_exts;
