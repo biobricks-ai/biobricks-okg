@@ -4,167 +4,19 @@
 
 use strict;
 use warnings;
-use feature qw(say signatures);
-no warnings qw(experimental::signatures);
+use feature qw(say signatures postderef);
+no warnings qw(experimental::signatures experimental::postderef);
 
 # Only using core modules inside of Docker
 use File::Find;
-use File::Basename qw(fileparse basename dirname);
+use File::Basename qw(basename dirname);
 use File::Copy qw(copy move);
 use File::Temp qw(tempfile);
 use IPC::Cmd qw(can_run); # can_run like File::Which, but core
 
-# From <https://vos.openlinksw.com/owiki/wiki/VOS/VirtBulkRDFLoader>:
-my %rdf_exts = (
-	'.grdf' =>  'Geospatial RDF',
-	'.nq'   =>  'N-Quads',
-	'.nt'   =>  'N-Triples',
-	'.owl'  =>  'OWL',
-	'.rdf'  =>  'RDF/XML',
-	'.trig' =>  'TriG',
-	'.ttl'  =>  'Turtle',
-	'.xml'  =>  'RDF/XML',
-);
-my @compress_exts = qw( .gz .bz2 .xz );
-# NOTE: Inside of Docker:
-#
-#     $ which gzip bzip2 xz
-#     /usr/bin/gzip
-#     /usr/bin/bzip2
-
-my $rdf_exts_qr      = join '|', map quotemeta, keys %rdf_exts;
-my $compress_exts_qr = join '|', map quotemeta, @compress_exts;
-my $hdt_ext_qr       = qr/\.hdt/;
-
-my $all_qr = qr/
-	(?:
-		$rdf_exts_qr (?:$compress_exts_qr)?
-		|
-		$hdt_ext_qr
-	)
-	$
-/x;
-
-sub sql_escape($x) { $x =~ s/'/''/gr; }
-
-sub graph_file($rdf_file) {
-	my $file_no_compress = $rdf_file =~ s/(?:$compress_exts_qr)$//r;
-	my $file_graph = "${file_no_compress}.graph";
-	return $file_graph;
+if( $ENV{HARNESS_ACTIVE} ) {
+	eval { require Test2::V0; Test2::V0->import; 1 } or die "Could not load Test2";
 }
-
-sub check_for_graph($file) {
-	my $file_graph = graph_file($file);
-	if( ! -r $file_graph ) {
-		die "No graph file for $file: must be $file_graph";
-	}
-}
-
-sub load_single_file_sql($file) {
-	check_for_graph($file);
-	my ($file_base, $file_dir) = ( basename( $file ), dirname( $file ) );
-	my $sql = <<~SQL;
-
-	ld_dir('@{[ sql_escape $file_dir ]}', '@{[ sql_escape $file_base ]}', NULL) ;
-
-	SQL
-
-	return $sql;
-}
-
-sub rdf_loader_sql($sql_statements) {
-	return <<~SQL;
-	DELETE FROM DB.DBA.load_list;
-
-	@{[ join "\n", @$sql_statements ]}
-
-	SELECT * FROM DB.DBA.load_list;
-
-	-- NOTE: log_enable = 2 disables triggers
-	rdf_loader_run(log_enable=>2) ;
-	SQL
-}
-
-sub run_sql($sql) {
-	my ($fh, $sql_filename) = tempfile( SUFFIX => '.sql' );
-
-	print $fh $sql;
-
-	system( qw(isql), "exec=LOAD $sql_filename" ) == 0 or die "Could not run $sql_filename: $sql";
-}
-
-sub _log(@msg) {
-	say STDERR @msg;
-}
-
-sub main {
-	my @dirs = @ARGV;
-
-	my @files;
-	find( {
-			wanted => sub {
-				return unless -f;
-				return unless /$all_qr/;
-				return if /\Q.hdt.nt\E$/; # converted
-				push @files, $File::Find::name;
-			},
-			follow   => 1,
-			no_chdir => 1,
-		}, @dirs, );
-
-	for my $bin (qw(isql hdt2rdf)) {
-		die "Unable to find executable $bin" unless can_run($bin);
-	}
-
-	my @sql_ld_dirs;
-	for my $file (@files) {
-		_log "$file: Processing...";
-		my $graph_file = graph_file( $file );
-		if( ! -r $graph_file ) {
-			warn "Skipping $file: No graph file $graph_file for RDF input $file";
-			next;
-		}
-		if( $file =~ /(?:$hdt_ext_qr)$/ ) {
-			# NOTE Based on testing, `hdt2rdf` gives the same
-			# output N-Triple file across multiple runs, i.e. it is
-			# a pure command.
-			my $hdt_file = $file;
-			my $nt_file  = "$hdt_file.nt"; # append .nt to file
-			# Format flag:
-			# -f [ntriples, n3, turtle]
-			if( ! -f $nt_file || -M $hdt_file < -M $nt_file ) {
-				_log "$file: Converting from $hdt_file to $nt_file";
-
-				my (undef, $nt_file_temp) = tempfile( OPEN => 0, DIR => dirname($file),
-					SUFFIX => '.tmp.hdt.nt' );
-				system(
-					qw(hdt2rdf),
-						qw(-f ntriples),
-						$hdt_file,
-						$nt_file_temp,
-				) == 0 or do {
-					unlink $nt_file_temp;
-					die "Could not convert $hdt_file to $nt_file";
-				};
-
-				move( $nt_file_temp, $nt_file );
-
-				copy( graph_file($hdt_file), graph_file($nt_file) );
-			} else {
-				_log "$file: Skipping conversion from $hdt_file to $nt_file: $nt_file exists and is newer than $hdt_file";
-			}
-
-			push @sql_ld_dirs, load_single_file_sql($nt_file);
-		} else {
-			# any other type of RDF file
-			push @sql_ld_dirs, load_single_file_sql($file);
-		}
-	}
-
-	say rdf_loader_sql( \@sql_ld_dirs );
-}
-
-main;
 
 =head1 NAME
 
@@ -200,3 +52,539 @@ but this is not available with Virtuoso Open Source Edition (VOS).
 
 
 =cut
+
+package Bio_Bricks::DB::Virtuoso {
+	use strict;
+	use warnings;
+	use feature qw(signatures);
+	no warnings qw(experimental::signatures);
+
+	use File::Basename qw(basename dirname);
+	use File::Find;
+	use File::Spec;
+	use IPC::Cmd qw(can_run);
+
+=head1 NAME
+
+Bio_Bricks::DB::Virtuoso
+
+=cut
+
+	# List from <https://vos.openlinksw.com/owiki/wiki/VOS/VirtBulkRDFLoader>:
+	our %RDF_EXTS = (
+		'.grdf' =>  'Geospatial RDF',
+		'.nq'   =>  'N-Quads',
+		'.nt'   =>  'N-Triples',
+		'.owl'  =>  'OWL',
+		'.rdf'  =>  'RDF/XML',
+		'.trig' =>  'TriG',
+		'.ttl'  =>  'Turtle',
+		'.xml'  =>  'RDF/XML',
+	);
+
+	# NOTE: Inside of Docker:
+	#
+	#     $ which gzip bzip2 xz
+	#     /usr/bin/gzip
+	#     /usr/bin/bzip2
+	our @COMPRESS_EXTS = qw( .gz .bz2 .xz );
+
+	sub sql_escape_string($class, $x) { $x =~ s/'/''/gr; }
+	sub sql_string($class, $x) { "'@{[ $class->sql_escape_string($x) ]}'"; }
+	sub sql_null($class)       { 'NULL'; }
+
+	my $rdf_exts_qr      = qr[ @{[ join '|', map quotemeta, keys %RDF_EXTS ]} ]x;
+	my $quad_exts_qr     = qr[ @{[ join '|', map quotemeta, qw(.nq .trig) ]} ]x;
+	my $compress_exts_qr = qr[ @{[ join '|', map quotemeta, @COMPRESS_EXTS ]} ]x;
+	my $db_loadable_qr   = qr/
+		$rdf_exts_qr
+		$compress_exts_qr ?
+		$
+	/x;
+	my $db_loadable_quad_qr   = qr/
+		$quad_exts_qr
+		$compress_exts_qr ?
+		$
+	/x;
+
+=head1 CLASS METHODS
+
+=head2 is_loadable_file
+
+Returns boolean to indicate if a file is loadable by Virtuoso by its extension.
+This includes compressed files.
+
+=cut
+	sub is_loadable_file($class, $rdf_file) {
+		return !! ( -f $rdf_file && $rdf_file =~ $db_loadable_qr );
+	}
+
+=head2 is_loadable_quad_file
+
+Returns boolean to indicate if a file is loadable by Virtuoso by its extension
+and is a quad file. This includes compressed files.
+
+=cut
+	sub is_loadable_quad_file($class, $rdf_file) {
+		return !! ( -f $rdf_file && $rdf_file =~ $db_loadable_quad_qr );
+	}
+
+=head2 map_single_file_to_graph_ld_dir
+
+  $class->map_single_file_to_graph_ld_dir($file)
+
+Returns the corresponding C<.graph> file for a given file just like
+L<C<ld_dir>|(https://docs.openlinksw.com/virtuoso/fn_ld_dir/>.
+
+If it is a file such as C<file.nt.gz>, it looks for C<file.nt.graph> or C<global.graph>.
+If no C<.graph> file is found, returns C<undef>. If the file is a quad RDF, returns C<\undef>.
+
+=cut
+	sub map_single_file_to_graph_ld_dir($class, $file) {
+		## no critic: Subroutines::ProhibitExplicitReturnUndef
+		return unless -f $file;
+
+		return \undef if $class->is_loadable_quad_file( $file );
+
+		my $file_no_compress = $file =~ s/(?:$compress_exts_qr)$//r;
+		my $file_graph = "${file_no_compress}.graph";
+
+		return $file_graph if -f $file_graph;
+
+		my $dir = dirname( $file );
+		my $global_graph = File::Spec->catfile( $dir, 'global.graph' );
+
+		return $global_graph if -f $global_graph;
+
+		## no critic: Subroutines::ProhibitExplicitReturnUndef
+		return undef;
+	}
+
+=head2 map_path_to_graph_files_ld_dir_all
+
+  $class->map_path_to_graph_files_ld_dir_all($path)
+
+For a given path, finds the corresponding graph files recursively
+like L<C<ld_dir_all>|https://docs.openlinksw.com/virtuoso/fn_ld_dir_all/>.
+
+Returns a C<HashRef> where keys are loadable files relative to C<$path>
+and values are:
+
+=over 4
+
+=item * The C<.graph> file path relative to C<$path>.
+
+=item * C<undef> if no such graph file is found.
+
+=item * C<\undef> for quad files.
+
+=back
+
+=cut
+	sub map_path_to_graph_files_ld_dir_all($class, $path) {
+		my %path_to_graph_file;
+		my %global_graph_by_dir;
+		find( {
+				wanted => sub {
+					if( -d ) {
+						my $global_for_dir = File::Spec->catfile($File::Find::name, 'global.graph');
+						$global_graph_by_dir{ $File::Find::name } =
+							-f $global_for_dir
+							? $global_for_dir
+							: $global_graph_by_dir{ $File::Find::dir };
+					}
+
+					if( $class->is_loadable_quad_file($_) ) {
+						# Quads use the graph IRIs inside the file itself.
+						$path_to_graph_file{ File::Spec->abs2rel( $_, $path  ) } = \ undef;
+					} elsif( $class->is_loadable_file($_) ) {
+						$path_to_graph_file{ File::Spec->abs2rel( $_, $path  ) } = do {
+							my $graph_file = $class->map_single_file_to_graph_ld_dir( $_ )
+								// $global_graph_by_dir{$File::Find::dir};
+							defined $graph_file ? File::Spec->abs2rel( $graph_file, $path ) : undef;
+						};
+					}
+				},
+				follow   => 1,
+				no_chdir => 1,
+			}, $path, );
+
+		\%path_to_graph_file;
+	}
+
+	sub load_single_file_sql($class, $file, $graph_iri = undef ) {
+		my ($file_base, $file_dir) = ( basename( $file ), dirname( $file ) );
+		# NOTE $file_base is a LIKE pattern. Might need to escape any /[\[%]/ ?
+		my $sql = <<~SQL;
+		ld_dir(@{[
+				$class->sql_string($file_dir)
+			]}, @{[
+				$class->sql_string($file_base)
+			]}, @{[
+				defined $graph_iri
+				? $class->sql_string($graph_iri)
+				: $class->sql_null
+			]}) ;
+		SQL
+
+		return $sql;
+	}
+
+	sub rdf_loader_sql($class, $sql_statements) {
+		return <<~SQL;
+		DELETE FROM DB.DBA.load_list;
+
+		@{[ join "\n", @$sql_statements ]}
+
+		SELECT * FROM DB.DBA.load_list;
+
+		-- NOTE: log_enable = 2 disables triggers
+		rdf_loader_run(log_enable=>2) ;
+		SQL
+	}
+
+	sub can_run_isql($class) {
+		my $bin = 'isql';
+		die "Unable to find executable $bin" unless can_run($bin);
+	}
+
+	sub run_sql($class, $sql) {
+		my ($fh, $sql_filename) = tempfile( SUFFIX => '.sql' );
+
+		print $fh $sql;
+		$fh->close;
+
+		$class->can_run_isql;
+
+		system( qw(isql), "exec=LOAD $sql_filename" ) == 0 or die "Could not run $sql_filename: $sql";
+	}
+
+
+=head1 SEE ALSO
+
+=over 4
+
+=item * L<Virtuoso: Bulk Loading RDF Source Files into one or more Graph IRIs|https://vos.openlinksw.com/owiki/wiki/VOS/VirtBulkRDFLoader>
+
+=item * L<https://github.com/openlink/vos-docker-bulkload-example>
+
+=item * L<https://community.openlinksw.com/t/how-to-bulk-load-data-into-a-virtuoso-docker-instance/3248>
+
+=back
+
+=cut
+
+	if( $ENV{HARNESS_ACTIVE} ) {
+		eval { Test2::V0->import; 1 } or die "Could not load Test2";
+	}
+	sub test {
+		eval {
+			require File::Temp;
+			require File::Basename;
+			require File::Spec;
+			1;
+		} or die "Could not load test modules";
+		subtest( 'Corresponding graphs in directory' => sub {
+			my $db = __PACKAGE__;
+
+			my $dir = File::Temp::tempdir( CLEANUP => 1 );
+			my @files = (
+				map { File::Spec->catfile( $dir, @$_ ) } (
+					[ 'example1.nt'              ],
+					[ 'example2.nt.bz2'          ],
+					[ 'example2.nt.graph'        ],
+					[ 'example3.nt.gz'           ],
+					[ 'global.graph'             ],
+					[ 'subdir', 'example4.nt.gz' ],
+					[ 'example5.nq.xz'           ],
+				)
+			);
+			for my $file (@files) {
+				my $file_dir = dirname($file);
+				mkdir $file_dir or die unless -d $file_dir;
+				open( my $fh, '>', $file );
+			}
+
+			my $path_to_graph = $db->map_path_to_graph_files_ld_dir_all( $dir );
+
+			is($path_to_graph, hash(sub {
+				field('example1.nt'           => 'global.graph'      );
+				field('example2.nt.bz2'       => 'example2.nt.graph' );
+				field('example3.nt.gz'        => 'global.graph'      );
+				field('subdir/example4.nt.gz' => 'global.graph'      );
+				field('example5.nq.xz'        => \ undef             );
+				end();
+			}), 'mapped from RDF paths to .graph files');
+		});
+
+		subtest( 'SQL generation' => sub {
+			my $db = __PACKAGE__;
+
+			like($db->load_single_file_sql( 'a/b.ttl' ), qr{
+					\Qld_dir('a', 'b.ttl', NULL)\E
+				}xs,
+				'Load a/b.ttl with NULL graph');
+
+			like($db->load_single_file_sql( 'a/b.ttl', 'http://example.org/' ), qr{
+					\Qld_dir('a', 'b.ttl', 'http://example.org/')\E
+				}xs,
+				'Load a/b.ttl with predefined graph');
+		});
+	}
+}
+
+package Bio_Bricks::File::HDT {
+	use strict;
+	use warnings;
+	use feature qw(signatures postderef);
+	no warnings qw(experimental::signatures experimental::postderef);
+
+	use File::Find;
+	use IPC::Cmd qw(can_run run);
+
+=head1 NAME
+
+Bio_Bricks::File::HDT
+
+=cut
+
+	our $HDT_EXT_QR       = qr/\.hdt$/;
+
+	our %COMPRESSION_TO_CMD = (
+		'gzip'  => [ qw(gzip --best)  ],
+		'bzip2' => [ qw(bzip2 --best) ],
+	);
+
+=head1 CLASS METHODS
+
+=head2 is_hdt_file
+
+Returns true if file is an C<.hdt> file by its extension.
+
+=cut
+	sub is_hdt_file($class, $file) {
+		return !! ( -f $file && $file =~ $HDT_EXT_QR );
+	}
+
+=head2 find_hdt_files
+
+Returns an C<ArrayRef> of all C<.hdt> files under path recursively.
+
+=cut
+	sub find_hdt_files($class, $path) {
+		my @files;
+		find( {
+				wanted => sub {
+					return unless $class->is_hdt_file($_);
+					push @files, $File::Find::name;
+				},
+				follow   => 1,
+				no_chdir => 1,
+			}, $path, );
+
+		\@files;
+	}
+
+	sub convert_to_ntriples($class, $input_file, $output_file, $compression = undef ) {
+		# NOTE Based on testing, `hdt2rdf` gives the same
+		# output N-Triple file across multiple runs, i.e. it is
+		# a pure command.
+		my @compression_cmd = exists $COMPRESSION_TO_CMD{$compression}
+			? $COMPRESSION_TO_CMD{$compression}->@*
+			: () ;
+		die "Unknown compression $compression" if $compression && !@compression_cmd;
+
+		for my $bin ( qw(hdt2rdf dd), ( @compression_cmd ? $compression_cmd[0] : () ) ) {
+			die "Unable to find executable $bin" unless can_run($bin);
+		}
+
+		my( $success, $error_message, $full_buf, $stdout_buf, $stderr_buf ) =
+			run( command => [
+				# to N-Triples on STDOUT
+				# Format flag:
+				# -f [ntriples, n3, turtle]
+				qw( hdt2rdf -f ntriples), $input_file, '-',
+
+				# compress if enabled
+				( @compression_cmd
+				? ( '|', @compression_cmd )
+				: ()
+				),
+
+				# pipe out to file
+				'|',
+				qw( dd ),  "of=$output_file"
+
+			], verbose => 0 );
+
+		die "Could not convert $input_file to $output_file: $full_buf" unless $success;
+	}
+
+	if( $ENV{HARNESS_ACTIVE} ) {
+		eval { Test2::V0->import; 1 } or die "Could not load Test2";
+	}
+	sub test {
+		eval {
+			require File::Temp;
+			require File::Basename;
+			require File::Spec;
+			1;
+		} or die "Could not load test modules";
+		subtest( 'Find HDT files' => sub {
+			my $hdt = __PACKAGE__;
+
+			my $dir = File::Temp::tempdir( CLEANUP => 1 );
+			my @files = (
+				map { File::Spec->catfile( $dir, @$_ ) } (
+					[ 'example1.hdt'           ],
+					[ 'example2.hdt.nt'        ],
+					[ 'example3.hdt.gz'        ],
+					[ 'example3.ttl'           ],
+					[ 'subdir', 'example4.hdt' ],
+				)
+			);
+			for my $file (@files) {
+				my $file_dir = File::Basename::dirname($file);
+				mkdir $file_dir or die unless -d $file_dir;
+				open( my $fh, '>', $file );
+			}
+
+			my @hdt_files = map { File::Spec->abs2rel($_, $dir) } $hdt->find_hdt_files( $dir )->@*;
+
+			is(\@hdt_files, bag(sub {
+				item('example1.hdt');
+				item('subdir/example4.hdt');
+				end();
+			}), 'found .hdt files');
+		});
+
+
+		subtest( 'Convert HDT to N-Triples' => sub {
+			my $hdt = __PACKAGE__;
+
+			my $dir = File::Temp::tempdir( CLEANUP => 1 );
+			my $ttl_file = File::Spec->catfile( $dir, 'test.ttl' );
+			my $hdt_file = File::Spec->catfile( $dir, 'test.hdt' );
+			my $nt_file  = File::Spec->catfile( $dir, 'test.nt' );
+			my $nt_bz2_file  = File::Spec->catfile( $dir, 'test.nt.bz2' );
+
+			open( my $ttl_fh, '>', $ttl_file );
+			print $ttl_fh <<~'EOF';
+			@base <http://example.org/> .
+			@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+			@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+			@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+			@prefix rel: <http://www.perceive.net/schemas/relationship/> .
+
+			<#green-goblin>
+				rel:enemyOf <#spiderman> ;
+				a foaf:Person ;
+				.
+			EOF
+			$ttl_fh->close;
+
+			0 == system( qw(rdf2hdt), $ttl_file, $hdt_file ) or die "Could not create .hdt file";
+
+			$hdt->convert_to_ntriples( $hdt_file, $nt_file );
+
+			$hdt->convert_to_ntriples( $hdt_file, $nt_bz2_file, 'bzip2' );
+
+			open my $cat_pipe, '-|', qw(cat), $nt_file;
+			my $nt_file_contents = do { local $/; <$cat_pipe> };
+
+			my $triple_string = q{<#green-goblin> <http://www.perceive.net/schemas/relationship/enemyOf> <#spiderman> .};
+			like($nt_file_contents, qr{
+				^ \Q$triple_string\E $
+			}xm, '.nt has triple');
+
+			open my $bzcat_pipe, '-|', qw(bzcat), $nt_bz2_file;
+			my $nt_bz2_file_contents = do { local $/; <$bzcat_pipe> };
+
+			is( $nt_file_contents, $nt_bz2_file_contents, 'uncompressed and compressed have same contents');
+		});
+	}
+}
+
+package Bio_Bricks::Process::VirtuosoLoader {
+
+	sub _log(@msg) {
+		say STDERR @msg;
+	}
+
+	sub main {
+		my $data_top_level = shift @ARGV;
+		# Directory layout for $data_top_level
+		#
+		# + brick0/
+		#     + data0.hdt
+		#     + data1.ttl
+		# + brick1/
+		#   + data0.hdt
+		#   + data1.ttl
+
+		my @files;
+		find( {
+				wanted => sub {
+					return unless Bio_Bricks::DB::Virtuoso->is_loadable_file($_)
+						|| Bio_Bricks::File::HDT->is_hdt_file($_);
+					return if /\Q.hdt.nt\E$/; # converted already
+					push @files, $File::Find::name;
+				},
+				follow   => 1,
+				no_chdir => 1,
+			}, $data_top_level, );
+
+		my @sql_ld_dirs;
+		for my $file (@files) {
+			_log "$file: Processing...";
+			if( Bio_Bricks::File::HDT->is_hdt_file($file) ) {
+				my $hdt_file = $file;
+				my $compression_type = 'bzip2';
+				my $suffix = '.nt.bz2'; # append .nt.bz2 to file
+				my $nt_file  = "${hdt_file}${suffix}";
+				if( ! -f $nt_file || -M $hdt_file < -M $nt_file ) {
+					_log "$file: Converting from $hdt_file to $nt_file";
+
+					my (undef, $nt_file_temp) = tempfile( OPEN => 0, DIR => dirname($file),
+						SUFFIX => '.tmp.hdt${suffix}' );
+					eval {
+						Bio_Bricks::File::HDT->convert_to_ntriples(
+							$hdt_file => $nt_file_temp,
+							$compression_type );
+						1;
+					} or do {
+						my $err = $@;
+						unlink $nt_file_temp;
+						die "Could not convert $hdt_file to $nt_file: $@";
+					};
+
+					move( $nt_file_temp, $nt_file );
+
+					copy( graph_file($hdt_file), graph_file($nt_file) );
+				} else {
+					_log "$file: Skipping conversion from $hdt_file to $nt_file: $nt_file exists and is newer than $hdt_file";
+				}
+
+				push @sql_ld_dirs, Bio_Bricks::Process::VirtuosoLoader->load_single_file_sql($nt_file);
+			} else {
+				# any other type of RDF file
+				push @sql_ld_dirs, Bio_Bricks::Process::VirtuosoLoader->load_single_file_sql($file);
+			}
+		}
+
+		say rdf_loader_sql( \@sql_ld_dirs );
+	}
+}
+
+sub test {
+	subtest('Bio_Bricks::DB::Virtuoso' => \&Bio_Bricks::DB::Virtuoso::test);
+	subtest('Bio_Bricks::File::HDT'    => \&Bio_Bricks::File::HDT::test);
+	done_testing();
+}
+
+if( $ENV{HARNESS_ACTIVE} ) {
+	test;
+	exit;
+}
+
+Bio_Bricks::Process::VirtuosoLoader::main unless caller();

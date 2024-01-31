@@ -56,6 +56,9 @@ help:
 docker-build:
 	docker buildx bake -f docker-bake.hcl
 
+docker-test:
+	docker buildx bake -f docker-bake.hcl --progress plain db-virtuoso-deploy-tester
+
 docker-compose%: export DB_PATH:=${DB_PATH}
 
 docker-compose-up: docker-build

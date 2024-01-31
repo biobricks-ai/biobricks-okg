@@ -16,6 +16,7 @@ variable "RUNTIME_BASE" {
   default = "docker-image://ubuntu:20.04"
 }
 
+# <https://github.com/openlink/vos-reference-docker>
 variable "VIRTUOSO_BASE" {
   default = "docker-image://openlink/virtuoso-opensource-7:latest"
 }
@@ -44,6 +45,7 @@ target "db-virtuoso-deploy-tester" {
   target     = "tester"
   contexts   = {
     db       = "target:db-virtuoso-deploy"
+    hdt-cpp  = "target:hdt-cpp"
   }
   args       = {
     CACHE_BUST = timestamp()
