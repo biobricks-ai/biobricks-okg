@@ -1,3 +1,17 @@
+.PHONY: plantuml-generate
+
+define MODEL_MESSAGE
+
+# Data Modeling
+
+## Generate
+
+  - plantuml-generate  : generated .puml files in puml/
+
+endef
+
+MESSAGE += $(MODEL_MESSAGE)
+
 SPARQL_UPDATE_FILES := $(wildcard model/*.ru)
 SPARQL_UPDATE_ARGS  := $(foreach I,$(SPARQL_UPDATE_FILES),--update $I)
 
@@ -8,3 +22,7 @@ stages/ice.rml.ttl: model/ice.rml.ttl    \
 			$(SPARQL_UPDATE_ARGS) \
 		| grep -v 'ERROR StatusConsoleListener'   \
 		> stages/ice.rml.ttl
+
+plantuml-generate: okg-ml.yaml
+	./vendor/biobricks-okg-tool/bin/okg.pl yaml plantuml --file okg-ml.yaml --output-dir puml
+	find puml -type f -name '*.puml' -exec plantuml {} \;

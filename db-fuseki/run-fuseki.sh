@@ -3,7 +3,7 @@
 export HDT_JAVA_PATH=$( perl -MAlien::hdt_java -e 'print Alien::hdt_java->dist_dir' );
 export JENA_FUSEKI_PATH=$( perl -MAlien::Jena::Fuseki -e 'print Alien::Jena::Fuseki->dist_dir' );
 export FUSEKI_HOME=$JENA_FUSEKI_PATH;
-export FUSEKI_BASE=$PWD/_jena-fuseki-run;
+export FUSEKI_BASE=$PWD/../_jena-fuseki-run;
 
 export JAVA_OPTIONS=${JENA_FUSEKI_JAVA_OPTIONS:-"-Xmx128G"}
 # -Xmx192G
