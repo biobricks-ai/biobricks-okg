@@ -12,3 +12,9 @@ stages/*.gen.ini
 /data-processed
 
 /_jena-fuseki-run/
+
+# N-Triples are only used for DB input
+*.nt
+*.nt.gz
+*.nt.bz2
+*.nt.xz
