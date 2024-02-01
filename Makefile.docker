@@ -1,6 +1,6 @@
-DB_PATH_DEFAULT := /mnt/ssd/biobricks/virtuoso-database
+DB_VIRTUOSO_PATH_DEFAULT := /mnt/ssd/biobricks/virtuoso-database
 
-DB_PATH := ${DB_PATH_DEFAULT}
+DB_VIRTUOSO_PATH := ${DB_VIRTUOSO_PATH_DEFAULT}
 
 .PHONY: \
 	docker-build                                   \
@@ -35,7 +35,7 @@ define DOCKER_MESSAGE
 
 # Variables
 
-  - DB_PATH  : directory for top-level of database storage (default: ${DB_PATH_DEFAULT})
+  - DB_VIRTUOSO_PATH  : directory for top-level of database storage (default: ${DB_VIRTUOSO_PATH_DEFAULT})
 
 endef
 
@@ -47,13 +47,13 @@ docker-build:
 docker-test:
 	docker buildx bake -f docker-bake.hcl --progress plain db-virtuoso-deploy-tester
 
-docker-compose%: export DB_PATH:=${DB_PATH}
+docker-compose%: export DB_VIRTUOSO_PATH:=${DB_VIRTUOSO_PATH}
 
 docker-compose-up: docker-build
-	[ -n "${DB_PATH}" ] || ( echo "Must set DB_PATH" && exit 1 )
-	[ -f "${DB_PATH}/database/virtuoso.ini" ] || $(ECHO) -n '' > "${ROOT_DIR}/db-virtuoso/initdb.d/11-load-datasets.output.sql"
-	$(MKDIR_P) "${DB_PATH}/database"
-	$(MKDIR_P) "${DB_PATH}/data"
+	[ -n "${DB_VIRTUOSO_PATH}" ] || ( echo "Must set DB_VIRTUOSO_PATH" && exit 1 )
+	[ -f "${DB_VIRTUOSO_PATH}/database/virtuoso.ini" ] || $(ECHO) -n '' > "${ROOT_DIR}/db-virtuoso/initdb.d/11-load-datasets.output.sql"
+	$(MKDIR_P) "${DB_VIRTUOSO_PATH}/database"
+	$(MKDIR_P) "${DB_VIRTUOSO_PATH}/data"
 	docker compose up -d
 
 docker-compose-down:

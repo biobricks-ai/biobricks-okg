@@ -1,13 +1,13 @@
 # Environment variables:
 #
-# DB_PATH  : directory for top-level of database storage
+# DB_VIRTUOSO_PATH  : directory for top-level of database storage
 version: "3.3"
 services:
   db-virtuoso:
     image: db-virtuoso-deploy
     volumes:
-      - $DB_PATH/database:/database
-      - $DB_PATH/data:/data
+      - $DB_VIRTUOSO_PATH/database:/database
+      - $DB_VIRTUOSO_PATH/data:/data
       - ./db-virtuoso/initdb.d:/opt/virtuoso-opensource/initdb.d
       - ./db-virtuoso/script:/script
     environment:
