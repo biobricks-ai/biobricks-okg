@@ -1,3 +1,6 @@
+# Requires (on Ubuntu):
+#  - apt:docker-compose-v2
+#  - apt:docker-buildx
 DB_VIRTUOSO_PATH_DEFAULT := /mnt/ssd/biobricks/virtuoso-database
 
 DB_VIRTUOSO_PATH := ${DB_VIRTUOSO_PATH_DEFAULT}
@@ -41,6 +44,14 @@ endef
 
 MESSAGE += $(DOCKER_MESSAGE)
 
+docker-graph-volumes.json: graphs.yaml
+	json_xs -f yaml < graphs.yaml  \
+		| jq 'map(.path)|.[]'  \
+		| sort \
+		| xargs ./bin/docker-rec-file-mapper /data \
+		| jq '{ services: { "db-virtuoso": { "volumes": . } } }' \
+		| sponge docker-graph-volumes.json
+
 docker-build:
 	docker buildx bake -f docker-bake.hcl
 
@@ -54,19 +65,40 @@ docker-compose-up: docker-build
 	[ -f "${DB_VIRTUOSO_PATH}/database/virtuoso.ini" ] || $(ECHO) -n '' > "${ROOT_DIR}/db-virtuoso/initdb.d/11-load-datasets.output.sql"
 	$(MKDIR_P) "${DB_VIRTUOSO_PATH}/database"
 	$(MKDIR_P) "${DB_VIRTUOSO_PATH}/data"
-	docker compose up -d
+	docker compose \
+		-f docker-compose.yml \
+		-f docker-graph-volumes.json \
+		up -d
 
 docker-compose-down:
-	docker compose down
+	docker compose \
+		-f docker-compose.yml \
+		-f docker-graph-volumes.json \
+		down
 
 docker-compose-logs:
-	docker compose logs -f
+	docker compose \
+		-f docker-compose.yml \
+		-f docker-graph-volumes.json \
+		logs -f
 
 docker-compose-exec-db-virtuoso:
-	docker compose exec db-virtuoso bash
+	docker compose \
+		-f docker-compose.yml \
+		-f docker-graph-volumes.json \
+		exec db-virtuoso bash
 
 docker-compose-exec-db-virtuoso-load-rdf-data:
-	docker compose exec db-virtuoso bash -c '/script/load-rdf-dir /data > /tmp/load-rdf-dir.sql; isql "exec=LOAD /tmp/load-rdf-dir.sql"'
+	docker compose \
+		-f docker-compose.yml \
+		-f docker-graph-volumes.json \
+		exec db-virtuoso bash -c '/script/load-rdf-dir /data > /tmp/load-rdf-dir.sql; isql "exec=LOAD /tmp/load-rdf-dir.sql"'
 
 docker-compose-exec-db-virtuoso-isql-load-list:
-	docker compose exec db-virtuoso isql 'exec=SELECT * FROM DB.DBA.load_list;'
+	docker compose \
+		-f docker-compose.yml \
+		-f docker-graph-volumes.json \
+		exec db-virtuoso isql 'exec=SELECT * FROM DB.DBA.load_list;'
+
+clean::
+	$(RM) docker-graph-volumes.json

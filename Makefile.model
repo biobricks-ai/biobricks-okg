@@ -1,3 +1,7 @@
+# Requires:
+#
+# - apt:plantuml
+# - Jena at $JENA_HOME/bin/jena
 .PHONY: plantuml-generate
 
 define MODEL_MESSAGE

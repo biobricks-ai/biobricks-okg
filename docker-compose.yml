@@ -10,6 +10,8 @@ services:
       - $DB_VIRTUOSO_PATH/data:/data
       - ./db-virtuoso/initdb.d:/opt/virtuoso-opensource/initdb.d
       - ./db-virtuoso/script:/script
+      - graphs.yaml:/data/graphs.yaml
+      - graph-meta:/data/graph-meta
     environment:
       - DBA_PASSWORD=dba
       # Add '/data' to `DirsAllowed` in `virtuoso.ini` file

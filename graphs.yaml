@@ -1,0 +1,12 @@
+- name: hgnc
+  path: data-source/internal-hgnc-kg
+- name: ice
+  path: brick/ice.hdt
+- name: mesh-kg
+  path: data-source/mesh-kg
+- name: tox21
+  path: data-source/internal-tox21-kg
+- name: toxcast
+  path: brick/toxcast.hdt
+- name: uniprot-kg
+  path: data-source/uniprot-kg

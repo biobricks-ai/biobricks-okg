@@ -1,0 +1,91 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use feature qw(signatures postderef);
+no warnings qw(experimental::signatures experimental::postderef);
+use File::Find;
+use File::Spec;
+use Cwd;
+use JSON::PP qw(encode_json);;
+
+sub expand_link($path) {
+	my @parts = File::Spec->splitdir($path);
+	my %links;
+
+	my $is_abs = File::Spec->file_name_is_absolute($path);
+	my $cwd = Cwd::cwd;
+	my $path_inter = $is_abs ? '' :$cwd;
+	while(defined ( my $next_part = shift @parts ) ) {
+		my $path_cat = File::Spec->catfile( $path_inter, $next_part );
+		if( -l $path_cat ) {
+			my $to = readlink $path_cat;
+			%links = ( %links,  expand_link($to)->%* );
+			# not taking into account .. in symlink for now
+			die "Not absolute" unless File::Spec->file_name_is_absolute( $to );
+			$links{$is_abs ? $path_cat : File::Spec->abs2rel($path_cat, $cwd) } = $to;
+			$path_inter = $to;
+		} else {
+			$path_inter = $path_cat;
+		}
+	}
+	\%links;
+}
+
+sub process_dir($dir) {
+	my %results = ( files => [], links => {} );
+	find(
+		{
+			wanted => sub {
+				push $results{files}->@*, $_ if -f;
+				if( -l ) {
+					$results{links}->%* = (
+						$results{links}->%*,
+						expand_link( $_ )->%*,
+					);
+				}
+			},
+			#follow   => 1,
+			no_chdir => 1,
+		},
+		$dir,
+	);
+
+	\%results;
+}
+
+sub main {
+	my $prefix = shift @ARGV;
+	my %mapping;
+	while ( my $dir = shift @ARGV) {
+		my $r = process_dir($dir);
+		for my $from (keys $r->{links}->%*) {
+			my $to = $r->{links}{$from};
+			$mapping{$from} = 1;
+			$mapping{$to} = 1;
+		}
+		for my $file ($r->{files}->@*) {
+			$mapping{$file} = 1;
+		}
+	}
+
+	my @volumes;
+	my $prev = undef;
+	for my $from (sort keys %mapping) {
+		next if defined $prev && $from =~ m,\A\Q$prev\E/,;
+		my $to = File::Spec->file_name_is_absolute( $from )
+			? $from
+			: File::Spec->catfile($prefix, $from);
+		push @volumes, {
+			type => 'bind',
+			source => $from,
+			target => $to,
+			bind   => { create_host_path => !!0 },
+		};
+		$prev = $from;
+	}
+	print encode_json(\@volumes);
+}
+
+main unless caller();
