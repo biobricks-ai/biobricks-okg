@@ -14,7 +14,7 @@ set -eu
 
 export DATASET="$1";
 
-json_xs -f yaml < okg-ml.yaml  | jq '[ .datasets[$ENV.DATASET].inputs | to_entries| .[] | {
+cpanel_json_xs -f yaml < okg-ml.yaml  | jq '[ .datasets[$ENV.DATASET].inputs | to_entries| .[] | {
 	(.key): 
 		[
 			.value.elements| .[] | to_entries | .[] |
@@ -45,4 +45,4 @@ json_xs -f yaml < okg-ml.yaml  | jq '[ .datasets[$ENV.DATASET].inputs | to_entri
 		) | @csv' \
 	| vd -f csv
 
- #| json_xs -t yaml
+ #| cpanel_json_xs -t yaml

@@ -45,7 +45,7 @@ endef
 MESSAGE += $(DOCKER_MESSAGE)
 
 docker-graph-volumes.json: graphs.yaml
-	json_xs -f yaml < graphs.yaml  \
+	cpanel_json_xs -f yaml < graphs.yaml  \
 		| jq 'map(.path)|.[]'  \
 		| sort \
 		| xargs ./bin/docker-rec-file-mapper /data \
