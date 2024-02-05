@@ -3,10 +3,9 @@
 #   - db-virtuoso/script/
 ARG APT_PKGS_RUN=" \
 libserd-0-0 zlib1g \
-perl-modules       \
+perl               \
 "
 ARG APT_PKGS_TEST=" \
-perl                \
 libtest2-suite-perl \
 "
 

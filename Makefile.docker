@@ -86,10 +86,15 @@ docker-compose-exec-db-virtuoso: $(DOCKER_COMPOSE_CONFIG_FILES)
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		exec db-virtuoso bash
 
-docker-compose-exec-db-virtuoso-load-rdf-data: $(DOCKER_COMPOSE_CONFIG_FILES)
+docker-compose-exec-db-virtuoso-load-rdf-data-noninteractive: $(DOCKER_COMPOSE_CONFIG_FILES)
 	docker compose \
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		exec db-virtuoso bash -c '/script/load-rdf-dir /data > /tmp/load-rdf-dir.sql; isql "exec=LOAD /tmp/load-rdf-dir.sql"'
+
+docker-compose-exec-db-virtuoso-load-rdf-data: $(DOCKER_COMPOSE_CONFIG_FILES)
+	docker compose \
+		$(DOCKER_COMPOSE_CONFIG_ARGS) \
+		exec --tty --interactive db-virtuoso bash -ic '/script/load-rdf-dir /data'
 
 docker-compose-exec-db-virtuoso-isql-load-list: $(DOCKER_COMPOSE_CONFIG_FILES)
 	docker compose \

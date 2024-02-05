@@ -7,12 +7,7 @@ use warnings;
 use feature qw(say signatures postderef);
 no warnings qw(experimental::signatures experimental::postderef);
 
-# Only using core modules inside of Docker
-use File::Find;
-use File::Basename qw(basename dirname);
-use File::Copy qw(copy move);
-use File::Temp qw(tempfile);
-use IPC::Cmd qw(can_run); # can_run like File::Which, but core
+# NOTE Only using core modules inside of Docker.
 
 if( $ENV{HARNESS_ACTIVE} ) {
 	eval { require Test2::V0; Test2::V0->import; 1 } or die "Could not load Test2";
@@ -59,10 +54,12 @@ package Bio_Bricks::DB::Virtuoso {
 	use feature qw(signatures);
 	no warnings qw(experimental::signatures);
 
+	# CORE MODULES ONLY
 	use File::Basename qw(basename dirname);
 	use File::Find;
 	use File::Spec;
-	use IPC::Cmd qw(can_run);
+	use IPC::Cmd qw(can_run); # can_run like File::Which, but core
+	use File::Temp qw(tempfile);
 
 =head1 NAME
 
@@ -249,12 +246,12 @@ and values are:
 	}
 
 	sub run_sql($class, $sql) {
+		$class->can_run_isql;
+
 		my ($fh, $sql_filename) = tempfile( SUFFIX => '.sql' );
 
 		print $fh $sql;
 		$fh->close;
-
-		$class->can_run_isql;
 
 		system( qw(isql), "exec=LOAD $sql_filename" ) == 0 or die "Could not run $sql_filename: $sql";
 	}
@@ -339,6 +336,7 @@ package Bio_Bricks::File::HDT {
 	use feature qw(signatures postderef);
 	no warnings qw(experimental::signatures experimental::postderef);
 
+	# CORE MODULES ONLY
 	use File::Find;
 	use IPC::Cmd qw(can_run run);
 
@@ -506,33 +504,54 @@ Returns an C<ArrayRef> of all C<.hdt> files under path recursively.
 }
 
 package Bio_Bricks::Process::VirtuosoLoader {
+	use strict;
+	use warnings;
+	use feature qw(say signatures postderef);
+	no warnings qw(experimental::signatures experimental::postderef);
+
+	# CORE MODULES ONLY
+	use File::Find;
+	use File::Basename qw(basename dirname);
+	use File::Temp qw(tempfile);
+	use File::Copy qw(copy move);
+	use CPAN::Meta::YAML;
 
 	sub _log(@msg) {
 		say STDERR @msg;
 	}
 
-	sub main {
-		my $data_top_level = shift @ARGV;
-		# Directory layout for $data_top_level
-		#
-		# + brick0/
-		#     + data0.hdt
-		#     + data1.ttl
-		# + brick1/
-		#   + data0.hdt
-		#   + data1.ttl
-
+	sub load_spec($self, $spec) {
 		my @files;
+		my $name = $spec->{name} // die "Missing 'name' key in spec";
+		die "Missing 'path' key in spec for $name" unless exists $spec->{path};
+		my $spec_path = File::Spec->catfile( $self->{dir}, $spec->{path} );
+		die "Path $spec_path does not exist" unless -e $spec_path;
+		my $spec_graph_iri = do {
+			my $spec_graph_file = File::Spec->catfile(
+				$self->{dir},
+				'graph-meta',
+				"${name}.graph"
+			);
+
+			die "Graph file $spec_graph_file for $name is not readable"
+				unless -r $spec_graph_file;
+
+			open my $graph_file_fh, '<', $spec_graph_file;
+			chomp( my $graph_iri = do { local $/; <$graph_file_fh> } );
+
+			$graph_iri;
+		};
 		find( {
 				wanted => sub {
 					return unless Bio_Bricks::DB::Virtuoso->is_loadable_file($_)
 						|| Bio_Bricks::File::HDT->is_hdt_file($_);
-					return if /\Q.hdt.nt\E$/; # converted already
+
+					return if /\Q.hdt.nt\E(?:\.(?:gz|bz2|xz))?$/; # converted already
 					push @files, $File::Find::name;
 				},
 				follow   => 1,
 				no_chdir => 1,
-			}, $data_top_level, );
+			}, $spec_path, );
 
 		my @sql_ld_dirs;
 		for my $file (@files) {
@@ -545,8 +564,8 @@ package Bio_Bricks::Process::VirtuosoLoader {
 				if( ! -f $nt_file || -M $hdt_file < -M $nt_file ) {
 					_log "$file: Converting from $hdt_file to $nt_file";
 
-					my (undef, $nt_file_temp) = tempfile( OPEN => 0, DIR => dirname($file),
-						SUFFIX => '.tmp.hdt${suffix}' );
+					my (undef, $nt_file_temp) = tempfile( OPEN => 0, DIR => $self->{tmpdir},
+						SUFFIX => ".tmp.hdt${suffix}" );
 					eval {
 						Bio_Bricks::File::HDT->convert_to_ntriples(
 							$hdt_file => $nt_file_temp,
@@ -559,20 +578,65 @@ package Bio_Bricks::Process::VirtuosoLoader {
 					};
 
 					move( $nt_file_temp, $nt_file );
-
-					copy( graph_file($hdt_file), graph_file($nt_file) );
 				} else {
 					_log "$file: Skipping conversion from $hdt_file to $nt_file: $nt_file exists and is newer than $hdt_file";
 				}
 
-				push @sql_ld_dirs, Bio_Bricks::Process::VirtuosoLoader->load_single_file_sql($nt_file);
+				push @sql_ld_dirs, Bio_Bricks::DB::Virtuoso->load_single_file_sql($nt_file, $spec_graph_iri);
 			} else {
 				# any other type of RDF file
-				push @sql_ld_dirs, Bio_Bricks::Process::VirtuosoLoader->load_single_file_sql($file);
+				push @sql_ld_dirs, Bio_Bricks::DB::Virtuoso->load_single_file_sql($file, $spec_graph_iri);
 			}
 		}
 
-		say rdf_loader_sql( \@sql_ld_dirs );
+		my $sql = Bio_Bricks::DB::Virtuoso->rdf_loader_sql( \@sql_ld_dirs );
+		## no critic: InputOutput::ProhibitInteractiveTest
+		#if( -t ) {
+		#        say $sql;
+		#} else {
+			say STDERR $sql;
+			Bio_Bricks::DB::Virtuoso->run_sql( $sql );
+		#}
+	}
+
+	sub load_all($self) {
+		for my $spec ($self->{graphs}->@*) {
+			$self->load_spec($spec);
+		}
+	}
+
+	sub new($class, %args) {
+		my $self = {};
+		$self->{dir} = delete $args{dir} // die "Missing 'dir' parameter";
+
+		my $tmpdir = File::Spec->catfile( $self->{dir}, "_tmp" );
+		if( ! -e $tmpdir ) {
+			mkdir $tmpdir or die "Could not create $tmpdir: $!";
+		} else {
+			die "Path $tmpdir already exists and is not a directory" unless -d $tmpdir;
+		}
+		$self->{tmpdir} = $tmpdir;
+
+		$self->{graphs} = do {
+			open my $graphs_yml_fh, '<', File::Spec->catfile($self->{dir}, 'graphs.yaml')
+				or die "Could not open graphs.yaml: $!";
+
+			my $graphs_yml = do { local $/; <$graphs_yml_fh> };
+			my $graphs_data = CPAN::Meta::YAML->read_string($graphs_yml)
+				  or die CPAN::Meta::YAML->errstr;
+
+			$graphs_data->[0];
+		};
+
+		return bless $self, $class;
+	}
+
+	sub main {
+		my $data_toplevel_dir = shift @ARGV;
+
+		my $loader = __PACKAGE__->new( dir => $data_toplevel_dir );
+
+		$loader->load_all;
 	}
 }
 
