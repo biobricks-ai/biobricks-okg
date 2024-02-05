@@ -8,7 +8,7 @@ no warnings qw(experimental::signatures experimental::postderef);
 use File::Find;
 use File::Spec;
 use Cwd;
-use JSON::PP qw(encode_json);;
+use JSON::PP qw(encode_json);
 
 sub expand_link($path) {
 	my @parts = File::Spec->splitdir($path);
@@ -81,7 +81,7 @@ sub main {
 			type => 'bind',
 			source => $from,
 			target => $to,
-			bind   => { create_host_path => !!0 },
+			bind   => { create_host_path => \0 },
 		};
 		$prev = $from;
 	}
