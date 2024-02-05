@@ -22,7 +22,7 @@ WHERE {
       ?cas a                   CHEMINF:000446.    # CAS RN
     }
   }
-  BIND( URI(STRBEFORE(STR(?g), '?file=')) AS ?g_prefix )
+  BIND( COALESCE( URI(STRBEFORE(STR(?g), '?file=')), ?g ) AS ?g_prefix )
 }
 ORDER BY ?dsstox
 LIMIT 200000

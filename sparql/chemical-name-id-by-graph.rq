@@ -18,7 +18,7 @@ WHERE {
     SELECT ?g ?g_prefix
     WHERE {
       GRAPH ?g { }
-      BIND( URI(STRBEFORE(STR(?g), '?file=')) AS ?g_prefix )
+      BIND( COALESCE( URI(STRBEFORE(STR(?g), '?file=')), ?g ) AS ?g_prefix )
       FILTER( ! STRSTARTS(STR(?g), 'https://www.uniprot.org/'))
     }
   }
