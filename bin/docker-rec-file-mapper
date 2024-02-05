@@ -33,17 +33,31 @@ sub expand_link($path) {
 	\%links;
 }
 
+my %seen;
 sub process_dir($dir) {
 	my %results = ( files => [], links => {} );
+	return \%results if $seen{$dir};
+	$seen{$dir} = 1;
 	find(
 		{
 			wanted => sub {
 				push $results{files}->@*, $_ if -f;
 				if( -l ) {
+					my $expanded_links = expand_link( $_ );
 					$results{links}->%* = (
 						$results{links}->%*,
-						expand_link( $_ )->%*,
+						$expanded_links->%*,
 					);
+
+					for my $sub (sort values $expanded_links->%*) {
+						my $sub_results = process_dir($sub);
+						push $results{files}->@*, $sub_results->{files}->@*;
+						$results{links}->%* = (
+							$results{links}->%*,
+							$sub_results->{links}->%*,
+						);
+					}
+
 				}
 			},
 			#follow   => 1,
