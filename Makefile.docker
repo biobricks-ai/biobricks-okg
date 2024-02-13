@@ -1,12 +1,11 @@
 # Requires (on Ubuntu):
 #  - apt:docker-compose-v2
 #  - apt:docker-buildx
-DB_VIRTUOSO_PATH_DEFAULT := /mnt/ssd/biobricks/virtuoso-database
 
-DB_VIRTUOSO_PATH := ${DB_VIRTUOSO_PATH_DEFAULT}
 
 .PHONY: \
 	docker-build                                   \
+	docker-guard-DB_VIRTUOSO_PATH                  \
 	docker-compose-up docker-compose-down          \
 	docker-compose-logs                            \
 	docker-compose-exec-db-virtuoso                \
@@ -40,7 +39,9 @@ define DOCKER_MESSAGE
 
 # Variables
 
-  - DB_VIRTUOSO_PATH  : directory for top-level of database storage (default: ${DB_VIRTUOSO_PATH_DEFAULT})
+  - DB_VIRTUOSO_PATH  : directory for top-level of database storage (required for docker targets)
+
+    (set to: ${DB_VIRTUOSO_PATH})
 
 endef
 
@@ -60,9 +61,12 @@ docker-build:
 docker-test:
 	docker buildx bake -f docker-bake.hcl --progress plain db-virtuoso-deploy-tester
 
-docker-compose%: export DB_VIRTUOSO_PATH:=${DB_VIRTUOSO_PATH}
+docker-guard-DB_VIRTUOSO_PATH:
+ifeq (${DB_VIRTUOSO_PATH},)
+	$(error Environment variable DB_VIRTUOSO_PATH is not set)
+endif
 
-docker-compose-up: docker-build $(DOCKER_COMPOSE_CONFIG_FILES)
+docker-compose-up: docker-guard-DB_VIRTUOSO_PATH docker-build $(DOCKER_COMPOSE_CONFIG_FILES)
 	[ -n "${DB_VIRTUOSO_PATH}" ] || ( echo "Must set DB_VIRTUOSO_PATH" && exit 1 )
 	[ -f "${DB_VIRTUOSO_PATH}/database/virtuoso.ini" ] || $(ECHO) -n '' > "${ROOT_DIR}/db-virtuoso/initdb.d/11-load-datasets.output.sql"
 	$(MKDIR_P) "${DB_VIRTUOSO_PATH}/database"
@@ -71,32 +75,32 @@ docker-compose-up: docker-build $(DOCKER_COMPOSE_CONFIG_FILES)
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		up -d
 
-docker-compose-down: $(DOCKER_COMPOSE_CONFIG_FILES)
+docker-compose-down: docker-guard-DB_VIRTUOSO_PATH $(DOCKER_COMPOSE_CONFIG_FILES)
 	docker compose \
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		down
 
-docker-compose-logs: $(DOCKER_COMPOSE_CONFIG_FILES)
+docker-compose-logs: docker-guard-DB_VIRTUOSO_PATH $(DOCKER_COMPOSE_CONFIG_FILES)
 	docker compose \
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		logs -f
 
-docker-compose-exec-db-virtuoso: $(DOCKER_COMPOSE_CONFIG_FILES)
+docker-compose-exec-db-virtuoso: docker-guard-DB_VIRTUOSO_PATH $(DOCKER_COMPOSE_CONFIG_FILES)
 	docker compose \
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		exec db-virtuoso bash
 
-docker-compose-exec-db-virtuoso-load-rdf-data-noninteractive: $(DOCKER_COMPOSE_CONFIG_FILES)
+docker-compose-exec-db-virtuoso-load-rdf-data-noninteractive: docker-guard-DB_VIRTUOSO_PATH $(DOCKER_COMPOSE_CONFIG_FILES)
 	docker compose \
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		exec db-virtuoso bash -c '/script/load-rdf-dir /data > /tmp/load-rdf-dir.sql; isql "exec=LOAD /tmp/load-rdf-dir.sql"'
 
-docker-compose-exec-db-virtuoso-load-rdf-data: $(DOCKER_COMPOSE_CONFIG_FILES)
+docker-compose-exec-db-virtuoso-load-rdf-data: docker-guard-DB_VIRTUOSO_PATH $(DOCKER_COMPOSE_CONFIG_FILES)
 	docker compose \
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		exec --tty --interactive db-virtuoso bash -ic '/script/load-rdf-dir /data'
 
-docker-compose-exec-db-virtuoso-isql-load-list: $(DOCKER_COMPOSE_CONFIG_FILES)
+docker-compose-exec-db-virtuoso-isql-load-list: docker-guard-DB_VIRTUOSO_PATH $(DOCKER_COMPOSE_CONFIG_FILES)
 	docker compose \
 		$(DOCKER_COMPOSE_CONFIG_ARGS) \
 		exec db-virtuoso isql 'exec=SELECT * FROM DB.DBA.load_list;'
