@@ -2,6 +2,7 @@
 #  - apt:docker-compose-v2
 #  - apt:docker-buildx
 
+export COMPOSE_PROJECT_NAME=biobricks-okg
 
 .PHONY: \
 	docker-build                                   \
