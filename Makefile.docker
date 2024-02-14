@@ -4,9 +4,12 @@
 
 export COMPOSE_PROJECT_NAME=biobricks-okg
 
+# NOTE Always make `docker-graph-volumes.json` as this can vary due to symlinks
+# outside of the repository.
 .PHONY: \
 	docker-build                                   \
 	docker-guard-DB_VIRTUOSO_PATH                  \
+	docker-graph-volumes.json                      \
 	docker-compose-up docker-compose-down          \
 	docker-compose-logs                            \
 	docker-compose-exec-db-virtuoso                \
