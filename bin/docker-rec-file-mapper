@@ -23,7 +23,7 @@ sub expand_link($path) {
 			my $to = readlink $path_cat;
 			%links = ( %links,  expand_link($to)->%* );
 			# not taking into account .. in symlink for now
-			die "Not absolute" unless File::Spec->file_name_is_absolute( $to );
+			die "Not absolute: symlink from $path_cat to $to" unless File::Spec->file_name_is_absolute( $to );
 			$links{$is_abs ? $path_cat : File::Spec->abs2rel($path_cat, $cwd) } = $to;
 			$path_inter = $to;
 		} else {
