@@ -516,6 +516,9 @@ package Bio_Bricks::Process::VirtuosoLoader {
 	use File::Copy qw(copy move);
 	use CPAN::Meta::YAML;
 
+	# Non-core
+	use Parallel::ForkManager;
+
 	sub _log(@msg) {
 		say STDERR @msg;
 	}
@@ -554,13 +557,42 @@ package Bio_Bricks::Process::VirtuosoLoader {
 			}, $spec_path, );
 
 		my @sql_ld_dirs;
+		# This is Docker. It has nproc.
+		chomp(my $ncpus = `nproc`);
+		my $pm = Parallel::ForkManager->new($ncpus);
+		$pm->run_on_start( sub {
+			my ($pid, $ident)=@_;
+			print "** $ident started, pid: $pid\n";
+		});
+		$pm->run_on_finish( sub {
+			my ($pid, $exit_code, $ident,
+				$exit_signal, $core_dump, $data_structure_reference) = @_;
+
+			die "** $ident failed ".
+				"with PID $pid and exit code: $exit_code"
+				if $exit_code;
+
+			if( defined $data_structure_reference ) {
+				if( ! exists $data_structure_reference->{converted}
+					|| $data_structure_reference->{converted} ) {
+					push @sql_ld_dirs,
+						Bio_Bricks::DB::Virtuoso->load_single_file_sql(
+							$data_structure_reference->{file},
+							$spec_graph_iri);
+				}
+			}
+		});
+		DATA_LOOP:
 		for my $file (@files) {
 			_log "$file: Processing...";
+			my $pid = $pm->start("process($file)") and next DATA_LOOP;
 			if( Bio_Bricks::File::HDT->is_hdt_file($file) ) {
 				my $hdt_file = $file;
 				my $compression_type = 'bzip2';
 				my $suffix = '.nt.bz2'; # append .nt.bz2 to file
 				my $nt_file  = "${hdt_file}${suffix}";
+
+				my $ran_conversion = 0;
 				if( ! -f $nt_file || -M $hdt_file < -M $nt_file ) {
 					_log "$file: Converting from $hdt_file to $nt_file";
 
@@ -578,16 +610,25 @@ package Bio_Bricks::Process::VirtuosoLoader {
 					};
 
 					move( $nt_file_temp, $nt_file );
+					$ran_conversion = 1;
 				} else {
 					_log "$file: Skipping conversion from $hdt_file to $nt_file: $nt_file exists and is newer than $hdt_file";
 				}
 
-				push @sql_ld_dirs, Bio_Bricks::DB::Virtuoso->load_single_file_sql($nt_file, $spec_graph_iri);
+				$pm->finish(0, {
+					file => $nt_file ,
+					hdt_file => $hdt_file,
+					converted => !! $ran_conversion,
+				} );
 			} else {
 				# any other type of RDF file
-				push @sql_ld_dirs, Bio_Bricks::DB::Virtuoso->load_single_file_sql($file, $spec_graph_iri);
+				$pm->finish(0, {
+					file => $file,
+				} );
 			}
+
 		}
+		$pm->wait_all_children;
 
 		my $sql = Bio_Bricks::DB::Virtuoso->rdf_loader_sql( \@sql_ld_dirs );
 		## no critic: InputOutput::ProhibitInteractiveTest

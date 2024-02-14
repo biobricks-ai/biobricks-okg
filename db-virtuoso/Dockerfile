@@ -1,9 +1,10 @@
 # Deps from
 #   - hdt-cpp/Dockerfile
 #   - db-virtuoso/script/
-ARG APT_PKGS_RUN=" \
-libserd-0-0 zlib1g \
-perl               \
+ARG APT_PKGS_RUN="            \
+libserd-0-0 zlib1g            \
+perl                          \
+libparallel-forkmanager-perl  \
 "
 ARG APT_PKGS_TEST=" \
 libtest2-suite-perl \
