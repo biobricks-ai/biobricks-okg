@@ -11568,7 +11568,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12500,7 +12502,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12592,7 +12596,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12960,7 +12966,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -13052,7 +13060,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -13664,7 +13674,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -14686,7 +14698,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -15918,7 +15932,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -16010,7 +16026,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -16102,7 +16120,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - MechanisticTarget:
               _mapper_alts:
                 Class:
@@ -16202,7 +16222,7 @@ datasets:
                 - Assay
               mapper:
                 ValueLabel:
-                  class: Assay
+                  class: Assay_InvitroDB
           - Curve Flag Description:
               _mapper_alts:
                 Class:
@@ -16308,7 +16328,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - MechanisticTarget:
               _mapper_alts:
                 Class:
@@ -16508,7 +16530,7 @@ datasets:
                 - Assay
               mapper:
                 ValueLabel:
-                  class: Assay
+                  class: Assay_InvitroDB
           - Assay Source:
               _mapper_alts:
                 Class:
@@ -16580,7 +16602,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
