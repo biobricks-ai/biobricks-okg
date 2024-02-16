@@ -1,6 +1,7 @@
 # Environment variables:
 #
-# DB_VIRTUOSO_PATH  : directory for top-level of database storage
+# DB_VIRTUOSO_PATH       : directory for top-level of database storage
+# DB_VIRTUOSO_HTTP_PORT  : port for HTTP access
 version: "3.3"
 services:
   db-virtuoso:
@@ -18,4 +19,4 @@ services:
       - 'VIRT_Parameters_DirsAllowed=., ../vad, /usr/share/proj, /data'
     ports:
       - "1111:1111"
-      - "8890:8890"
+      - "${DB_VIRTUOSO_HTTP_PORT:-8890}:8890"
