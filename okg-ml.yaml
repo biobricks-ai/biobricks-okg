@@ -16545,7 +16545,9 @@ datasets:
                   class: ~
               columns:
                 - Assay Source
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssaySource_InvitroDB
           - Species:
               _mapper_alts:
                 Class:
@@ -16555,7 +16557,9 @@ datasets:
                   class: ~
               columns:
                 - Species
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssaySpecies_InvitroDB
           - Tissue:
               _mapper_alts:
                 Class:
@@ -16565,7 +16569,9 @@ datasets:
                   class: ~
               columns:
                 - Tissue
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssayTissue_InvitroDB
           - Invitro Assay Format:
               _mapper_alts:
                 Class:
@@ -16575,7 +16581,9 @@ datasets:
                   class: ~
               columns:
                 - Invitro Assay Format
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssayInvitroAssayFormat_InvitroDB
           - Gene:
               _mapper_alts:
                 Class:
@@ -16595,7 +16603,9 @@ datasets:
                   class: ~
               columns:
                 - Entrez Gene ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: NCBIGene
       data-source/ice/cHTSMT_cHTSMT.parquet:
         elements:
           - AssayEndpointName:
@@ -18372,6 +18382,13 @@ mappings:
       iceprop:mayInformOn                   "(ICE_MOA)"                     ; # Mode of Action
       iceprop:throughMechanisticTarget      "(ICE_MT)"                      ; # Mechanistic Target
       iceprop:throughMechanisticTarget_NCIm <(MechanisticTarget_NCIm_Term)> .
+
+    <(Assay_InvitroDB)>
+      iceprop:assay_source               "(AssaySource_InvitroDB)"            ;
+      iceprop:assay_species              "(AssaySpecies_InvitroDB)"           ;
+      iceprop:assay_tissue               "(AssayTissue_InvitroDB)"            ;
+      iceprop:assay_invitro_assay_format "(AssayInvitroAssayFormat_InvitroDB)";
+      iceprop:assay_entrez_gene_id       <(NCBIGene)>                         .
 prefixes:
   BAO:
     uri: http://www.bioassayontology.org/bao#BAO_
@@ -18415,3 +18432,7 @@ values:
   Response_Unit: ~
   Route: ~
   MechanisticTarget_NCIm_Term_label: ~
+  AssaySource_InvitroDB: ~
+  AssaySpecies_InvitroDB: ~
+  AssayTissue_InvitroDB: ~
+  AssayInvitroAssayFormat_InvitroDB: ~
