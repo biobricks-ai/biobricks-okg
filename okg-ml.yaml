@@ -18467,6 +18467,7 @@ mappings:
       ncim:C1708327                         <(MechanisticTarget_NCIm_Term)> . # (Has_Target)
 
     <(Assay_InvitroDB)>
+      # NOTE: The MOA / MT is for a particular ToxicityEndpoint.
       iceprop:mayInformOn                   "(ICE_MOA)"                     ; # Mode of Action
       iceprop:throughMechanisticTarget      "(ICE_MT)"                      ; # Mechanistic Target
       iceprop:throughMechanisticTarget_NCIm <(MechanisticTarget_NCIm_Term)> .
