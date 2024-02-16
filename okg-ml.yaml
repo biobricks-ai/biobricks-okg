@@ -33,6 +33,21 @@ classes:
     types:
       - CHEMINF:000568
     uri: 'https://comptox.epa.gov/dashboard/chemical/details/{value}'
+  Assay_InvitroDB:
+    note: same as Assay class
+    description: |
+      bioassay found in InvitroDB.
+
+      Identifier is underscore word (/\w+/) not an integer ID (aeid in ToxCast).
+    types:
+      - BAO:0000015
+    uri: 'https://comptox.epa.gov/dashboard/assay-endpoints/{value}'
+  MechanisticTarget_NCIm_Term:
+    description: |
+      Type BAO:0003064 is a 'target'
+    types:
+      - BAO:0003064
+    uri: 'https://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?dictionary=NCI%20Metathesaurus&code={value}'
 datasets:
   bindingdb:
     inputs:
@@ -18282,6 +18297,8 @@ mappings:
   - >-
     <(Assay)>
       BAO:0000209 <(Measure_Group)>. # (has measure group)
+    <(Assay_InvitroDB)>
+      BAO:0000209 <(Measure_Group)>. # (has measure group)
 
     <(Measure_Group)>
       OBI:0000299 <(Endpoint)>        ; # (has specified output)
@@ -18317,6 +18334,14 @@ mappings:
     BAO:0000015    a puml:Inline; skos:prefLabel "bioassay".
     CHEMINF:000446 a puml:Inline; skos:prefLabel "CAS registry number".
     CHEMINF:000568 a puml:Inline; skos:prefLabel "DSSTOX substance identifier".
+  - >-
+    <(Assay_InvitroDB)>
+      ncim:C1708327                         <(MechanisticTarget_NCIm_Term)> . # (Has_Target)
+
+    <(Assay_InvitroDB)>
+      iceprop:mayInformOn                   "(ICE_MOA)"                     ; # Mode of Action
+      iceprop:throughMechanisticTarget      "(ICE_MT)"                      ; # Mechanistic Target
+      iceprop:throughMechanisticTarget_NCIm <(MechanisticTarget_NCIm_Term)> .
 prefixes:
   BAO:
     uri: http://www.bioassayontology.org/bao#BAO_
@@ -18344,9 +18369,17 @@ prefixes:
     uri: http://www.w3.org/2004/02/skos/core#
   puml:
     uri: http://plantuml.com/ontology#
+  ncim:
+    uri: 'https://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?dictionary=NCI%20Metathesaurus&code='
+  iceprop:
+    description: |
+      Ad hoc.
+    uri: https://ice.ntp.niehs.nih.gov/property/
+
 values:
   Chemical_Name: ~
   Critical_Effect: ~
   Response: ~
   Response_Unit: ~
   Route: ~
+  MechanisticTarget_NCIm_Term_label: ~
