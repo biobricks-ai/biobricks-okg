@@ -48,7 +48,7 @@ classes:
     types:
       - BAO:0003064
       - EDAM:data_1181 # UMLS concept ID
-    uri: 'https://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?dictionary=NCI%20Metathesaurus&code={value}'
+    prefix: ncim
   NCBIGene:
     types:
       - EDAM:data_1027 # NCBI Gene ID
@@ -18506,7 +18506,7 @@ prefixes:
   puml:
     uri: http://plantuml.com/ontology#
   ncim:
-    uri: 'https://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?dictionary=NCI%20Metathesaurus&code='
+    uri: 'https://identifiers.org/umls:'
   iceprop:
     description: |
       Ad hoc.
