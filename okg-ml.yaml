@@ -47,6 +47,7 @@ classes:
       Type BAO:0003064 is a 'target'
     types:
       - BAO:0003064
+      - EDAM:data_1181 # UMLS concept ID
     uri: 'https://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?dictionary=NCI%20Metathesaurus&code={value}'
 datasets:
   bindingdb:
