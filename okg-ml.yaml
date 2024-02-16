@@ -49,6 +49,10 @@ classes:
       - BAO:0003064
       - EDAM:data_1181 # UMLS concept ID
     uri: 'https://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?dictionary=NCI%20Metathesaurus&code={value}'
+  NCBIGene:
+    types:
+      - EDAM:data_1027 # NCBI Gene ID
+    prefix: ncbigene
 datasets:
   bindingdb:
     inputs:
@@ -18401,6 +18405,8 @@ prefixes:
     description: |
       Ad hoc.
     uri: https://ice.ntp.niehs.nih.gov/property/
+  ncbigene:
+    uri: https://www.ncbi.nlm.nih.gov/gene/
 
 values:
   Chemical_Name: ~
