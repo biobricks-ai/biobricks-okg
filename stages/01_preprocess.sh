@@ -14,4 +14,4 @@ mkdir -p $processpath
 echo "Processed path: $processpath"
 
 mkdir -p "$processpath"/ice
-duckdb -batch < stages/process.sql
+duckdb -batch < stages/process.ice.sql
