@@ -1,55 +1,69 @@
-@prefix :        <http://base/> .
-@prefix BAO:     <http://www.bioassayontology.org/bao#BAO_> .
-@prefix CAS:     <http://identifiers.org/cas/> .
+@base <http://base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <> .
+@prefix BAO: <http://www.bioassayontology.org/bao#BAO_> .
+@prefix CAS: <http://identifiers.org/cas/> .
 @prefix CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_> .
-@prefix EDAM:    <http://edamontology.org/> .
-@prefix ExO:     <http://purl.obolibrary.org/obo/ExO_> .
-@prefix OBI:     <http://purl.obolibrary.org/obo/OBI_> .
-@prefix RO:      <http://purl.obolibrary.org/obo/RO_> .
-@prefix SIO:     <http://semanticscience.org/resource/SIO_> .
-@prefix dce:     <http://purl.org/dc/elements/1.1/> .
+@prefix EDAM: <http://edamontology.org/> .
+@prefix ExO: <http://purl.obolibrary.org/obo/ExO_> .
+@prefix OBI: <http://purl.obolibrary.org/obo/OBI_> .
+@prefix RO: <http://purl.obolibrary.org/obo/RO_> .
+@prefix SIO: <http://semanticscience.org/resource/SIO_> .
+@prefix dce: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix fnml:    <http://semweb.mmlab.be/ns/fnml#> .
-@prefix fno:     <https://w3id.org/function/ontology#> .
-@prefix grel:    <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
-@prefix puml:    <http://plantuml.com/ontology#> .
-@prefix ql:      <http://semweb.mmlab.be/ns/ql#> .
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rml:     <http://semweb.mmlab.be/ns/rml#> .
-@prefix rr:      <http://www.w3.org/ns/r2rml#> .
-@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
-@prefix xsd:     <http://www.w3.org/2001/XMLSchema> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno: <https://w3id.org/function/ontology#> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix puml: <http://plantuml.com/ontology#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema> .
 
-:ls_toxcast_data-source_toxcast_invitrodb.parquet
-        rdf:type                  rml:LogicalSource;
-        dce:source                "toxcast";
-        dce:title                 "data-source/toxcast/invitrodb.parquet";
-        rml:referenceFormulation  ql:CSV;
-        rml:source                "data-source/toxcast/invitrodb.parquet" .
+<ls_toxcast_data-source_toxcast_invitrodb.parquet>
+    dce:source "toxcast" ;
+    dce:title "data-source/toxcast/invitrodb.parquet" ;
+    rml:referenceFormulation ql:CSV ;
+    rml:source "data-source/toxcast/invitrodb.parquet" ;
+    a rml:LogicalSource .
 
-[ rdf:type               rr:TriplesMap;
-  rml:logicalSource      :ls_toxcast_data-source_toxcast_invitrodb.parquet;
-  rr:predicateObjectMap  [ rr:objectMap  [ rml:reference  "chnm" ];
-                           rr:predicate  rdfs:label
-                         ];
-  rr:predicateObjectMap  [ rr:objectMap  [ rr:constant  "CompTox" ];
-                           rr:predicate  dce:source
-                         ];
-  rr:subjectMap          [ rr:class     CHEMINF:000568;
-                           rr:template  "https://comptox.epa.gov/dashboard/chemical/details/{dsstox_substance_id}"
-                         ]
-] .
+[]
+    rml:logicalSource <ls_toxcast_data-source_toxcast_invitrodb.parquet> ;
+    a rr:TriplesMap ;
+    rr:predicateObjectMap [
+        rr:objectMap [
+            rr:constant "CompTox"
+        ] ;
+        rr:predicate dce:source
+    ], [
+        rr:objectMap [
+            rml:reference "chnm"
+        ] ;
+        rr:predicate rdfs:label
+    ] ;
+    rr:subjectMap [
+        rr:class <http://purl.obolibrary.org/obo/CHEMINF_000568> ;
+        rr:template "https://comptox.epa.gov/dashboard/chemical/details/{dsstox_substance_id}"
+    ] .
 
-[ rdf:type               rr:TriplesMap;
-  rml:logicalSource      :ls_toxcast_data-source_toxcast_invitrodb.parquet;
-  rr:predicateObjectMap  [ rr:objectMap  [ rml:reference  "chnm" ];
-                           rr:predicate  rdfs:label
-                         ];
-  rr:predicateObjectMap  [ rr:objectMap  [ rr:constant  "CAS" ];
-                           rr:predicate  dce:source
-                         ];
-  rr:subjectMap          [ rr:class     CHEMINF:000446;
-                           rr:template  "http://identifiers.org/cas/{casn}"
-                         ]
-] .
+[]
+    rml:logicalSource <ls_toxcast_data-source_toxcast_invitrodb.parquet> ;
+    a rr:TriplesMap ;
+    rr:predicateObjectMap [
+        rr:objectMap [
+            rml:reference "chnm"
+        ] ;
+        rr:predicate rdfs:label
+    ], [
+        rr:objectMap [
+            rr:constant "CAS"
+        ] ;
+        rr:predicate dce:source
+    ] ;
+    rr:subjectMap [
+        rr:class <http://purl.obolibrary.org/obo/CHEMINF_000446> ;
+        rr:template "http://identifiers.org/cas/{casn}"
+    ] .
+
