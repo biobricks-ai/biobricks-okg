@@ -18424,9 +18424,6 @@ mappings:
   - >-
     <(Assay)>
       BAO:0000209 <(Measure_Group)>. # (has measure group)
-    <(Assay_InvitroDB)>
-      BAO:0000209 <(Measure_Group)>; # (has measure group)
-      dce:source  "InvitroDB"      .
 
     <(Measure_Group)>
       OBI:0000299 <(Endpoint)>        ; # (has specified output)
@@ -18464,6 +18461,12 @@ mappings:
     CHEMINF:000568 a puml:Inline; skos:prefLabel "DSSTOX substance identifier".
   - >-
     <(Assay_InvitroDB)>
+      puml:up-tri    <(Assay)>  .
+    <(Assay_InvitroDB)>
+      BAO:0000209 <(Measure_Group)>; # (has measure group)
+      dce:source  "InvitroDB"      .
+
+    <(Assay_InvitroDB)>
       ncim:C1708327                         <(MechanisticTarget_NCIm_Term)> . # (Has_Target)
 
     <(Assay_InvitroDB)>
@@ -18478,6 +18481,8 @@ mappings:
       iceprop:assay_tissue               "(AssayTissue_InvitroDB)"            ;
       iceprop:assay_invitro_assay_format "(AssayInvitroAssayFormat_InvitroDB)";
       iceprop:assay_entrez_gene_id       <(NCBIGene)>                         .
+
+    BAO:0000209    a puml:Inline; skos:prefLabel "has measure group".
 prefixes:
   BAO:
     uri: http://www.bioassayontology.org/bao#BAO_
