@@ -33,25 +33,6 @@
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "chnm"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{dsstox_substance_id}"
-	] .
-
-[]
-	rml:logicalSource </ls_toxcast_data-source_toxcast_invitrodb.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
 			rml:reference "chnm"
 		] ;
 		rr:predicate rdfs:label
@@ -64,5 +45,24 @@
 	rr:subjectMap [
 		rr:class CHEMINF:000446 ;
 		rr:template "http://identifiers.org/cas/{casn}"
+	] .
+
+[]
+	rml:logicalSource </ls_toxcast_data-source_toxcast_invitrodb.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "chnm"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{dsstox_substance_id}"
 	] .
 

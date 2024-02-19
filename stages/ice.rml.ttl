@@ -134,154 +134,6 @@
 	a rml:LogicalSource .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-		] ;
-		rr:predicate BAO:0000209
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/DART_Data.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Endpoint"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rml:reference "Response"
-		] ;
-		rr:predicate <http://semanticscience.org/resource/SIO_has-value>
-	] , [
-		rr:objectMap [
-			rml:reference "Response Unit"
-		] ;
-		rr:predicate <http://semanticscience.org/resource/SIO_has-unit>
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000179 ;
-		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-		] ;
-		rr:predicate BAO:0000209
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://identifiers.org/cas/{CASRN}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Measure_Group"
-		] ;
-		rr:predicate RO:0000056
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000000 ;
-		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-		] ;
-		rr:predicate BAO:0000209
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
 	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
@@ -298,125 +150,6 @@
 	rr:subjectMap [
 		rr:class BAO:0000015 ;
 		rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://identifiers.org/cas/{CASRN}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-		] ;
-		rr:predicate RO:0000056
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000000 ;
-		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Skin_Irritation_Skin_Irritation-Corrosion.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/Skin_Irritation_Skin_Irritation-Corrosion.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Eye_Irritation_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Skin_Irritation_Skin_Irritation-Corrosion.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
 	] .
 
 []
@@ -449,391 +182,6 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Acute_Oral_Toxicity_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Acute_Dermal_Toxicity_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/Acute_Dermal_Toxicity_Data.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "ChemicalName"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Exposure_Predictions_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Endpoint"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rml:reference "Response"
-		] ;
-		rr:predicate <http://semanticscience.org/resource/SIO_has-value>
-	] , [
-		rr:objectMap [
-			rml:reference "Response Unit"
-		] ;
-		rr:predicate <http://semanticscience.org/resource/SIO_has-unit>
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000179 ;
-		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Acute_Inhalation_Toxicity_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Cancer_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical.Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Acute_Dermal_Toxicity_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/cHTS2022_invitrodb34_20220302.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Skin_Sensitization_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CAS"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000446 ;
-		rr:template "http://identifiers.org/cas/{CASRN}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Route"
-		] ;
-		rr:predicate ExO:0000055
-	] , [
-		rr:objectMap [
-			rml:reference "Response"
-		] ;
-		rr:predicate <http://semanticscience.org/resource/SIO_has-value>
-	] , [
-		rr:objectMap [
-			rml:reference "Response Unit"
-		] ;
-		rr:predicate <http://semanticscience.org/resource/SIO_has-unit>
-	] , [
-		rr:objectMap [
-			rml:reference "Endpoint"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000179 ;
-		rr:template "http://example.com/ice/DART_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Exposure_Predictions_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Skin_Irritation_Skin_Irritation-Corrosion.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Acute_Oral_Toxicity_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Acute_Inhalation_Toxicity_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Cancer_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical.Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
 	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
@@ -858,7 +206,97 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_Eye_Irritation_Data.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+		] ;
+		rr:predicate RO:0000057
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
+		] ;
+		rr:predicate OBI:0000299
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000040 ;
+		rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Acute_Dermal_Toxicity_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/Acute_Dermal_Toxicity_Data.parquet/assay/{Assay}/Assay"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Acute_Dermal_Toxicity_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Acute_Dermal_Toxicity_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
@@ -891,26 +329,26 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_Acute_Inhalation_Toxicity_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
-			rr:constant "CompTox"
+			rr:constant "CAS"
 		] ;
 		rr:predicate dce:source
 	] , [
 		rr:objectMap [
-			rml:reference "ChemicalName"
+			rml:reference "Chemical Name"
 		] ;
 		rr:predicate rdfs:label
 	] ;
 	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_Skin_Sensitization_Data.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_Acute_Inhalation_Toxicity_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
@@ -926,77 +364,6 @@
 	rr:subjectMap [
 		rr:class CHEMINF:000568 ;
 		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Acute_Dermal_Toxicity_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:constant "CompTox"
-		] ;
-		rr:predicate dce:source
-	] , [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000568 ;
-		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet/assay/{Assay}/Assay"
 	] .
 
 []
@@ -1014,6 +381,44 @@
 	] .
 
 []
+	rml:logicalSource </ls_ice_data-source_ice_Acute_Oral_Toxicity_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Acute_Oral_Toxicity_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
 	rml:logicalSource </ls_ice_data-source_ice_Cancer_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
@@ -1028,45 +433,433 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_Skin_Sensitization_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/Skin_Sensitization_Data.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Eye_Irritation_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Assay"
-		] ;
-		rr:predicate rdfs:label
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/Eye_Irritation_Data.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Skin_Irritation_Formulations.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_Cancer_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
 			rr:constant "CAS"
 		] ;
 		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical.Name"
+		] ;
+		rr:predicate rdfs:label
 	] ;
 	rr:subjectMap [
 		rr:class CHEMINF:000446 ;
 		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Cancer_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical.Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://identifiers.org/cas/{CASRN}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Measure_Group"
+		] ;
+		rr:predicate RO:0000056
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000000 ;
+		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Endpoint"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rml:reference "Response"
+		] ;
+		rr:predicate <http://semanticscience.org/resource/SIO_has-value>
+	] , [
+		rr:objectMap [
+			rml:reference "Response Unit"
+		] ;
+		rr:predicate <http://semanticscience.org/resource/SIO_has-unit>
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000179 ;
+		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+		] ;
+		rr:predicate RO:0000057
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
+		] ;
+		rr:predicate OBI:0000299
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000040 ;
+		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Measure_Group"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate BAO:0000209
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/DART_Data.parquet/assay/{Assay}/Assay"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate RO:0000056
+	] , [
+		rr:objectMap [
+			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://identifiers.org/cas/{CASRN}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000000 ;
+		rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Route"
+		] ;
+		rr:predicate ExO:0000055
+	] , [
+		rr:objectMap [
+			rml:reference "Response"
+		] ;
+		rr:predicate <http://semanticscience.org/resource/SIO_has-value>
+	] , [
+		rr:objectMap [
+			rml:reference "Response Unit"
+		] ;
+		rr:predicate <http://semanticscience.org/resource/SIO_has-unit>
+	] , [
+		rr:objectMap [
+			rml:reference "Endpoint"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000179 ;
+		rr:template "http://example.com/ice/DART_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+		] ;
+		rr:predicate RO:0000057
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/DART_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
+		] ;
+		rr:predicate OBI:0000299
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000040 ;
+		rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate BAO:0000209
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/assay/{Assay}/Assay"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://identifiers.org/cas/{CASRN}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate RO:0000056
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000000 ;
+		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Endpoint"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rml:reference "Response"
+		] ;
+		rr:predicate <http://semanticscience.org/resource/SIO_has-value>
+	] , [
+		rr:objectMap [
+			rml:reference "Response Unit"
+		] ;
+		rr:predicate <http://semanticscience.org/resource/SIO_has-unit>
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000179 ;
+		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+		] ;
+		rr:predicate RO:0000057
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
+		] ;
+		rr:predicate OBI:0000299
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000040 ;
+		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate BAO:0000209
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/assay/{Assay}/Assay"
 	] .
 
 []
@@ -1103,6 +896,63 @@
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+		] ;
+		rr:predicate RO:0000057
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
+		] ;
+		rr:predicate OBI:0000299
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000040 ;
+		rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
 			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
 		] ;
 		rr:predicate RO:0000056
@@ -1128,126 +978,276 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_Exposure_Predictions_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+			rr:constant "CAS"
 		] ;
-		rr:predicate RO:0000057
+		rr:predicate dce:source
 	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
-		] ;
-		rr:predicate OBI:0000299
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000040 ;
-		rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
-		] ;
-		rr:predicate RO:0000057
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
-		] ;
-		rr:predicate OBI:0000299
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000040 ;
-		rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
-		] ;
-		rr:predicate RO:0000057
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/DART_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
-		] ;
-		rr:predicate OBI:0000299
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000040 ;
-		rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
-		] ;
-		rr:predicate RO:0000057
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
-		] ;
-		rr:predicate OBI:0000299
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000040 ;
-		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Measure_Group"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
-		] ;
-		rr:predicate RO:0000057
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/record_id/{Record ID}/dtxsid/{DTXSID}/endpoint/{Endpoint}/Endpoint"
-		] ;
-		rr:predicate OBI:0000299
-	] ;
-	rr:subjectMap [
-		rr:class BAO:0000040 ;
-		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_DART_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
 		rr:objectMap [
 			rml:reference "Chemical Name"
 		] ;
 		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-		] ;
-		rr:predicate RO:0000056
-	] , [
-		rr:objectMap [
-			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://identifiers.org/cas/{CASRN}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
 	] ;
 	rr:subjectMap [
-		rr:class CHEMINF:000000 ;
-		rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Exposure_Predictions_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Eye_Irritation_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/Eye_Irritation_Data.parquet/assay/{Assay}/Assay"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Eye_Irritation_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Eye_Irritation_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Skin_Irritation_Formulations.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Skin_Irritation_Skin_Irritation-Corrosion.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/Skin_Irritation_Skin_Irritation-Corrosion.parquet/assay/{Assay}/Assay"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Skin_Irritation_Skin_Irritation-Corrosion.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Skin_Irritation_Skin_Irritation-Corrosion.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Skin_Sensitization_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/Skin_Sensitization_Data.parquet/assay/{Assay}/Assay"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Skin_Sensitization_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Skin_Sensitization_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/cHTS2022_invitrodb34_20220302.parquet/assay/{Assay}/Assay"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "ChemicalName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CASRN}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CompTox"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "ChemicalName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000568 ;
+		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "http://example.com/ice/cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet/assay/{Assay}/Assay"
 	] .
 
