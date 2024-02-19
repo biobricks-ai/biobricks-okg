@@ -34,11 +34,22 @@ classes:
       - CHEMINF:000568
     uri: 'https://comptox.epa.gov/dashboard/chemical/details/{value}'
   Assay_InvitroDB:
-    note: same as Assay class
     description: |
       bioassay found in InvitroDB.
 
       Identifier is underscore word (/\w+/) not an integer ID (aeid in ToxCast).
+    types:
+      - BAO:0000015
+    uri: 'https://comptox.epa.gov/dashboard/assay-endpoints/{value}'
+  Assay_InvitroDB_ice:
+    description: |
+      bioassay found in InvitroDB curated for ICE.
+    types:
+      - BAO:0000015
+    uri: 'https://comptox.epa.gov/dashboard/assay-endpoints/{value}'
+  Assay_InvitroDB_toxcast:
+    description: |
+      bioassay found in InvitroDB from ToxCast
     types:
       - BAO:0000015
     uri: 'https://comptox.epa.gov/dashboard/assay-endpoints/{value}'
@@ -11575,7 +11586,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12517,7 +12528,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12619,7 +12630,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12997,7 +13008,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -13099,7 +13110,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -13721,7 +13732,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -14753,7 +14764,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -15995,7 +16006,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -16097,7 +16108,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -16199,7 +16210,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - MechanisticTarget:
               _mapper_alts:
                 Class:
@@ -16305,7 +16316,7 @@ datasets:
                 - Assay
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Curve Flag Description:
               _mapper_alts:
                 Class:
@@ -16413,7 +16424,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - MechanisticTarget:
               _mapper_alts:
                 Class:
@@ -16615,7 +16626,7 @@ datasets:
                 - Assay
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay Source:
               _mapper_alts:
                 Class:
@@ -16699,7 +16710,7 @@ datasets:
                 - AssayEndpointName
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_ice
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -17731,7 +17742,7 @@ datasets:
                 - aenm
               mapper:
                 ValueLabel:
-                  class: Assay_InvitroDB
+                  class: Assay_InvitroDB_toxcast
           - m5id:
               _mapper_alts:
                 Class:
@@ -18464,20 +18475,32 @@ mappings:
   - >-
     <(Assay_InvitroDB)>
       puml:up-tri    <(Assay)>  .
-    <(Assay_InvitroDB)>
-      BAO:0000209 <(Measure_Group)>; # (has measure group)
-      dce:source  "InvitroDB"      .
+    <(Assay_InvitroDB_ice)>
+      puml:up-tri    <(Assay_InvitroDB)>  .
+    <(Assay_InvitroDB_toxcast)>
+      puml:up-tri    <(Assay_InvitroDB)>  .
 
     <(Assay_InvitroDB)>
+      dce:source  "InvitroDB"      .
+    <(Assay_InvitroDB_toxcast)>
+      BAO:0000209 <(Measure_Group)>; # (has measure group)
+      dce:source  "InvitroDB"      ;
+      dce:source  "ToxCast"        .
+    <(Assay_InvitroDB_ice)>
+      BAO:0000209 <(Measure_Group)>; # (has measure group)
+      dce:source  "InvitroDB"      ;
+      dce:source  "ICE"            .
+
+    <(Assay_InvitroDB_ice)>
       ncim:C1708327                         <(MechanisticTarget_NCIm_Term)> . # (Has_Target)
 
-    <(Assay_InvitroDB)>
+    <(Assay_InvitroDB_ice)>
       # NOTE: The MOA / MT is for a particular ToxicityEndpoint.
       iceprop:mayInformOn                   "(ICE_MOA)"                     ; # Mode of Action
       iceprop:throughMechanisticTarget      "(ICE_MT)"                      ; # Mechanistic Target
       iceprop:throughMechanisticTarget_NCIm <(MechanisticTarget_NCIm_Term)> .
 
-    <(Assay_InvitroDB)>
+    <(Assay_InvitroDB_ice)>
       iceprop:assay_source               "(AssaySource_InvitroDB)"            ;
       iceprop:assay_species              "(AssaySpecies_InvitroDB)"           ;
       iceprop:assay_tissue               "(AssayTissue_InvitroDB)"            ;
