@@ -17729,7 +17729,9 @@ datasets:
                   class: ~
               columns:
                 - aenm
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - m5id:
               _mapper_alts:
                 Class:
