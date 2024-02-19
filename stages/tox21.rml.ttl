@@ -1,6 +1,4 @@
-@base <http://base/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix : <> .
+@prefix : <http://base/> .
 @prefix BAO: <http://www.bioassayontology.org/bao#BAO_> .
 @prefix CAS: <http://identifiers.org/cas/> .
 @prefix CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_> .
@@ -16,37 +14,38 @@
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
 @prefix puml: <http://plantuml.com/ontology#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rml: <http://semweb.mmlab.be/ns/rml#> .
 @prefix rr: <http://www.w3.org/ns/r2rml#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema> .
 
-<ls_tox21_data-source_tox21_tox21.parquet>
-    dce:source "tox21" ;
-    dce:title "data-source/tox21/tox21.parquet" ;
-    rml:referenceFormulation ql:CSV ;
-    rml:source "data-source/tox21/tox21.parquet" ;
-    a rml:LogicalSource .
+</ls_tox21_data-source_tox21_tox21.parquet>
+	dce:source "tox21" ;
+	dce:title "data-source/tox21/tox21.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/tox21/tox21.parquet" ;
+	a rml:LogicalSource .
 
-<ls_tox21_data-source_tox21_tox21lib.parquet>
-    dce:source "tox21" ;
-    dce:title "data-source/tox21/tox21lib.parquet" ;
-    rml:referenceFormulation ql:CSV ;
-    rml:source "data-source/tox21/tox21lib.parquet" ;
-    a rml:LogicalSource .
+</ls_tox21_data-source_tox21_tox21lib.parquet>
+	dce:source "tox21" ;
+	dce:title "data-source/tox21/tox21lib.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/tox21/tox21lib.parquet" ;
+	a rml:LogicalSource .
 
 []
-    rml:logicalSource <ls_tox21_data-source_tox21_tox21lib.parquet> ;
-    a rr:TriplesMap ;
-    rr:predicateObjectMap [
-        rr:objectMap [
-            rr:constant "CAS"
-        ] ;
-        rr:predicate dce:source
-    ] ;
-    rr:subjectMap [
-        rr:class <http://purl.obolibrary.org/obo/CHEMINF_000446> ;
-        rr:template "http://identifiers.org/cas/{CAS}"
-    ] .
+	rml:logicalSource </ls_tox21_data-source_tox21_tox21lib.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CAS}"
+	] .
 
