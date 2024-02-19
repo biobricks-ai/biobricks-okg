@@ -31,4 +31,28 @@ EOF
 
 		print $ttl;
 	' \
+	| perl -0777 -e '
+		my $ttl = <>;
+		my @para = split /\.\n\n+/, $ttl;
+
+		my @prefixes = ( grep { m/
+						\A
+						(?= \@prefix \x{20}  )
+						/xms } @para );
+		my @others   = ( grep { m/
+						\A
+						(?! \@prefix \x{20}  )
+						(?! \Q[]\E $)
+						/xms  } @para );
+		my @bnodes   = ( sort grep { m/
+						\A
+						\Q[]\E $
+						/xms } @para );
+		print join ".\n\n", (
+			@prefixes,
+			@others,
+			@bnodes,
+			( @others + @bnodes ? "" : () ),
+		);
+	' \
 	| sponge "$INPUT"
