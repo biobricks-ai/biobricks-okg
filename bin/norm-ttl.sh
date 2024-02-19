@@ -16,5 +16,19 @@ puts g_canon.dump(:nquads) # Normalized, but not sorted
 EOF
 )" \
 		"$INPUT" | sort ) \
-	| rapper -i turtle -I "$BASE" -o turtle - \
+	| sordi -i turtle -o turtle - "$BASE" \
+	| perl -0777 -e '
+		my $ttl = <>;
+		my @head_bnodes = $ttl =~ /^(_:\S+)$/msg;
+		$bnode_counter{$_} += $ttl =~ /(^|\b)@{[ quotemeta($_) ]}(\b|$)/msg for @head_bnodes;
+		while(my ($bnode, $count) = each %bnode_counter) {
+			unless($count == 1) {
+				warn "$bnode is not a singleton";
+				next;
+			}
+			$ttl =~ s/^@{[ quotemeta($bnode) ]}$/[]/mg;
+		}
+
+		print $ttl;
+	' \
 	| sponge "$INPUT"
