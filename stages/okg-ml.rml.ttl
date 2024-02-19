@@ -12,6 +12,9 @@
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno: <https://w3id.org/function/ontology#> .
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix iceprop: <https://ice.ntp.niehs.nih.gov/property/> .
+@prefix ncbigene: <https://www.ncbi.nlm.nih.gov/gene/> .
+@prefix ncim: <https://identifiers.org/umls:> .
 @prefix puml: <http://plantuml.com/ontology#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -26,6 +29,13 @@
 	dce:title "data-source/ice/ADME_Parameters_Data.parquet" ;
 	rml:referenceFormulation ql:CSV ;
 	rml:source "data-source/ice/ADME_Parameters_Data.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_AcuteToxMOA_AcuteLethalityMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/AcuteToxMOA_AcuteLethalityMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/AcuteToxMOA_AcuteLethalityMOA.parquet" ;
 	a rml:LogicalSource .
 
 </ls_ice_data-source_ice_Acute_Dermal_Toxicity_Data.parquet>
@@ -49,6 +59,20 @@
 	rml:source "data-source/ice/Acute_Oral_Toxicity_Data.parquet" ;
 	a rml:LogicalSource .
 
+</ls_ice_data-source_ice_AndrogenMOA_AndrogenMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/AndrogenMOA_AndrogenMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/AndrogenMOA_AndrogenMOA.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_CancerMOA_CancerMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/CancerMOA_CancerMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/CancerMOA_CancerMOA.parquet" ;
+	a rml:LogicalSource .
+
 </ls_ice_data-source_ice_Cancer_Data.parquet>
 	dce:source "ice" ;
 	dce:title "data-source/ice/Cancer_Data.parquet" ;
@@ -56,11 +80,32 @@
 	rml:source "data-source/ice/Cancer_Data.parquet" ;
 	a rml:LogicalSource .
 
+</ls_ice_data-source_ice_CardioToxMOA_CardioToxTMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/CardioToxMOA_CardioToxTMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/CardioToxMOA_CardioToxTMOA.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_CardioToxTMOA_CardioToxTMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/CardioToxTMOA_CardioToxTMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/CardioToxTMOA_CardioToxTMOA.parquet" ;
+	a rml:LogicalSource .
+
 </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet>
 	dce:source "ice" ;
 	dce:title "data-source/ice/Chemical_Functional_Use_Categories_Data.parquet" ;
 	rml:referenceFormulation ql:CSV ;
 	rml:source "data-source/ice/Chemical_Functional_Use_Categories_Data.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_DARTMOA_DARTMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/DARTMOA_DARTMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/DARTMOA_DARTMOA.parquet" ;
 	a rml:LogicalSource .
 
 </ls_ice_data-source_ice_DART_Data.parquet>
@@ -82,6 +127,13 @@
 	dce:title "data-source/ice/Endocrine_In_Vivo_Endocrine.parquet" ;
 	rml:referenceFormulation ql:CSV ;
 	rml:source "data-source/ice/Endocrine_In_Vivo_Endocrine.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_EstrogenMOA_EstrogenMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/EstrogenMOA_EstrogenMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/EstrogenMOA_EstrogenMOA.parquet" ;
 	a rml:LogicalSource .
 
 </ls_ice_data-source_ice_Exposure_Predictions_Data.parquet>
@@ -119,6 +171,27 @@
 	rml:source "data-source/ice/Skin_Sensitization_Data.parquet" ;
 	a rml:LogicalSource .
 
+</ls_ice_data-source_ice_SteroidMOA_SteroidMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/SteroidMOA_SteroidMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/SteroidMOA_SteroidMOA.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_ThyroidMOA_ThyroidMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/ThyroidMOA_ThyroidMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/ThyroidMOA_ThyroidMOA.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_Tox21MT_Tox21MT.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/Tox21MT_Tox21MT.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/Tox21MT_Tox21MT.parquet" ;
+	a rml:LogicalSource .
+
 </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet>
 	dce:source "ice" ;
 	dce:title "data-source/ice/cHTS2022_invitrodb34_20220302.parquet" ;
@@ -126,11 +199,32 @@
 	rml:source "data-source/ice/cHTS2022_invitrodb34_20220302.parquet" ;
 	a rml:LogicalSource .
 
+</ls_ice_data-source_ice_cHTSMOA_Tox21MT.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/cHTSMOA_Tox21MT.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/cHTSMOA_Tox21MT.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_cHTSMT_ALL_AllMTMOA.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/cHTSMT_ALL_AllMTMOA.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/cHTSMT_ALL_AllMTMOA.parquet" ;
+	a rml:LogicalSource .
+
 </ls_ice_data-source_ice_cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet>
 	dce:source "ice" ;
 	dce:title "data-source/ice/cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet" ;
 	rml:referenceFormulation ql:CSV ;
 	rml:source "data-source/ice/cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet" ;
+	a rml:LogicalSource .
+
+</ls_ice_data-source_ice_cHTSMT_cHTSMT.parquet>
+	dce:source "ice" ;
+	dce:title "data-source/ice/cHTSMT_cHTSMT.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/ice/cHTSMT_cHTSMT.parquet" ;
 	a rml:LogicalSource .
 
 </ls_tox21_data-source_tox21_tox21.parquet>
@@ -171,35 +265,6 @@
 	rr:subjectMap [
 		rr:class BAO:0000015 ;
 		rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://identifiers.org/cas/{CASRN}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-		] ;
-		rr:predicate RO:0000056
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000000 ;
-		rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
 	] .
 
 []
@@ -281,6 +346,83 @@
 	rr:subjectMap [
 		rr:class BAO:0000040 ;
 		rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_ADME_Parameters_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate RO:0000056
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://identifiers.org/cas/{CASRN}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000000 ;
+		rr:template "http://example.com/ice/ADME_Parameters_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_AcuteToxMOA_AcuteLethalityMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_AcuteToxMOA_AcuteLethalityMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
 	] .
 
 []
@@ -440,6 +582,102 @@
 	] .
 
 []
+	rml:logicalSource </ls_ice_data-source_ice_AndrogenMOA_AndrogenMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_AndrogenMOA_AndrogenMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_CancerMOA_CancerMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_CancerMOA_CancerMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+	] .
+
+[]
 	rml:logicalSource </ls_ice_data-source_ice_Cancer_Data.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
@@ -492,32 +730,99 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_CardioToxMOA_CardioToxTMOA.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
-			rml:reference "Chemical Name"
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
 		] ;
 		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://identifiers.org/cas/{CASRN}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Measure_Group"
-		] ;
-		rr:predicate RO:0000056
 	] ;
 	rr:subjectMap [
-		rr:class CHEMINF:000000 ;
-		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_CardioToxMOA_CardioToxTMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_CardioToxTMOA_CardioToxTMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_CardioToxTMOA_CardioToxTMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
 	] .
 
 []
@@ -599,6 +904,83 @@
 	rr:subjectMap [
 		rr:class BAO:0000040 ;
 		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Measure_Group"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Chemical_Functional_Use_Categories_Data.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Measure_Group"
+		] ;
+		rr:predicate RO:0000056
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://identifiers.org/cas/{CASRN}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000000 ;
+		rr:template "http://example.com/ice/Chemical_Functional_Use_Categories_Data.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_DARTMOA_DARTMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_DARTMOA_DARTMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
 	] .
 
 []
@@ -711,6 +1093,11 @@
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
+			rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate RO:0000056
+	] , [
+		rr:objectMap [
 			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
 		] ;
 		rr:predicate <http://edamontology.org/has_identifier>
@@ -724,11 +1111,6 @@
 			rml:reference "Chemical Name"
 		] ;
 		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/DART_Data.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-		] ;
-		rr:predicate RO:0000056
 	] ;
 	rr:subjectMap [
 		rr:class CHEMINF:000000 ;
@@ -752,35 +1134,6 @@
 	rr:subjectMap [
 		rr:class BAO:0000015 ;
 		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/assay/{Assay}/Assay"
-	] .
-
-[]
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
-	a rr:TriplesMap ;
-	rr:predicateObjectMap [
-		rr:objectMap [
-			rml:reference "Chemical Name"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
-			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://identifiers.org/cas/{CASRN}"
-		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
-	] , [
-		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
-		] ;
-		rr:predicate RO:0000056
-	] ;
-	rr:subjectMap [
-		rr:class CHEMINF:000000 ;
-		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
 	] .
 
 []
@@ -865,6 +1218,35 @@
 	] .
 
 []
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vitro_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate RO:0000056
+	] , [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://identifiers.org/cas/{CASRN}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000000 ;
+		rr:template "http://example.com/ice/Endocrine_In_Vitro_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+	] .
+
+[]
 	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
@@ -881,6 +1263,35 @@
 	rr:subjectMap [
 		rr:class BAO:0000015 ;
 		rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/assay/{Assay}/Assay"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Chemical Name"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+		] ;
+		rr:predicate RO:0000056
+	] , [
+		rr:objectMap [
+			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] , [
+		rr:objectMap [
+			rr:template "http://identifiers.org/cas/{CASRN}"
+		] ;
+		rr:predicate <http://edamontology.org/has_identifier>
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000000 ;
+		rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
 	] .
 
 []
@@ -970,32 +1381,51 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_Endocrine_In_Vivo_Endocrine.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_EstrogenMOA_EstrogenMOA.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
-			rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/assay/{Assay}/Measure_Group"
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
 		] ;
-		rr:predicate RO:0000056
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
 	] , [
 		rr:objectMap [
-			rr:template "https://comptox.epa.gov/dashboard/chemical/details/{DTXSID}"
+			rr:constant "InvitroDB"
 		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
+		rr:predicate dce:source
 	] , [
 		rr:objectMap [
-			rr:template "http://identifiers.org/cas/{CASRN}"
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
 		] ;
-		rr:predicate <http://edamontology.org/has_identifier>
+		rr:predicate ncim:C1708327
 	] , [
 		rr:objectMap [
-			rml:reference "Chemical Name"
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
 		] ;
 		rr:predicate rdfs:label
 	] ;
 	rr:subjectMap [
-		rr:class CHEMINF:000000 ;
-		rr:template "http://example.com/ice/Endocrine_In_Vivo_Endocrine.parquet/dtxsid/{DTXSID}/Chemical_Entity"
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_EstrogenMOA_EstrogenMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
 	] .
 
 []
@@ -1207,17 +1637,142 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_SteroidMOA_SteroidMOA.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
-			rml:reference "Assay"
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
 		] ;
 		rr:predicate rdfs:label
 	] ;
 	rr:subjectMap [
 		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/cHTS2022_invitrodb34_20220302.parquet/assay/{Assay}/Assay"
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_SteroidMOA_SteroidMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_ThyroidMOA_ThyroidMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_ThyroidMOA_ThyroidMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Tox21MT_Tox21MT.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_Tox21MT_Tox21MT.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
 	] .
 
 []
@@ -1259,9 +1814,14 @@
 	] .
 
 []
-	rml:logicalSource </ls_ice_data-source_ice_cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet> ;
+	rml:logicalSource </ls_ice_data-source_ice_cHTS2022_invitrodb34_20220302.parquet> ;
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
 		rr:objectMap [
 			rml:reference "Assay"
 		] ;
@@ -1269,7 +1829,159 @@
 	] ;
 	rr:subjectMap [
 		rr:class BAO:0000015 ;
-		rr:template "http://example.com/ice/cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet/assay/{Assay}/Assay"
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{Assay}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTSMOA_Tox21MT.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTSMOA_Tox21MT.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTSMT_ALL_AllMTMOA.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "Invitro Assay Format"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/assay_invitro_assay_format>
+	] , [
+		rr:objectMap [
+			rml:reference "Tissue"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/assay_tissue>
+	] , [
+		rr:objectMap [
+			rml:reference "Assay"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:template "https://www.ncbi.nlm.nih.gov/gene/{Entrez Gene ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/assay_entrez_gene_id>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "Species"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/assay_species>
+	] , [
+		rr:objectMap [
+			rml:reference "Assay Source"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/assay_source>
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{Assay}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTSMT_ALL_invitrodb34_AssayAnnotation.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1027> ;
+		rr:template "https://www.ncbi.nlm.nih.gov/gene/{Entrez Gene ID}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTSMT_cHTSMT.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate <https://ice.ntp.niehs.nih.gov/property/throughMechanisticTarget_NCIm>
+	] , [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
+		] ;
+		rr:predicate ncim:C1708327
+	] , [
+		rr:objectMap [
+			rml:reference "MechanisticTarget"
+		] ;
+		rr:predicate iceprop:throughMechanisticTarget
+	] , [
+		rr:objectMap [
+			rml:reference "ModeofAction"
+		] ;
+		rr:predicate iceprop:mayInformOn
+	] , [
+		rr:objectMap [
+			rml:reference "AssayEndpointName"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{AssayEndpointName}"
+	] .
+
+[]
+	rml:logicalSource </ls_ice_data-source_ice_cHTSMT_cHTSMT.parquet> ;
+	a rr:TriplesMap ;
+	rr:subjectMap [
+		rr:class <http://edamontology.org/data_1181> ,
+			BAO:0003064 ;
+		rr:template "https://identifiers.org/umls:{MT_NCIm_term_ID}"
 	] .
 
 []
@@ -1322,5 +2034,24 @@
 	rr:subjectMap [
 		rr:class CHEMINF:000568 ;
 		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{dsstox_substance_id}"
+	] .
+
+[]
+	rml:logicalSource </ls_toxcast_data-source_toxcast_invitrodb.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "aenm"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{aenm}"
 	] .
 
