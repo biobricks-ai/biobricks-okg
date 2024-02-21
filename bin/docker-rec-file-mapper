@@ -6,28 +6,25 @@ use warnings;
 use feature qw(signatures postderef);
 no warnings qw(experimental::signatures experimental::postderef);
 use File::Find;
+use File::Basename qw(basename dirname);
 use File::Spec;
 use Cwd;
 use JSON::PP qw(encode_json);
 
 sub expand_link($path) {
-	my @parts = File::Spec->splitdir($path);
 	my %links;
 
-	my $is_abs = File::Spec->file_name_is_absolute($path);
 	my $cwd = Cwd::cwd;
-	my $path_inter = $is_abs ? '' :$cwd;
-	while(defined ( my $next_part = shift @parts ) ) {
-		my $path_cat = File::Spec->catfile( $path_inter, $next_part );
-		if( -l $path_cat ) {
-			my $to = readlink $path_cat;
-			%links = ( %links,  expand_link($to)->%* );
+	while( dirname($path) !~ m{\A(?:/|\.)\z} ) {
+		if( -l $path ) {
+			my $to = readlink $path;
 			# not taking into account .. in symlink for now
-			warn "Not absolute: symlink from $path_cat to $to", next unless File::Spec->file_name_is_absolute( $to );
-			$links{$is_abs ? $path_cat : File::Spec->abs2rel($path_cat, $cwd) } = $to;
-			$path_inter = $to;
+			warn "Not absolute: symlink from $path to $to", next unless File::Spec->file_name_is_absolute( $to );
+			my $is_abs = File::Spec->file_name_is_absolute($path);
+			$links{$is_abs ? $path : File::Spec->abs2rel($path, $cwd) } = $to;
+			$path = $to;
 		} else {
-			$path_inter = $path_cat;
+			$path = dirname($path);
 		}
 	}
 	\%links;
@@ -48,16 +45,6 @@ sub process_dir($dir) {
 						$results{links}->%*,
 						$expanded_links->%*,
 					);
-
-					for my $sub (sort values $expanded_links->%*) {
-						my $sub_results = process_dir($sub);
-						push $results{files}->@*, $sub_results->{files}->@*;
-						$results{links}->%* = (
-							$results{links}->%*,
-							$sub_results->{links}->%*,
-						);
-					}
-
 				}
 			},
 			#follow   => 1,
@@ -73,6 +60,7 @@ sub main {
 	my $prefix = shift @ARGV;
 	my %mapping;
 	while ( my $dir = shift @ARGV) {
+		print STDERR "Processing $dir\n";
 		my $r = process_dir($dir);
 		for my $from (keys $r->{links}->%*) {
 			my $to = $r->{links}{$from};
@@ -87,7 +75,8 @@ sub main {
 	my @volumes;
 	my $prev = undef;
 	for my $from (sort keys %mapping) {
-		next if defined $prev && $from =~ m,\A\Q$prev\E/,;
+		# subsumes previous path
+		next if defined $prev && $from =~ m, \A \Q$prev\E / ,x;
 		my $to = File::Spec->file_name_is_absolute( $from )
 			? $from
 			: File::Spec->catfile($prefix, $from);
