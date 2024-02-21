@@ -562,7 +562,7 @@ package Bio_Bricks::Process::VirtuosoLoader {
 		my $pm = Parallel::ForkManager->new($ncpus);
 		$pm->run_on_start( sub {
 			my ($pid, $ident)=@_;
-			print "** $ident started, pid: $pid\n";
+			_log "** $ident started, pid: $pid";
 		});
 		$pm->run_on_finish( sub {
 			my ($pid, $exit_code, $ident,
