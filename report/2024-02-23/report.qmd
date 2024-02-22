@@ -11,8 +11,7 @@ format:
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(here, remotes, dplyr, readr, reshape2, ggplot2, ComplexUpset)
 
-remotes::install_github('cran/SPARQL')
-
+if (!require("SPARQL")) remotes::install_github('cran/SPARQL')
 pacman::p_load(SPARQL)
 
 knitr::opts_knit$set(
