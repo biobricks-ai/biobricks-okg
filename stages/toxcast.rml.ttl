@@ -12,6 +12,9 @@
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno: <https://w3id.org/function/ontology#> .
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix iceprop: <https://ice.ntp.niehs.nih.gov/property/> .
+@prefix ncbigene: <https://www.ncbi.nlm.nih.gov/gene/> .
+@prefix ncim: <https://identifiers.org/umls:> .
 @prefix puml: <http://plantuml.com/ontology#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -33,14 +36,14 @@
 	a rr:TriplesMap ;
 	rr:predicateObjectMap [
 		rr:objectMap [
-			rml:reference "chnm"
-		] ;
-		rr:predicate rdfs:label
-	] , [
-		rr:objectMap [
 			rr:constant "CAS"
 		] ;
 		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "chnm"
+		] ;
+		rr:predicate rdfs:label
 	] ;
 	rr:subjectMap [
 		rr:class CHEMINF:000446 ;
@@ -64,5 +67,24 @@
 	rr:subjectMap [
 		rr:class CHEMINF:000568 ;
 		rr:template "https://comptox.epa.gov/dashboard/chemical/details/{dsstox_substance_id}"
+	] .
+
+[]
+	rml:logicalSource </ls_toxcast_data-source_toxcast_invitrodb.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "InvitroDB"
+		] ;
+		rr:predicate dce:source
+	] , [
+		rr:objectMap [
+			rml:reference "aenm"
+		] ;
+		rr:predicate rdfs:label
+	] ;
+	rr:subjectMap [
+		rr:class BAO:0000015 ;
+		rr:template "https://comptox.epa.gov/dashboard/assay-endpoints/{aenm}"
 	] .
 

@@ -33,6 +33,26 @@ classes:
     types:
       - CHEMINF:000568
     uri: 'https://comptox.epa.gov/dashboard/chemical/details/{value}'
+  Assay_InvitroDB:
+    note: same as Assay class
+    description: |
+      bioassay found in InvitroDB.
+
+      Identifier is underscore word (/\w+/) not an integer ID (aeid in ToxCast).
+    types:
+      - BAO:0000015
+    uri: 'https://comptox.epa.gov/dashboard/assay-endpoints/{value}'
+  MechanisticTarget_NCIm_Term:
+    description: |
+      Type BAO:0003064 is a 'target'
+    types:
+      - BAO:0003064
+      - EDAM:data_1181 # UMLS concept ID
+    prefix: ncim
+  NCBIGene:
+    types:
+      - EDAM:data_1027 # NCBI Gene ID
+    prefix: ncbigene
 datasets:
   bindingdb:
     inputs:
@@ -11553,7 +11573,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -11573,7 +11595,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -11613,7 +11637,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -11623,7 +11649,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -11633,7 +11661,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/Acute_Dermal_Toxicity_Data.parquet:
         _note: >-
           Skipping this until the Mixture / Chemical can be separated.
@@ -12485,7 +12515,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12505,7 +12537,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -12545,7 +12579,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -12555,7 +12591,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -12565,7 +12603,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/CancerMOA_CancerMOA.parquet:
         elements:
           - AssayEndpointName:
@@ -12577,7 +12617,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12597,7 +12639,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -12637,7 +12681,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -12647,7 +12693,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -12657,7 +12705,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/Cancer_Data.parquet:
         elements:
           - Data.Name:
@@ -12945,7 +12995,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -12965,7 +13017,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -13005,7 +13059,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -13015,7 +13071,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -13025,7 +13083,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/CardioToxTMOA_CardioToxTMOA.parquet:
         elements:
           - AssayEndpointName:
@@ -13037,7 +13097,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -13057,7 +13119,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -13097,7 +13161,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -13107,7 +13173,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -13117,7 +13185,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/ChemcialQC_Column_Descriptions.parquet:
         elements:
           - 'Unnamed: 0':
@@ -13649,7 +13719,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -13669,7 +13741,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -13709,7 +13783,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -13719,7 +13795,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -13729,7 +13807,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/DART_Data.parquet:
         elements:
           - _ChemicalEntity:
@@ -14671,7 +14751,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -14691,7 +14773,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -14731,7 +14815,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -14741,7 +14827,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -14751,7 +14839,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/Exposure_Predictions_Data.parquet:
         _note: >-
           Skipping this until the Mixture / Chemical can be separated.
@@ -15903,7 +15993,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -15923,7 +16015,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -15963,7 +16057,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -15973,7 +16069,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -15983,7 +16081,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/ThyroidMOA_ThyroidMOA.parquet:
         elements:
           - AssayEndpointName:
@@ -15995,7 +16095,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -16015,7 +16117,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -16055,7 +16159,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -16065,7 +16171,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -16075,7 +16183,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/Tox21MT_Tox21MT.parquet:
         elements:
           - AssayEndpointName:
@@ -16087,7 +16197,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - MechanisticTarget:
               _mapper_alts:
                 Class:
@@ -16097,7 +16209,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -16107,7 +16221,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -16117,7 +16233,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/cHTS2022_invitrodb34_20220302.parquet:
         elements:
           - DatasetName:
@@ -16187,7 +16305,7 @@ datasets:
                 - Assay
               mapper:
                 ValueLabel:
-                  class: Assay
+                  class: Assay_InvitroDB
           - Curve Flag Description:
               _mapper_alts:
                 Class:
@@ -16293,7 +16411,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - MechanisticTarget:
               _mapper_alts:
                 Class:
@@ -16303,27 +16423,21 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
-              _mapper_alts:
-                Class:
-                  class: ~
-                Value: ~
-                ValueLabel:
-                  class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
-              _mapper_alts:
-                Class:
-                  class: ~
-                Value: ~
-                ValueLabel:
-                  class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/cHTSMT_ALL_AllMTMOA.parquet:
         elements:
           - new_AssayEndpointName:
@@ -16365,7 +16479,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -16405,7 +16521,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -16415,7 +16533,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -16425,7 +16545,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
       data-source/ice/cHTSMT_ALL_ChangedNames.parquet:
         elements:
           - aeid:
@@ -16493,7 +16615,7 @@ datasets:
                 - Assay
               mapper:
                 ValueLabel:
-                  class: Assay
+                  class: Assay_InvitroDB
           - Assay Source:
               _mapper_alts:
                 Class:
@@ -16503,7 +16625,9 @@ datasets:
                   class: ~
               columns:
                 - Assay Source
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssaySource_InvitroDB
           - Species:
               _mapper_alts:
                 Class:
@@ -16513,7 +16637,9 @@ datasets:
                   class: ~
               columns:
                 - Species
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssaySpecies_InvitroDB
           - Tissue:
               _mapper_alts:
                 Class:
@@ -16523,7 +16649,9 @@ datasets:
                   class: ~
               columns:
                 - Tissue
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssayTissue_InvitroDB
           - Invitro Assay Format:
               _mapper_alts:
                 Class:
@@ -16533,7 +16661,9 @@ datasets:
                   class: ~
               columns:
                 - Invitro Assay Format
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssayInvitroAssayFormat_InvitroDB
           - Gene:
               _mapper_alts:
                 Class:
@@ -16553,7 +16683,9 @@ datasets:
                   class: ~
               columns:
                 - Entrez Gene ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: NCBIGene
       data-source/ice/cHTSMT_cHTSMT.parquet:
         elements:
           - AssayEndpointName:
@@ -16565,7 +16697,9 @@ datasets:
                   class: ~
               columns:
                 - AssayEndpointName
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - Assay_MOA:
               _mapper_alts:
                 Class:
@@ -16585,7 +16719,9 @@ datasets:
                   class: ~
               columns:
                 - ModeofAction
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MOA
           - MOA_ToxicityEndpoint:
               _mapper_alts:
                 Class:
@@ -16625,7 +16761,9 @@ datasets:
                   class: ~
               columns:
                 - MechanisticTarget
-              mapper: {}
+              mapper:
+                Value:
+                  value: ICE_MT
           - MT_NCIm_term:
               _mapper_alts:
                 Class:
@@ -16635,7 +16773,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term
-              mapper: {}
+              mapper:
+                Value:
+                  value: MechanisticTarget_NCIm_Term_label
           - MT_NCIm_term_ID:
               _mapper_alts:
                 Class:
@@ -16645,7 +16785,9 @@ datasets:
                   class: ~
               columns:
                 - MT_NCIm_term_ID
-              mapper: {}
+              mapper:
+                Class:
+                  class: MechanisticTarget_NCIm_Term
   tox21:
     inputs:
       data-source/tox21/tox21.parquet:
@@ -17587,7 +17729,9 @@ datasets:
                   class: ~
               columns:
                 - aenm
-              mapper: {}
+              mapper:
+                ValueLabel:
+                  class: Assay_InvitroDB
           - m5id:
               _mapper_alts:
                 Class:
@@ -18317,6 +18461,30 @@ mappings:
     BAO:0000015    a puml:Inline; skos:prefLabel "bioassay".
     CHEMINF:000446 a puml:Inline; skos:prefLabel "CAS registry number".
     CHEMINF:000568 a puml:Inline; skos:prefLabel "DSSTOX substance identifier".
+  - >-
+    <(Assay_InvitroDB)>
+      puml:up-tri    <(Assay)>  .
+    <(Assay_InvitroDB)>
+      BAO:0000209 <(Measure_Group)>; # (has measure group)
+      dce:source  "InvitroDB"      .
+
+    <(Assay_InvitroDB)>
+      ncim:C1708327                         <(MechanisticTarget_NCIm_Term)> . # (Has_Target)
+
+    <(Assay_InvitroDB)>
+      # NOTE: The MOA / MT is for a particular ToxicityEndpoint.
+      iceprop:mayInformOn                   "(ICE_MOA)"                     ; # Mode of Action
+      iceprop:throughMechanisticTarget      "(ICE_MT)"                      ; # Mechanistic Target
+      iceprop:throughMechanisticTarget_NCIm <(MechanisticTarget_NCIm_Term)> .
+
+    <(Assay_InvitroDB)>
+      iceprop:assay_source               "(AssaySource_InvitroDB)"            ;
+      iceprop:assay_species              "(AssaySpecies_InvitroDB)"           ;
+      iceprop:assay_tissue               "(AssayTissue_InvitroDB)"            ;
+      iceprop:assay_invitro_assay_format "(AssayInvitroAssayFormat_InvitroDB)";
+      iceprop:assay_entrez_gene_id       <(NCBIGene)>                         .
+
+    BAO:0000209    a puml:Inline; skos:prefLabel "has measure group".
 prefixes:
   BAO:
     uri: http://www.bioassayontology.org/bao#BAO_
@@ -18344,9 +18512,25 @@ prefixes:
     uri: http://www.w3.org/2004/02/skos/core#
   puml:
     uri: http://plantuml.com/ontology#
+  ncim:
+    uri: 'https://identifiers.org/umls:'
+  iceprop:
+    description: |
+      Ad hoc.
+    uri: https://ice.ntp.niehs.nih.gov/property/
+  ncbigene:
+    uri: https://www.ncbi.nlm.nih.gov/gene/
+
 values:
   Chemical_Name: ~
   Critical_Effect: ~
   Response: ~
   Response_Unit: ~
   Route: ~
+  MechanisticTarget_NCIm_Term_label: ~
+  ICE_MOA: ~
+  ICE_MT: ~
+  AssaySource_InvitroDB: ~
+  AssaySpecies_InvitroDB: ~
+  AssayTissue_InvitroDB: ~
+  AssayInvitroAssayFormat_InvitroDB: ~

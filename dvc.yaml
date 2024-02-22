@@ -20,7 +20,7 @@ stages:
     cmd: stages/01_preprocess.sh
     deps:
       - stages/01_preprocess.sh
-      - stages/process.sql
+      - stages/process.ice.sql
     outs:
       - data-processed:
           push: false

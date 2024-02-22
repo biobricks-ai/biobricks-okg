@@ -1,0 +1,24 @@
+## DESCRIPTION:
+##
+## Look up assays from InvitroDB that are found in both ICE and ToxCast by
+## graph (where the graph IRI corresponds to which dataset it is from).
+##
+## ICE is not a subset of ToxCast because some assays have been renamed.
+
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
+prefix CAS:     <http://identifiers.org/cas/>
+PREFIX EDAM:    <http://edamontology.org/>
+PREFIX dce:     <http://purl.org/dc/elements/1.1/>
+PREFIX BAO:     <http://www.bioassayontology.org/bao#BAO_>
+
+SELECT
+	?assay ?graph
+WHERE {
+	graph ?graph {
+		?assay  a            BAO:0000015 ;
+			dce:source   "InvitroDB" .
+	}
+}
+ORDER BY ?assay

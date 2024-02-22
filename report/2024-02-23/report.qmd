@@ -1,0 +1,62 @@
+---
+title: Exploration of ICE data via SPARQL
+author: Zaki Mughal
+date: 2024-02-21
+format:
+  html:
+    embed-resources: true
+---
+
+```{r, setup, include=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(here, remotes, dplyr, readr, reshape2, ggplot2, ComplexUpset)
+
+if (!require("SPARQL")) remotes::install_github('cran/SPARQL')
+pacman::p_load(SPARQL)
+
+knitr::opts_knit$set(
+    root.dir = here::here()
+)
+Sys.setenv(HERE=here::here())
+```
+
+
+```{r, engine='bash', include=FALSE}
+cd $HERE
+make db-fuseki-up
+```
+
+Set up preliminaries and define query:
+
+```{r}
+# Define the endpoint
+endpoint <- 'http://localhost:8080/hdtservice/'
+
+# create query statement
+query <- read_file('report/2024-02-23/invitrodb-toxcast-vs-ice-graph.rq')
+cat( query )
+```
+
+Use SPARQL package to submit query and save results to a data frame
+```{r}
+qd <- SPARQL(endpoint,query)
+df <- qd$results
+
+# Step 3 - Prep for graphing
+recode_map <- tribble(
+	~iri,                                                                                  ~dataset,
+	"<https://ice.ntp.niehs.nih.gov/?file=brick/ice.hdt>",                                 'ice',
+	"<https://www.epa.gov/chemical-research/toxicity-forecasting?file=brick/toxcast.hdt>", 'toxcast'
+) |> pull(dataset, name = iri )
+
+df <- df |>
+	mutate(across(c(graph), as.factor)) |>
+	# rename graph IRIs to simple names
+	mutate(graph = recode(graph, !!! recode_map )) |>
+	# one-hot encoding by graph name
+	dcast(assay ~ graph, value.var = 'graph', length )
+str(df)
+```
+```{r}
+upset(df, recode_map)
+```
