@@ -23,6 +23,11 @@ Sys.setenv(HERE=here::here())
 ```
 
 
+```{r, engine='bash', include=FALSE}
+cd $HERE
+make db-fuseki-up
+```
+
 ```{r}
 # Step 1 - Set up preliminaries and define query
 # Define the endpoint
