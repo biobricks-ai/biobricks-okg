@@ -1,8 +1,7 @@
 ## DESCRIPTION:
 ##
-## Look up assays from InvitroDB that are found in both ICE and ToxCast.
-## Count the number of graphs that these appear in in order to find how they
-## intersect.
+## Look up assays from InvitroDB that are found in both ICE and ToxCast by
+## graph (where the graph IRI corresponds to which dataset it is from).
 ##
 ## ICE is not a subset of ToxCast because some assays have been renamed.
 
