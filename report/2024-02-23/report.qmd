@@ -1,0 +1,82 @@
+---
+title: Exploration of ICE data via SPARQL
+author: Zaki Mughal
+date: 2024-02-21
+format:
+  html:
+    embed-resources: true
+---
+
+```{r, setup, include=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(here, remotes, ggplot2)
+
+remotes::install_github('cran/SPARQL')
+
+pacman::p_load(SPARQL)
+
+
+knitr::opts_chunk$set(
+    root.dir = here::here()
+)
+Sys.setenv(HERE=here::here())
+```
+
+
+```{r}
+# Step 1 - Set up preliminaries and define query
+# Define the endpoint
+endpoint <- 'http://localhost:8080/hdtservice/'
+
+
+# create query statement
+query <-
+r"(
+## DESCRIPTION:
+##
+## Look up assays from InvitroDB that are found in only ICE or only ToxCast.
+##
+## These are assays that have been renamed.
+
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
+prefix CAS:     <http://identifiers.org/cas/>
+PREFIX EDAM:    <http://edamontology.org/>
+PREFIX dce:     <http://purl.org/dc/elements/1.1/>
+PREFIX BAO:     <http://www.bioassayontology.org/bao#BAO_>
+
+SELECT *
+WHERE
+{
+	{
+		SELECT
+			?assay
+			( GROUP_CONCAT(?g;separator=", ") AS ?graphs  )
+			( COUNT(?g) AS ?g_count )
+		WHERE {
+			graph ?g {
+				?assay  a            BAO:0000015 ;
+					dce:source   "InvitroDB" .
+			}
+		}
+		GROUP BY ?assay
+	}
+	FILTER( ?g_count < 2 )
+}
+ORDER BY ?assay
+)"
+
+# Step 2 - Use SPARQL package to submit query and save results to a data frame
+qd <- SPARQL(endpoint,query)
+df <- qd$results
+
+# Step 3 - Prep for graphing
+
+# Numbers are usually returned as characters, so convert to numeric and create a
+# variable for "average acres burned per fire"
+str(df)
+#df <- as.data.frame(apply(df, 2, as.numeric))
+#str(df)
+
+```

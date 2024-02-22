@@ -1,0 +1,85 @@
+---
+title: Exploration of ICE MOA data
+author: Zaki Mughal
+date: 2024-02-16
+---
+
+```{r, setup, include=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(here)
+
+knitr::opts_chunk$set(
+    root.dir = here::here()
+)
+Sys.setenv(HERE=here::here())
+```
+
+List names of MOA files that are specific to each toxicity endpoint versus the
+file that contains all of them:
+
+```{r moa-files, engine='bash'}
+cd $HERE
+diff \
+  <( ls data-source/ice/*MOA*.parquet | sort ) \
+  <( ls data-source/ice/*MOA_*MOA.parquet | sort )
+
+diff \
+  <( ls data-source/ice/*MOA.parquet | sort ) \
+  <( ls data-source/ice/*MOA_*MOA.parquet | sort )
+
+exit 0
+```
+
+Count of `ToxicityEndpoint` in the individual MOA files versus the ALL MOA file.
+Note that there are differences for example with "Thyroid Hormone" being
+70 items versus 76 items.
+
+```{r toxend-count, engine='bash'}
+cd $HERE
+
+duckdb -c "$(cat <<SQL
+SELECT "ToxicityEndpoint", COUNT(*) AS count
+FROM 'data-source/ice/*MOA*MOA.parquet' GROUP BY "ToxicityEndpoint"
+ORDER BY count
+;
+
+SELECT "ToxicityEndpoint", COUNT(*) AS count
+FROM 'data-source/ice/cHTSMT_ALL_AllMTMOA.parquet'
+GROUP BY "ToxicityEndpoint"
+ORDER BY count
+;
+SQL
+)"
+
+```
+
+Looking at the `ThyroidMOA` file specifically:
+
+```{r toxend-thyroid-count, engine='bash'}
+cd $HERE
+
+
+duckdb -c "$(cat <<SQL
+SELECT 'ThyroidMOA_ThyroidMOA' AS table, "ToxicityEndpoint", COUNT(*) AS count
+FROM 'data-source/ice/ThyroidMOA_ThyroidMOA.parquet'
+WHERE
+"ToxicityEndpoint" LIKE 'Thyroid%'
+GROUP BY "ToxicityEndpoint"
+ORDER BY count
+;
+
+
+SELECT 'cHTSMT_ALL_AllMTMOA' as table, "ToxicityEndpoint", COUNT(*) AS count
+FROM 'data-source/ice/cHTSMT_ALL_AllMTMOA.parquet'
+WHERE
+"ToxicityEndpoint" LIKE 'Thyroid%'
+GROUP BY "ToxicityEndpoint"
+ORDER BY count
+;
+
+
+SQL
+)"
+
+
+```
