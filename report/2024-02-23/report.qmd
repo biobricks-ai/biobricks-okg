@@ -9,7 +9,7 @@ format:
 
 ```{r, setup, include=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(here, remotes, readr, ggplot2)
+pacman::p_load(here, remotes, dplyr, readr, reshape2, ggplot2, ComplexUpset)
 
 remotes::install_github('cran/SPARQL')
 
@@ -27,26 +27,31 @@ cd $HERE
 make db-fuseki-up
 ```
 
+Set up preliminaries and define query:
+
 ```{r}
-# Step 1 - Set up preliminaries and define query
 # Define the endpoint
 endpoint <- 'http://localhost:8080/hdtservice/'
-
 
 # create query statement
 query <- read_file('report/2024-02-23/invitrodb-toxcast-vs-ice-graph.rq')
 cat( query )
+```
 
-# Step 2 - Use SPARQL package to submit query and save results to a data frame
+Use SPARQL package to submit query and save results to a data frame
+```{r}
 qd <- SPARQL(endpoint,query)
 df <- qd$results
 
 # Step 3 - Prep for graphing
-
-# Numbers are usually returned as characters, so convert to numeric and create a
-# variable for "average acres burned per fire"
+df <- df |>
+	mutate(across(c(graph), as.factor)) |>
+	rename graph IRIs to simple names
+	mutate(graph = recode(graph,
+			"<https://ice.ntp.niehs.nih.gov/?file=brick/ice.hdt>" = 'ice',
+			"<https://www.epa.gov/chemical-research/toxicity-forecasting?file=brick/toxcast.hdt>" = 'toxcast'
+		)) |>
+	# one-hot encoding by graph name
+	dcast(assay ~ graph, value.var = 'graph', length )
 str(df)
-#df <- as.data.frame(apply(df, 2, as.numeric))
-#str(df)
-
 ```

@@ -1,10 +1,8 @@
 ## DESCRIPTION:
 ##
-## Look up assays from InvitroDB that are found in both ICE and ToxCast.
-## Count the number of graphs that these appear in in order to find how they
-## intersect.
+## Look up assays from InvitroDB that are found in only ICE or only ToxCast.
 ##
-## ICE is not a subset of ToxCast because some assays have been renamed.
+## These are assays that have been renamed.
 
 PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -14,12 +12,22 @@ PREFIX EDAM:    <http://edamontology.org/>
 PREFIX dce:     <http://purl.org/dc/elements/1.1/>
 PREFIX BAO:     <http://www.bioassayontology.org/bao#BAO_>
 
-SELECT
-	?assay ?graph
-WHERE {
-	graph ?graph {
-		?assay  a            BAO:0000015 ;
-			dce:source   "InvitroDB" .
+SELECT *
+WHERE
+{
+	{
+		SELECT
+			?assay
+			( GROUP_CONCAT(?g;separator=", ") AS ?graphs  )
+			( COUNT(?g) AS ?g_count )
+		WHERE {
+			graph ?g {
+				?assay  a            BAO:0000015 ;
+					dce:source   "InvitroDB" .
+			}
+		}
+		GROUP BY ?assay
 	}
+	FILTER( ?g_count < 2 )
 }
 ORDER BY ?assay
