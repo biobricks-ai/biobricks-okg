@@ -35,11 +35,11 @@ db-fuseki-start: db-fuseki/fuseki_config.ttl db-fuseki/run-fuseki.sh
 	./db-fuseki/run-fuseki.sh --port 8080 --config=db-fuseki/fuseki_config.ttl
 
 db-fuseki-up: db-fuseki/fuseki_config.ttl db-fuseki/run-fuseki.sh
-	[ -f "./_jena-fuseki-run/jena.pid" ]                                                  \
-		|| ./db-fuseki/run-fuseki.sh --port 8080 --config=db-fuseki/fuseki_config.ttl \
-			>  "./_jena-fuseki-run/log.out"                                       \
-			2> "./_jena-fuseki-run/log.err"                                       \
-			&  echo "$$!" > "./_jena-fuseki-run/jena.pid"
+	[ -f "./_jena-fuseki-run/jena.pid" ]                                                    \
+		|| ( ./db-fuseki/run-fuseki.sh --port 8080 --config=db-fuseki/fuseki_config.ttl \
+			>  "./_jena-fuseki-run/log.out"                                         \
+			2> "./_jena-fuseki-run/log.err"                                         \
+			&  echo "$$!" > "./_jena-fuseki-run/jena.pid" )
 
 db-fuseki-down:
 	[ -f "./_jena-fuseki-run/jena.pid" ]                          \
