@@ -5,21 +5,21 @@ stages:
     deps:
     - path: stages/00_bb_path.sh
       hash: md5
-      md5: c7fec13448c12c8bdf73789c61ac2851
-      size: 500
+      md5: f15ac464faf4448dbf744e06a72ffd1c
+      size: 730
     outs:
     - path: data-source/brick-manifest
       hash: md5
-      md5: 0667d89a45fc9c23d802b512e61c14d9
-      size: 481
+      md5: a093c73ab72b2b9fe36322a3fb75d7e9
+      size: 806
   preprocess:
     cmd: stages/01_preprocess.sh
     deps:
     - path: stages/01_preprocess.sh
       hash: md5
-      md5: 20f1a8d33c119c62a723f03f94bda371
-      size: 315
-    - path: stages/process.sql
+      md5: 04cfbd416df050c4d397cea638278be1
+      size: 319
+    - path: stages/process.ice.sql
       hash: md5
       md5: d41d8cd98f00b204e9800998ecf8427e
       size: 0
@@ -39,54 +39,54 @@ stages:
       nfiles: 0
     - path: data-source/brick-manifest
       hash: md5
-      md5: 0667d89a45fc9c23d802b512e61c14d9
-      size: 481
+      md5: a093c73ab72b2b9fe36322a3fb75d7e9
+      size: 806
     - path: stages/02_rml.sh
       hash: md5
       md5: a3945b2206e24a52c8f3a5d3e21d6396
       size: 687
     - path: stages/bindingdb.rml.ttl
       hash: md5
-      md5: 9d1b2976a211d3a33f482b64fdadba4a
-      size: 1097
+      md5: 6d256d43455cb51b687b7c0e9ec76de1
+      size: 1292
     - path: stages/chembl.rml.ttl
       hash: md5
-      md5: 9d1b2976a211d3a33f482b64fdadba4a
-      size: 1097
+      md5: 6d256d43455cb51b687b7c0e9ec76de1
+      size: 1292
     - path: stages/ctdbase.rml.ttl
       hash: md5
-      md5: 9d1b2976a211d3a33f482b64fdadba4a
-      size: 1097
+      md5: 6d256d43455cb51b687b7c0e9ec76de1
+      size: 1292
     - path: stages/ice.rml.ttl
       hash: md5
-      md5: 2d52cea48786a35d4ec6d263a59c29dd
-      size: 46000
+      md5: f357f79274d9e0b864d1549a14c454b6
+      size: 52312
     - path: stages/okg-ml.rml.ttl
       hash: md5
-      md5: 2b415495bd3718c84c25f6c73018a5b4
-      size: 46000
+      md5: 4aab81a20db70a3156f3c0a0fcd6cb78
+      size: 54490
     - path: stages/tox21.rml.ttl
       hash: md5
-      md5: 9d1b2976a211d3a33f482b64fdadba4a
-      size: 1097
+      md5: 786dc005da7d0225128199a4298d862e
+      size: 2032
     - path: stages/toxcast.rml.ttl
       hash: md5
-      md5: 9d1b2976a211d3a33f482b64fdadba4a
-      size: 1097
+      md5: 4cf1946a8b927907cdaaf1b9a6d00dca
+      size: 2732
     outs:
     - path: raw
       hash: md5
-      md5: 3c48ed148c0851ec07b2860cdf5f36ae.dir
-      size: 1301324427
-      nfiles: 1
+      md5: 50827e749c0cd8d361cc75cfb119a8ec.dir
+      size: 1312819978
+      nfiles: 2
   build:
     cmd: stages/03_build.sh
     deps:
     - path: raw
       hash: md5
-      md5: 3c48ed148c0851ec07b2860cdf5f36ae.dir
-      size: 1301324427
-      nfiles: 1
+      md5: 50827e749c0cd8d361cc75cfb119a8ec.dir
+      size: 1312819978
+      nfiles: 2
     - path: stages/03_build.sh
       hash: md5
       md5: ae756975c7bca594f2d70b00c3d75c8c
@@ -94,6 +94,6 @@ stages:
     outs:
     - path: brick
       hash: md5
-      md5: 1a77dcb0a6192e072fcf0230ad853a39.dir
-      size: 128264652
-      nfiles: 2
+      md5: 4f75402b34f2cc6ac11a8e1cf3bfc120.dir
+      size: 130048905
+      nfiles: 4
