@@ -26,6 +26,8 @@ EOF
 	fi
 fi
 
+mkdir -p $FUSEKI_BASE
+
 exec /usr/bin/java $JAVA_OPTIONS \
 	-Dlog4j.configurationFile=$JENA_FUSEKI_PATH/log4j2.properties \
 	-cp $JENA_FUSEKI_PATH/fuseki-server.jar:$HDT_JAVA_PATH/lib/hdt-api-3.0.10.jar:$HDT_JAVA_PATH/lib/hdt-java-core-3.0.10.jar:$HDT_JAVA_PATH/lib/hdt-jena-3.0.10.jar \
