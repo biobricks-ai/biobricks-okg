@@ -22,11 +22,15 @@
               perlPackages.YAML            # see cpanfile
               perlPackages.TemplateToolkit # see db-fuseki/cpanfile
               hdt-java.packages.${system}.default
+              apache-jena
               apache-jena-fuseki
               jq
               (lib.hiPrio pkgs.parallel-full) # prefer GNU Parallel over `moreutils`
               moreutils
             ];
+            shellHook = oldAttrs.shellHook + ''
+              export JENA_HOME=$(realpath $( dirname $( which jena ) )/..)
+            '';
           });
       });
 }
