@@ -14,6 +14,7 @@ pacman::p_load(here, remotes, dplyr, readr, reshape2, ggplot2, ComplexUpset)
 if (!require("SPARQL")) remotes::install_github('cran/SPARQL')
 pacman::p_load(SPARQL)
 
+setwd( here::here() )
 knitr::opts_knit$set(
     root.dir = here::here()
 )
@@ -21,14 +22,18 @@ Sys.setenv(HERE=here::here())
 ```
 
 
-```{r, engine='bash', include=FALSE}
+```{r, db-fuseki, engine='bash', include=FALSE}
 cd $HERE
 make db-fuseki-up
 ```
 
+# Assay by Dataset
+
+## SPARQL query
+
 Set up preliminaries and define query:
 
-```{r}
+```{r, sparql-query}
 # Define the endpoint
 endpoint <- 'http://localhost:8080/hdtservice/'
 
@@ -37,8 +42,10 @@ query <- read_file('report/2024-02-23/invitrodb-toxcast-vs-ice-graph.rq')
 cat( query )
 ```
 
+## Process results
+
 Use SPARQL package to submit query and save results to a data frame
-```{r}
+```{r, retrieve-data}
 qd <- SPARQL(endpoint,query)
 df <- qd$results
 
@@ -57,6 +64,14 @@ df <- df |>
 	dcast(assay ~ graph, value.var = 'graph', length )
 str(df)
 ```
-```{r}
+
+## Plot
+
+```{r, dataset-assay-intersect}
 upset(df, recode_map)
+```
+
+## Session Info
+```{r, session-info, echo = FALSE}
+sessionInfo()
 ```
