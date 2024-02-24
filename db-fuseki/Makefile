@@ -29,32 +29,30 @@ MESSAGE += $(DB_FUSEKI_MESSAGE)
 db-fuseki/fuseki_config.ttl: db-fuseki/fuseki_config.ttl.tt2
 	tpage $< | perl -lpe 's/\s+$$//' | sponge $@
 
-FUSEKI_BASE_DIR := ./_jena-fuseki-run
-
-$(FUSEKI_BASE_DIR):
+export FUSEKI_BASE := ./_jena-fuseki-run
 
 # - `java` requires JDK
 # - requires Alien::* listed in db-fuseki/cpanfile
 db-fuseki-start: db-fuseki/fuseki_config.ttl db-fuseki/run-fuseki.sh
-	$(MKDIR_P) $(FUSEKI_BASE_DIR)                                                 \
+	$(MKDIR_P) $(FUSEKI_BASE)                                                 \
 	&& ./db-fuseki/run-fuseki.sh --port 8080 --config=db-fuseki/fuseki_config.ttl
 
-db-fuseki-up: db-fuseki/fuseki_config.ttl db-fuseki/run-fuseki.sh $(FUSEKI_BASE_DIR)
-	[ -f $(FUSEKI_BASE_DIR)/jena.pid ]                                                              \
+db-fuseki-up: db-fuseki/fuseki_config.ttl db-fuseki/run-fuseki.sh
+	[ -f $(FUSEKI_BASE)/jena.pid ]                                                              \
 		|| (                                                                                    \
-			$(MKDIR_P) $(FUSEKI_BASE_DIR)                                                   \
+			$(MKDIR_P) $(FUSEKI_BASE)                                                   \
 			&& ( ./db-fuseki/run-fuseki.sh --port 8080 --config=db-fuseki/fuseki_config.ttl \
-				>  "$(FUSEKI_BASE_DIR)/log.out"                                         \
-				2> "$(FUSEKI_BASE_DIR)/log.err"                                         \
-				&  echo "$$!" > "$(FUSEKI_BASE_DIR)/jena.pid" ) )                       \
-		&& sleep 5 && head "$(FUSEKI_BASE_DIR)/log.out" "$(FUSEKI_BASE_DIR)/log.err"
+				>  "$(FUSEKI_BASE)/log.out"                                         \
+				2> "$(FUSEKI_BASE)/log.err"                                         \
+				&  echo "$$!" > "$(FUSEKI_BASE)/jena.pid" ) )                       \
+		&& sleep 5 && head "$(FUSEKI_BASE)/log.out" "$(FUSEKI_BASE)/log.err"
 
 db-fuseki-down:
-	[ -f "$(FUSEKI_BASE_DIR)/jena.pid" ]                          \
-		&& echo "Killing `cat "$(FUSEKI_BASE_DIR)/jena.pid"`" \
-		&& ps -lf -p `cat "$(FUSEKI_BASE_DIR)/jena.pid"`      \
-		&& kill `cat "$(FUSEKI_BASE_DIR)/jena.pid"`           \
-		&& rm "$(FUSEKI_BASE_DIR)/jena.pid"
+	[ -f "$(FUSEKI_BASE)/jena.pid" ]                          \
+		&& echo "Killing `cat "$(FUSEKI_BASE)/jena.pid"`" \
+		&& ps -lf -p `cat "$(FUSEKI_BASE)/jena.pid"`      \
+		&& kill `cat "$(FUSEKI_BASE)/jena.pid"`           \
+		&& rm "$(FUSEKI_BASE)/jena.pid"
 
 db-fuseki-install: db-fuseki/cpanfile
 	cpanm --installdeps ./db-fuseki/

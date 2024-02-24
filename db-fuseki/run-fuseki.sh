@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CURDIR=`dirname "$0"`
+
 # Check for rdf2hdt.sh (provided by hdt-java package in Nix)
 # and fallback to Alien::hdt_java if installed.
 if which rdf2hdt.sh >/dev/null 2>&1 ; then
@@ -33,7 +35,7 @@ echo "JENA_FUSEKI_PATH: $JENA_FUSEKI_PATH"  >&2
 
 
 export FUSEKI_HOME=$JENA_FUSEKI_PATH;
-export FUSEKI_BASE=$PWD/../_jena-fuseki-run;
+export FUSEKI_BASE=${FUSEKI_BASE:-$CURDIR/../_jena-fuseki-run};
 
 export JAVA_OPTIONS=${JENA_FUSEKI_JAVA_OPTIONS:-"-Xmx128G"}
 # -Xmx192G
