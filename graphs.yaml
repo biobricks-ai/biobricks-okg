@@ -1,12 +1,18 @@
 - name: hgnc
+  iri: https://www.genenames.org/
   path: data-source/internal-hgnc-kg
 - name: ice
+  iri: https://ice.ntp.niehs.nih.gov/
   path: brick/ice.hdt
 - name: mesh-kg
+  iri: https://nlmpubs.nlm.nih.gov/projects/mesh/rdf/mesh.nt.gz
   path: data-source/mesh-kg
 - name: tox21
+  iri: https://tripod.nih.gov/tox21/pubdata/
   path: data-source/internal-tox21-kg
 - name: toxcast
+  iri: https://www.epa.gov/chemical-research/toxicity-forecasting
   path: brick/toxcast.hdt
 - name: uniprot-kg
+  iri: https://www.uniprot.org/
   path: data-source/uniprot-kg
