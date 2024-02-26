@@ -530,19 +530,23 @@ package Bio_Bricks::Process::VirtuosoLoader {
 		my $spec_path = File::Spec->catfile( $self->{dir}, $spec->{path} );
 		die "Path $spec_path does not exist" unless -e $spec_path;
 		my $spec_graph_iri = do {
-			my $spec_graph_file = File::Spec->catfile(
-				$self->{dir},
-				'graph-meta',
-				"${name}.graph"
-			);
+			if( exists $spec->{iri} ) {
+				$spec->{iri};
+			} else {
+				my $spec_graph_file = File::Spec->catfile(
+					$self->{dir},
+					'graph-meta',
+					"${name}.graph"
+				);
 
-			die "Graph file $spec_graph_file for $name is not readable"
-				unless -r $spec_graph_file;
+				die "Graph file $spec_graph_file for $name is not readable"
+					unless -r $spec_graph_file;
 
-			open my $graph_file_fh, '<', $spec_graph_file;
-			chomp( my $graph_iri = do { local $/; <$graph_file_fh> } );
+				open my $graph_file_fh, '<', $spec_graph_file;
+				chomp( my $graph_iri = do { local $/; <$graph_file_fh> } );
 
-			$graph_iri;
+				$graph_iri;
+			}
 		};
 		find( {
 				wanted => sub {
