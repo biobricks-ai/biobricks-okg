@@ -66,37 +66,61 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 [%- USE brick_path = Directory('brick/') -%]
 
     # HGNC {{{
+[% TRY -%]
 [% USE hgnc_path = Directory('data-source/internal-hgnc-kg') -%]
 [% hgnc_graphName = INCLUDE graphFromFile file="graph-meta/hgnc.graph" -%]
 [% INCLUDE hdtgraph graphName=hgnc_graphName dir=hgnc_path FILTER indent(4) %]
+[% CATCH -%]
+    # Could not load hgnc
+[% END -%]
     # }}}
 
     # ICE {{{
+[% TRY -%]
 [% ice_graphName = INCLUDE graphFromFile file="graph-meta/ice.graph" -%]
 [% INCLUDE hdtgraph graphName=ice_graphName dir=brick_path nameFilter='ice' keepInMemory_nameFilter='(*ACCEPT)' FILTER indent(4) %]
+[% CATCH -%]
+    # Could not load ice
+[% END -%]
     # }}}
 
     # MeSH {{{
+[% TRY -%]
 [% USE mesh_path = Directory('data-source/mesh-kg') -%]
 [% mesh_kg_graphName = INCLUDE graphFromFile file="graph-meta/mesh-kg.graph" -%]
 [% INCLUDE hdtgraph graphName=mesh_kg_graphName dir=mesh_path FILTER indent(4) %]
+[% CATCH -%]
+    # Could not load mesh-kg
+[% END -%]
     # }}}
 
     # Tox21 {{{
+[% TRY -%]
 [% USE tox21_path = Directory('data-source/internal-tox21-kg') -%]
 [% tox21_graphName = INCLUDE graphFromFile file="graph-meta/tox21.graph" -%]
 [% INCLUDE hdtgraph graphName=tox21_graphName dir=tox21_path FILTER indent(4) %]
+[% CATCH -%]
+    # Could not load tox21
+[% END -%]
     # }}}
 
     # ToxCast {{{
+[% TRY -%]
 [% toxcast_graphName = INCLUDE graphFromFile file="graph-meta/toxcast.graph" -%]
 [% INCLUDE hdtgraph graphName=toxcast_graphName dir=brick_path nameFilter='toxcast' FILTER indent(4) %]
+[% CATCH -%]
+    # Could not load toxcast
+[% END -%]
     # }}}
 
     # UniProt {{{
+[% TRY -%]
 [% USE uniprot_path = Directory('data-source/uniprot-kg') -%]
 [% uniprot_kg_graphName = INCLUDE graphFromFile file="graph-meta/uniprot-kg.graph" -%]
 [% INCLUDE hdtgraph graphName=uniprot_kg_graphName dir=uniprot_path FILTER indent(4) %]
+[% CATCH -%]
+    # Could not load uniprot-kg
+[% END -%]
     # }}}
 
     .
