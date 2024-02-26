@@ -31,20 +31,24 @@ db-fuseki/fuseki_config.ttl: db-fuseki/fuseki_config.ttl.tt2
 
 export FUSEKI_BASE := ./_jena-fuseki-run
 
+DB_FUSEKI_HTTP_PORT ?= 8080
+
 # - `java` requires JDK
 # - requires Alien::* listed in db-fuseki/cpanfile
 db-fuseki-start: db-fuseki/fuseki_config.ttl db-fuseki/run-fuseki.sh
-	$(MKDIR_P) $(FUSEKI_BASE)                                                 \
-	&& ./db-fuseki/run-fuseki.sh --port 8080 --config=db-fuseki/fuseki_config.ttl
+	$(MKDIR_P) $(FUSEKI_BASE)                                  \
+	&& ./db-fuseki/run-fuseki.sh --port $(DB_FUSEKI_HTTP_PORT) \
+		--config=db-fuseki/fuseki_config.ttl
 
 db-fuseki-up: db-fuseki/fuseki_config.ttl db-fuseki/run-fuseki.sh
-	[ -f $(FUSEKI_BASE)/jena.pid ]                                                              \
-		|| (                                                                                    \
-			$(MKDIR_P) $(FUSEKI_BASE)                                                   \
-			&& ( ./db-fuseki/run-fuseki.sh --port 8080 --config=db-fuseki/fuseki_config.ttl \
-				>  "$(FUSEKI_BASE)/log.out"                                         \
-				2> "$(FUSEKI_BASE)/log.err"                                         \
-				&  echo "$$!" > "$(FUSEKI_BASE)/jena.pid" ) )                       \
+	[ -f $(FUSEKI_BASE)/jena.pid ]                                                \
+		|| (                                                                  \
+			$(MKDIR_P) $(FUSEKI_BASE)                                     \
+			&& ( ./db-fuseki/run-fuseki.sh --port $(DB_FUSEKI_HTTP_PORT)  \
+					--config=db-fuseki/fuseki_config.ttl          \
+				>  "$(FUSEKI_BASE)/log.out"                           \
+				2> "$(FUSEKI_BASE)/log.err"                           \
+				&  echo "$$!" > "$(FUSEKI_BASE)/jena.pid" ) )         \
 		&& sleep 5 && head "$(FUSEKI_BASE)/log.out" "$(FUSEKI_BASE)/log.err"
 
 db-fuseki-down:

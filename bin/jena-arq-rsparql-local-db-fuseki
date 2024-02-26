@@ -17,7 +17,7 @@ EOF
 	exit 1
 fi
 
-SPARQL_ENDPOINT='http://localhost:8080/hdtservice/'
+SPARQL_ENDPOINT="http://localhost:${DB_FUSEKI_HTTP_PORT:-8080}/hdtservice/"
 
 $JENA_HOME/bin/jena arq.rsparql \
 	--service "$SPARQL_ENDPOINT" \

@@ -3,7 +3,7 @@
 export FILE="$1"
 
 QUERY_URI="$(
-	perl -M'5;print+q{http://localhost:8080/#/dataset/hdtservice/query?query=}' \
+	perl -M"5;print+q{http://localhost:${DB_FUSEKI_HTTP_PORT:-8080}/#/dataset/hdtservice/query?query=}" \
 		-MURI::Encode=uri_encode \
 		-pe '$_ = uri_encode($_, { encode_reserved => 1 })' < $FILE \
 )"
