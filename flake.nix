@@ -20,6 +20,7 @@
             buildInputs = oldAttrs.buildInputs ++ [
               perlPackages.CpanelJSONXS    # see cpanfile
               perlPackages.YAML            # see cpanfile
+              perlPackages.URI             # see cpanfile
               perlPackages.TemplateToolkit # see db-fuseki/cpanfile
               hdt-java.packages.${system}.default
               apache-jena

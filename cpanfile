@@ -3,3 +3,6 @@
 # for cpanel_json_xs
 requires 'Cpanel::JSON::XS';
 requires 'YAML';
+
+# For bin/jena-yasgui-open-browser
+requires 'URI';
