@@ -17,7 +17,11 @@ EOF
 	exit 1
 fi
 
-SPARQL_ENDPOINT='http://localhost:8890/sparql'
+if [ -f ./.env ]; then
+	. ./.env;
+fi
+
+SPARQL_ENDPOINT="http://localhost:${DB_VIRTUOSO_HTTP_PORT:-8890}/sparql"
 
 $JENA_HOME/bin/jena arq.rsparql \
 	--service "$SPARQL_ENDPOINT" \
