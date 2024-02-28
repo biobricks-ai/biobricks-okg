@@ -2,7 +2,7 @@
   description = "biobricks-okg BioBrick";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     flake-utils.url = "github:numtide/flake-utils";
     dev-shell.url = "github:biobricks-ai/dev-shell";
     hdt-java = {
@@ -16,12 +16,18 @@
     flake-utils.lib.eachDefaultSystem (system:
       with import nixpkgs { inherit system; }; {
         devShells.default = dev-shell.devShells.${system}.default.overrideAttrs
-          (oldAttrs: {
+          (oldAttrs:
+            let
+              inherit (pkgs.perlPackages) makePerlPath;
+              perlEnv =
+                perl.withPackages (p: with p; [
+                  CpanelJSONXS    # see cpanfile
+                  YAML            # see cpanfile
+                  URI             # see cpanfile
+                  TemplateToolkit # see db-fuseki/cpanfile
+                ]); in {
             buildInputs = oldAttrs.buildInputs ++ [
-              perlPackages.CpanelJSONXS    # see cpanfile
-              perlPackages.YAML            # see cpanfile
-              perlPackages.URI             # see cpanfile
-              perlPackages.TemplateToolkit # see db-fuseki/cpanfile
+              perlEnv
               hdt-java.packages.${system}.default
               apache-jena
               apache-jena-fuseki
@@ -29,9 +35,9 @@
               (lib.hiPrio pkgs.parallel-full) # prefer GNU Parallel over `moreutils`
               moreutils
             ];
-            shellHook = oldAttrs.shellHook + ''
-              export JENA_HOME=$(realpath $( dirname $( which jena ) )/..)
-            '';
+            env = oldAttrs.env // {
+              JENA_HOME = "${apache-jena}";
+            };
           });
       });
 }

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -eu
+
+if [ "$#" -eq 0 ]; then
+	cat <<EOF >&2
+Usage:
+  $0 sparql-query-file.rq
+EOF
+	exit 1
+fi
+
+if [ -f ./.env ]; then
+	. ./.env;
+fi
+
+export FILE="$1"
+
+export WEB_QUERY_ENDPOINT="http://localhost:${DB_FUSEKI_HTTP_PORT:-8080}/#/dataset/hdtservice/query"
+
+QUERY_URI="$(
+	perl -M'5;print+$ENV{WEB_QUERY_ENDPOINT}.q{?query=}' \
+		-MURI::Escape=uri_escape \
+		-pe '$_ = uri_escape($_)' < $FILE \
+)"
+
+x-www-browser "$QUERY_URI"
