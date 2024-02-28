@@ -13,6 +13,7 @@ libtest2-suite-perl \
 FROM virtuoso-base AS db
 ARG APT_PKGS_RUN
 
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	$APT_PKGS_RUN
 
