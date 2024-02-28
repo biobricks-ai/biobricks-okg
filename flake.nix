@@ -2,7 +2,7 @@
   description = "biobricks-okg BioBrick";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     flake-utils.url = "github:numtide/flake-utils";
     dev-shell.url = "github:biobricks-ai/dev-shell";
     hdt-java = {
