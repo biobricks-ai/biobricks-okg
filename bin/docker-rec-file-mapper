@@ -15,7 +15,7 @@ sub expand_link($path) {
 	my %links;
 
 	my $cwd = Cwd::cwd;
-	do {
+	while(1) {
 		if( -l $path ) {
 			my $to = readlink $path;
 			# not taking into account .. in symlink for now
@@ -26,7 +26,9 @@ sub expand_link($path) {
 		} else {
 			$path = dirname($path);
 		}
-	} while( $path !~ m{\A(?:/|\.)\z} ); # either / or .
+
+		last unless $path !~ m{\A(?:/|\.)\z}; # either / or .
+	}
 	\%links;
 }
 
