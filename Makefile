@@ -17,6 +17,13 @@ export MESSAGE
 help:
 	@$(ECHO) "$$MESSAGE"
 
+
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
+
+
 include Makefile.docker
 include Makefile.model
 include db-fuseki/Makefile
