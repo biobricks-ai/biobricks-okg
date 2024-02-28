@@ -17,8 +17,9 @@ variable "RUNTIME_BASE" {
 }
 
 # <https://github.com/openlink/vos-reference-docker>
+# <https://hub.docker.com/r/openlink/virtuoso-opensource-7>
 variable "VIRTUOSO_BASE" {
-  default = "docker-image://openlink/virtuoso-opensource-7:latest"
+  default = "docker-image://openlink/virtuoso-opensource-7:7.2.11"
 }
 
 target "hdt-cpp" {
