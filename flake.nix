@@ -16,12 +16,18 @@
     flake-utils.lib.eachDefaultSystem (system:
       with import nixpkgs { inherit system; }; {
         devShells.default = dev-shell.devShells.${system}.default.overrideAttrs
-          (oldAttrs: {
+          (oldAttrs:
+            let
+              inherit (pkgs.perlPackages) makePerlPath;
+              perlEnv =
+                perl.withPackages (p: with p; [
+                  CpanelJSONXS    # see cpanfile
+                  YAML            # see cpanfile
+                  URI             # see cpanfile
+                  TemplateToolkit # see db-fuseki/cpanfile
+                ]); in {
             buildInputs = oldAttrs.buildInputs ++ [
-              perlPackages.CpanelJSONXS    # see cpanfile
-              perlPackages.YAML            # see cpanfile
-              perlPackages.URI             # see cpanfile
-              perlPackages.TemplateToolkit # see db-fuseki/cpanfile
+              perlEnv
               hdt-java.packages.${system}.default
               apache-jena
               apache-jena-fuseki
