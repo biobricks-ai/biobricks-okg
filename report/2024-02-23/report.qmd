@@ -74,6 +74,15 @@ str(df)
 upset(df, recode_map)
 ```
 
+# Chemical by Dataset
+
+```{r}
+query <- read_file('report/2024-02-23/chemical-by-database.rq');
+cat( query )
+
+df <- SPARQL(endpoint,query)$results
+```
+
 ## Session Info
 ```{r, session-info, echo = FALSE}
 sessionInfo()

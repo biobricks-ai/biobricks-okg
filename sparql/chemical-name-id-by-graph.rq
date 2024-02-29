@@ -3,7 +3,7 @@
 ## Look up the names of chemical entities and optionally their CAS RN and
 ## DSSTOX SID if available. Indicate which graph the data come from.
 ##
-## NOTE: differnce from <report/2024-01-15/chemical-name-id.rq> is that the
+## NOTE: difference from <report/2024-01-15/chemical-name-id.rq> is that the
 ## named graph is filtered using a subquery.
 PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
