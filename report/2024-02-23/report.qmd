@@ -9,7 +9,7 @@ format:
 
 ```{r, setup, include=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(here, remotes, dplyr, readr, reshape2, ggplot2, ComplexUpset)
+pacman::p_load(here, remotes, dplyr, stringr, readr, reshape2, ggplot2, ComplexUpset)
 
 if (!require("SPARQL")) remotes::install_github('cran/SPARQL')
 pacman::p_load(SPARQL)
@@ -51,12 +51,15 @@ df <- qd$results
 
 # Step 3 - Prep for graphing
 recode_map <- tribble(
-	~iri,                                                                                  ~dataset,
-	"<https://ice.ntp.niehs.nih.gov/?file=brick/ice.hdt>",                                 'ice',
-	"<https://www.epa.gov/chemical-research/toxicity-forecasting?file=brick/toxcast.hdt>", 'toxcast'
+	~iri,                                                           ~dataset,
+	"<https://ice.ntp.niehs.nih.gov/>",                             'ice',
+	"<https://www.epa.gov/chemical-research/toxicity-forecasting>", 'toxcast'
 ) |> pull(dataset, name = iri )
 
 df <- df |>
+	# remove "?file=" parameter suffix
+	mutate( graph = str_replace(graph, r'(\?file=.*$)', '' ) ) |>
+	# to factor
 	mutate(across(c(graph), as.factor)) |>
 	# rename graph IRIs to simple names
 	mutate(graph = recode(graph, !!! recode_map )) |>
