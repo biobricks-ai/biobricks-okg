@@ -15,6 +15,7 @@ classes:
     description: A chemical entity
     types:
       - CHEMINF:000000
+      - biolink:ChemicalEntity
   Endpoint:
     description: Endpoint result
     types:
@@ -18520,6 +18521,8 @@ prefixes:
     uri: https://ice.ntp.niehs.nih.gov/property/
   ncbigene:
     uri: https://www.ncbi.nlm.nih.gov/gene/
+  biolink:
+    uri: https://w3id.org/biolink/vocab/
 
 values:
   Chemical_Name: ~
