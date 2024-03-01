@@ -18531,9 +18531,19 @@ mappings:
 
     BAO:0000209    a puml:Inline; skos:prefLabel "has measure group".
   - >-
+    <(Measure_Group)>
+      OBI:0000299 <(HitcallEndpoint)> ; # (has specified output)
+      RO:0000057  <(Chemical_Entity)> . # (has participant)
+
     <(HitcallEndpoint)>
+      puml:up-tri    <(Endpoint)>  .
+    <(HitcallEndpoint)>
+      IAO:0000136   <(Chemical_Entity)>      ; # (is about)
       rdfs:label    "hitcall"                ;
       SIO:has-value "(HitcallResponse)"      .
+
+    OBI:0000299    a puml:Inline; skos:prefLabel "has specified output".
+    RO:0000057     a puml:Inline; skos:prefLabel "has participant".
 
 prefixes:
   BAO:
