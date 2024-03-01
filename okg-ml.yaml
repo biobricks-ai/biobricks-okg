@@ -17258,6 +17258,8 @@ datasets:
                 - CONC15
               mapper: {}
           - CAS:
+              _note: |
+                Some of these do not have CAS RNs. These match /^NOCAS_.*/.
               _mapper_alts:
                 Class:
                   class: ~
