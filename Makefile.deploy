@@ -1,0 +1,32 @@
+.PHONY: \
+	tailscale-funnel-bg      \
+	tailscale-funnel-status  \
+	tailscale-funnel-reset
+
+define DEPLOY_MESSAGE
+
+# Deploy
+
+## Tailscale
+
+  - tailscale-funnel-bg        : create a public endpoint pointing at Nginx reverse proxy
+  - tailscale-funnel-status    : show information about current funnel
+  - tailscale-funnel-reset     : remove funnel
+
+endef
+
+MESSAGE += $(DEPLOY_MESSAGE)
+
+tailscale-funnel-bg: docker-compose.yml
+	tailscale funnel --bg $$(                                              \
+		docker compose config --format json                            \
+			| jq -r '                                              \
+	                      .services."reverse-proxy".ports                  \
+			      | map(select( .target == 8080 )).[0].published'  \
+	)
+
+tailscale-funnel-status:
+	tailscale funnel status
+
+tailscale-funnel-reset:
+	tailscale funnel reset

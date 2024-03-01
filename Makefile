@@ -27,3 +27,4 @@ endif
 include Makefile.docker
 include Makefile.model
 include db-fuseki/Makefile
+include Makefile.deploy
