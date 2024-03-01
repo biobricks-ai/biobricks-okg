@@ -4,5 +4,7 @@
 requires 'Cpanel::JSON::XS';
 requires 'YAML';
 
-# For bin/jena-yasgui-open-browser
+# For:
+#   - bin/x-www-browser-sparql-local-db-fuseki
+#   - bin/x-www-browser-sparql-local-db-virtuoso
 requires 'URI';
