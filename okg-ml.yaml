@@ -18482,9 +18482,10 @@ mappings:
       EDAM:has_identifier <(DSSTOX_SID)>    .
 
     <(Endpoint)>
-      SIO:has-value "(Response)"      ;
-      SIO:has-unit  "(Response_Unit)" ;
-      ExO:0000055   "(Route)"         . # route
+      IAO:0000136   <(Chemical_Entity)> ; # (is about)
+      SIO:has-value "(Response)"        ;
+      SIO:has-unit  "(Response_Unit)"   ;
+      ExO:0000055   "(Route)"           . # route
 
     <(CAS_RN)>
       rdfs:label "(Chemical_Name)";
@@ -18545,6 +18546,8 @@ prefixes:
     uri: http://semanticscience.org/resource/SIO_
   OBI:
     uri: http://purl.obolibrary.org/obo/OBI_
+  IAO:
+    uri: http://purl.obolibrary.org/obo/IAO_
   RO:
     uri: http://purl.obolibrary.org/obo/RO_
   ExO:
