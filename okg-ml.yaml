@@ -17262,7 +17262,9 @@ datasets:
                   class: ~
               columns:
                 - CAS
-              mapper: {}
+              mapper:
+                Class:
+                  class: CAS_RN
           - PUBCHEM_CID:
               _mapper_alts:
                 Class:
@@ -17456,7 +17458,9 @@ datasets:
                   class: ~
               columns:
                 - CAS
-              mapper: {}
+              mapper:
+                Class:
+                  class: CAS_RN
           - PUBCHEM_CID:
               _mapper_alts:
                 Class:
