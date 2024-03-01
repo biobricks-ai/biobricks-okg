@@ -16243,6 +16243,41 @@ datasets:
                   class: MechanisticTarget_NCIm_Term
       data-source/ice/cHTS2022_invitrodb34_20220302.parquet:
         elements:
+          - _ChemicalEntity:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - DTXSID
+              mapper:
+                Class:
+                  class: Chemical_Entity
+          - _MeasureGroup:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - Assay
+                - DatasetName
+              mapper:
+                Class:
+                  class: Measure_Group
+          - _Endpoint:
+              _mapper_alts:
+                Value: ~
+                ValueLabel:
+                  class: ~
+              columns:
+                - RecordID
+                - DTXSID
+                - Assay
+                - Endpoint
+              mapper:
+                ValueLabel:
+                  class: Endpoint
+                  label_column: Endpoint
           - DatasetName:
               _mapper_alts:
                 Class:
