@@ -24,6 +24,10 @@ classes:
     description: bioassay
     types:
       - BAO:0000015
+  HitcallEndpoint:
+    description: Endpoint result (for hitcall)
+    types:
+      - BAO:0000179
   CAS_RN:
     description: CAS registry number.
     prefix: CAS
@@ -17648,7 +17652,38 @@ datasets:
   toxcast:
     inputs:
       data-source/toxcast/invitrodb.parquet:
+        _note: |
+          Need original data to differentiate between assay ID (`aid`), assay
+          component ID (`acid`), and assay endpoint ID (`aeid`).
         elements:
+          - _Assay:
+              columns:
+                - aeid
+                - aenm
+              mapper:
+                ValueLabel:
+                  class: Assay
+                  label_column: aenm
+          - _ChemicalEntity:
+              columns:
+                - dsstox_substance_id
+              mapper:
+                Class:
+                  class: Chemical_Entity
+          - _MeasureGroup:
+              columns:
+                - dsstox_substance_id
+                - aeid
+              mapper:
+                Class:
+                  class: Measure_Group
+          - _HitcallEndpoint:
+              columns:
+                - aeid
+                - dsstox_substance_id
+              mapper:
+                Class:
+                  class: HitcallEndpoint
           - spid:
               _mapper_alts:
                 Class:
@@ -18246,7 +18281,9 @@ datasets:
                   class: ~
               columns:
                 - hitc
-              mapper: {}
+              mapper:
+                Value:
+                  value: HitcallResponse
           - modl:
               _mapper_alts:
                 Class:
@@ -18490,6 +18527,11 @@ mappings:
       iceprop:assay_entrez_gene_id       <(NCBIGene)>                         .
 
     BAO:0000209    a puml:Inline; skos:prefLabel "has measure group".
+  - >-
+    <(HitcallEndpoint)>
+      rdfs:label    "hitcall"                ;
+      SIO:has-value "(HitcallResponse)"      .
+
 prefixes:
   BAO:
     uri: http://www.bioassayontology.org/bao#BAO_
@@ -18541,3 +18583,4 @@ values:
   AssaySpecies_InvitroDB: ~
   AssayTissue_InvitroDB: ~
   AssayInvitroAssayFormat_InvitroDB: ~
+  HitcallResponse: ~
