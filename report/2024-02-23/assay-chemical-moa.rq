@@ -1,0 +1,63 @@
+## DESCRIPTION:
+##
+## TODO
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
+PREFIX SIO:     <http://semanticscience.org/resource/SIO_>
+PREFIX CAS:     <http://identifiers.org/cas/>
+PREFIX EDAM:    <http://edamontology.org/>
+PREFIX dce:     <http://purl.org/dc/elements/1.1/>
+PREFIX BAO:     <http://www.bioassayontology.org/bao#BAO_>
+PREFIX RO:      <http://purl.obolibrary.org/obo/RO_>
+PREFIX OBI:     <http://purl.obolibrary.org/obo/OBI_>
+PREFIX IAO:     <http://purl.obolibrary.org/obo/IAO_>
+PREFIX iceprop: <https://ice.ntp.niehs.nih.gov/property/>
+
+
+SELECT
+    ?chem_name
+    ?dsstox ?cas
+    ?assay
+    ?endpoint_label
+    ?response ?response_unit
+    ?moa  ?mt
+    ?graph
+WHERE {
+    graph ?graph {
+      ?assay BAO:0000209 ?measure_group. # (has measure group)
+
+      ?measure_group OBI:0000299 ?endpoint . # (has specified output)
+
+      #?measure_group RO:0000057  ?chem    ; # (has participant)
+
+      ?endpoint
+        rdfs:label    ?endpoint_label ;
+        IAO:0000136   ?chem           ; # (is about)
+        SIO:has-value ?response       ;
+        SIO:has-unit  ?response_unit  .
+
+      OPTIONAL {
+        ?assay iceprop:mayInformOn              ?moa .
+      }
+      OPTIONAL {
+        ?assay iceprop:throughMechanisticTarget ?mt  .
+      }
+
+      ?chem a          CHEMINF:000000;
+            rdfs:label ?chem_name .
+
+      OPTIONAL {
+        ?chem   EDAM:has_identifier ?dsstox.
+        ?dsstox a                   CHEMINF:000568. # DSSTOX SID
+      }
+      OPTIONAL {
+        ?chem EDAM:has_identifier ?cas.
+        ?cas  a                   CHEMINF:000446.   # CAS RN
+      }
+
+      FILTER( ?response NOT IN ( 'Flag-Omit', 'QC-Omit' ) )
+      FILTER( STRSTARTS(?moa, 'DART') )
+    }
+}
+LIMIT 200000

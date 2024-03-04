@@ -1,0 +1,65 @@
+## DESCRIPTION:
+##
+## TODO
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
+PREFIX SIO:     <http://semanticscience.org/resource/SIO_>
+PREFIX CAS:     <http://identifiers.org/cas/>
+PREFIX EDAM:    <http://edamontology.org/>
+PREFIX dce:     <http://purl.org/dc/elements/1.1/>
+PREFIX BAO:     <http://www.bioassayontology.org/bao#BAO_>
+PREFIX RO:      <http://purl.obolibrary.org/obo/RO_>
+PREFIX OBI:     <http://purl.obolibrary.org/obo/OBI_>
+PREFIX IAO:     <http://purl.obolibrary.org/obo/IAO_>
+PREFIX iceprop: <https://ice.ntp.niehs.nih.gov/property/>
+
+PREFIX comptox_dtxsid: <https://comptox.epa.gov/dashboard/chemical/details/>
+PREFIX comptox_assay:  <https://comptox.epa.gov/dashboard/assay-endpoints/>
+
+SELECT
+    ?chem_name
+    #?dsstox ?cas
+    #?assay
+    ?endpoint_label
+    ?response ?response_unit
+    #?moa  ?mt
+    ?graph
+    #( GROUP_CONCAT(?graph;separator=", ") AS ?graphs  )
+    ( GROUP_CONCAT(DISTINCT CONCAT(?moa, " (", ?mt, ")");separator="; ") AS ?assay_moa_mt  )
+WHERE {
+    graph ?graph {
+      VALUES ( ?dsstox                      ?assay                     )
+         {   ( comptox_dtxsid:DTXSID0022436 comptox_assay:ACEA_ER_80hr ) }
+
+      ?assay BAO:0000209 ?measure_group. # (has measure group)
+      ?chem  RO:0000056  ?measure_group. # (participates in)
+
+      ?chem a          CHEMINF:000000  ;
+            rdfs:label ?chem_name      ;
+            EDAM:has_identifier ?dsstox.
+
+      ?measure_group OBI:0000299 ?endpoint . # (has specified output)
+
+      ?endpoint
+        rdfs:label    ?endpoint_label;
+        IAO:0000136   ?chem          ; # (is about)
+        SIO:has-value ?response      ;
+        SIO:has-unit  ?response_unit .
+
+      OPTIONAL {
+        ?assay iceprop:mayInformOn              ?moa .
+      }
+      OPTIONAL {
+        ?assay iceprop:throughMechanisticTarget ?mt  .
+      }
+
+
+      FILTER( ?response NOT IN ( 'Flag-Omit', 'QC-Omit' ) )
+      FILTER( STRSTARTS(?moa, 'DART') )
+    }
+}
+GROUP BY ?assay ?graph ?chem_name ?endpoint ?endpoint_label ?response ?response_unit 
+LIMIT 200000
+## R -e 'arrow::read_parquet( biobricks::bbassets("ice")$cHTS2022_invitrodb34_20220302_parquet) |>
+##    subset( DTXSID == "DTXSID0022436" & Assay == "ACEA_ER_80hr" )'
