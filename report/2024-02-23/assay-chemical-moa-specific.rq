@@ -1,6 +1,7 @@
 ## DESCRIPTION:
 ##
-## TODO
+## Retrieves endpoint responses for a given chemical (by DTXSID)
+## and assay (by CompTox assay name) pair.
 PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
@@ -18,15 +19,11 @@ PREFIX comptox_dtxsid: <https://comptox.epa.gov/dashboard/chemical/details/>
 PREFIX comptox_assay:  <https://comptox.epa.gov/dashboard/assay-endpoints/>
 
 SELECT
+    ?dsstox ?assay
     ?chem_name
-    #?dsstox ?cas
-    #?assay
-    ?endpoint_label
-    ?response ?response_unit
-    #?moa  ?mt
-    ?graph
-    #( GROUP_CONCAT(?graph;separator=", ") AS ?graphs  )
+    ?endpoint_label ?response ?response_unit
     ( GROUP_CONCAT(DISTINCT CONCAT(?moa, " (", ?mt, ")");separator="; ") AS ?assay_moa_mt  )
+    ?graph
 WHERE {
     graph ?graph {
       VALUES ( ?dsstox                      ?assay                     )
@@ -54,12 +51,12 @@ WHERE {
         ?assay iceprop:throughMechanisticTarget ?mt  .
       }
 
-
       FILTER( ?response NOT IN ( 'Flag-Omit', 'QC-Omit' ) )
       FILTER( STRSTARTS(?moa, 'DART') )
     }
 }
-GROUP BY ?assay ?graph ?chem_name ?endpoint ?endpoint_label ?response ?response_unit 
-LIMIT 200000
-## R -e 'arrow::read_parquet( biobricks::bbassets("ice")$cHTS2022_invitrodb34_20220302_parquet) |>
-##    subset( DTXSID == "DTXSID0022436" & Assay == "ACEA_ER_80hr" )'
+GROUP BY
+  ?dsstox ?assay
+  ?chem_name
+  ?endpoint_label ?response ?response_unit
+  ?graph

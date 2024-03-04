@@ -77,10 +77,29 @@ upset(df, recode_map)
 # Chemical by Dataset
 
 ```{r}
-query <- read_file('report/2024-02-23/chemical-by-database.rq');
+query <- read_file('report/2024-02-23/chemical-by-database.rq')
 cat( query )
 
 df <- SPARQL(endpoint,query)$results
+
+str(df)
+```
+
+## Assay, chemical, MOA
+
+
+```{r}
+query <- read_file('report/2024-02-23/assay-chemical-moa-specific.rq')
+cat( query )
+
+df <- SPARQL(endpoint,query)$results
+
+str(df)
+```
+
+```{r}
+arrow::read_parquet( biobricks::bbassets("ice")$cHTS2022_invitrodb34_20220302_parquet) |>
+	subset( DTXSID == "DTXSID0022436" & Assay == "ACEA_ER_80hr", c(DTXSID, Assay, ChemicalName, Endpoint, Response, ResponseUnit) )
 ```
 
 ## Session Info

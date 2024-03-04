@@ -1,7 +1,7 @@
 ## DESCRIPTION:
 ##
-## Look up the names of chemical entities and optionally their CAS RN and
-## DSSTOX SID if available. Indicate which graph the data come from.
+## Look up the names of chemical entities by their DSSTOX SID and optionally
+## their CAS RN if available. Indicate which graph the data came from.
 ##
 ## Does not remove the ?file= suffix in the query like <report/2024-01-15/chemical-name-id.rq> does.
 PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
@@ -13,22 +13,23 @@ PREFIX dce:     <http://purl.org/dc/elements/1.1/>
 PREFIX BAO:     <http://www.bioassayontology.org/bao#BAO_>
 
 SELECT
-    ?chem ?dsstox ?cas
+    DISTINCT ?dsstox
+    ( GROUP_CONCAT(?name;separator=", ") AS ?names  )
+    ( GROUP_CONCAT(?cas_rn;separator=", ") AS ?cas_rns  )
     ( GROUP_CONCAT(?graph;separator=", ") AS ?graphs  )
 WHERE {
     graph ?graph {
-      ?chem a          CHEMINF:000000;
-            rdfs:label ?name .
+      ?chem a          CHEMINF:000000   ; # chemical entity
+            rdfs:label ?name            ; # with name
+            EDAM:has_identifier ?dsstox . # and ID
+
+      ?dsstox a CHEMINF:000568. # DSSTOX SID
+
       OPTIONAL {
-	?chem   EDAM:has_identifier ?dsstox.
-	?dsstox a                   CHEMINF:000568. # DSSTOX SID
-      }
-      OPTIONAL {
-	?chem EDAM:has_identifier ?cas.
-	?cas  a                   CHEMINF:000446.   # CAS RN
+        ?chem   EDAM:has_identifier ?cas_rn.
+        ?cas_rn a                   CHEMINF:000446. # CAS RN
       }
     }
 }
-GROUP BY ?chem ?dsstox ?cas
-ORDER BY ?chem
-LIMIT 200000
+GROUP BY ?dsstox
+LIMIT 2000

@@ -1,6 +1,6 @@
 ## DESCRIPTION:
 ##
-## TODO
+## Retrieves endpoint responses chemicals and assays.
 PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
@@ -16,26 +16,27 @@ PREFIX iceprop: <https://ice.ntp.niehs.nih.gov/property/>
 
 
 SELECT
+    ?dsstox ?assay
     ?chem_name
-    ?dsstox ?cas
-    ?assay
-    ?endpoint_label
-    ?response ?response_unit
-    ?moa  ?mt
+    ?endpoint_label ?response ?response_unit
+    ?moa ?mt
     ?graph
 WHERE {
     graph ?graph {
       ?assay BAO:0000209 ?measure_group. # (has measure group)
+      ?chem  RO:0000056  ?measure_group. # (participates in)
+
+      ?chem a                   CHEMINF:000000  ;
+            rdfs:label          ?chem_name      ;
+            EDAM:has_identifier ?dsstox         .
 
       ?measure_group OBI:0000299 ?endpoint . # (has specified output)
 
-      #?measure_group RO:0000057  ?chem    ; # (has participant)
-
       ?endpoint
-        rdfs:label    ?endpoint_label ;
-        IAO:0000136   ?chem           ; # (is about)
-        SIO:has-value ?response       ;
-        SIO:has-unit  ?response_unit  .
+        rdfs:label    ?endpoint_label;
+        IAO:0000136   ?chem          ; # (is about)
+        SIO:has-value ?response      ;
+        SIO:has-unit  ?response_unit .
 
       OPTIONAL {
         ?assay iceprop:mayInformOn              ?moa .
@@ -44,20 +45,8 @@ WHERE {
         ?assay iceprop:throughMechanisticTarget ?mt  .
       }
 
-      ?chem a          CHEMINF:000000;
-            rdfs:label ?chem_name .
-
-      OPTIONAL {
-        ?chem   EDAM:has_identifier ?dsstox.
-        ?dsstox a                   CHEMINF:000568. # DSSTOX SID
-      }
-      OPTIONAL {
-        ?chem EDAM:has_identifier ?cas.
-        ?cas  a                   CHEMINF:000446.   # CAS RN
-      }
-
       FILTER( ?response NOT IN ( 'Flag-Omit', 'QC-Omit' ) )
       FILTER( STRSTARTS(?moa, 'DART') )
     }
 }
-LIMIT 200000
+LIMIT 200
