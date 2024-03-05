@@ -60,3 +60,4 @@ GROUP BY
   ?chem_name
   ?endpoint_label ?response ?response_unit
   ?graph
+ORDER BY ?endpoint_label

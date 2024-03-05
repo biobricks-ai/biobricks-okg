@@ -33,10 +33,12 @@ make db-fuseki-up
 
 Set up preliminaries and define query:
 
-```{r, sparql-query}
+```{r, sparql-endpoint}
 # Define the endpoint
-endpoint <- 'http://localhost:8080/hdtservice/'
+if(!exists('endpoint')) endpoint <- 'http://localhost:8080/hdtservice/'
+```
 
+```{r, sparql-query}
 # create query statement
 query <- read_file('report/2024-02-23/invitrodb-toxcast-vs-ice-graph.rq')
 cat( query )
@@ -58,7 +60,7 @@ recode_map <- tribble(
 
 df <- df |>
 	# remove "?file=" parameter suffix
-	mutate( graph = str_replace(graph, r'(\?file=.*$)', '' ) ) |>
+	mutate( graph = str_replace(graph, r'(\?file=.*>$)', '>' ) ) |>
 	# to factor
 	mutate(across(c(graph), as.factor)) |>
 	# rename graph IRIs to simple names
@@ -94,7 +96,7 @@ cat( query )
 
 df <- SPARQL(endpoint,query)$results
 
-str(df)
+df
 ```
 
 ```{r}
