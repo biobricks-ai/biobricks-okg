@@ -17693,14 +17693,6 @@ datasets:
           Need original data to differentiate between assay ID (`aid`), assay
           component ID (`acid`), and assay endpoint ID (`aeid`).
         elements:
-          - _Assay:
-              columns:
-                - aeid
-                - aenm
-              mapper:
-                ValueLabel:
-                  class: Assay
-                  label_column: aenm
           - _ChemicalEntity:
               columns:
                 - dsstox_substance_id
@@ -17796,7 +17788,9 @@ datasets:
                   class: ~
               columns:
                 - aeid
-              mapper: {}
+              mapper:
+                Value:
+                  value: AssayID_InvitroDB
           - aenm:
               _mapper_alts:
                 Class:
@@ -18549,6 +18543,9 @@ mappings:
       dce:source  "InvitroDB"      .
 
     <(Assay_InvitroDB)>
+      invitrodb:assayID "(AssayID_InvitroDB)".
+
+    <(Assay_InvitroDB)>
       ncim:C1708327                         <(MechanisticTarget_NCIm_Term)> . # (Has_Target)
 
     <(Assay_InvitroDB)>
@@ -18615,6 +18612,10 @@ prefixes:
     description: |
       Ad hoc.
     uri: https://ice.ntp.niehs.nih.gov/property/
+  invitrodb:
+    description: |
+      Ad hoc.
+    uri: https://comptox.epa.gov/property/
   ncbigene:
     uri: https://www.ncbi.nlm.nih.gov/gene/
   biolink:
@@ -18633,4 +18634,5 @@ values:
   AssaySpecies_InvitroDB: ~
   AssayTissue_InvitroDB: ~
   AssayInvitroAssayFormat_InvitroDB: ~
+  AssayID_InvitroDB: ~
   HitcallResponse: ~
