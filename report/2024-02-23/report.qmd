@@ -101,7 +101,8 @@ df
 
 ```{r}
 arrow::read_parquet( biobricks::bbassets("ice")$cHTS2022_invitrodb34_20220302_parquet) |>
-	subset( DTXSID == "DTXSID0022436" & Assay == "ACEA_ER_80hr", c(DTXSID, Assay, ChemicalName, Endpoint, Response, ResponseUnit) )
+	subset( DTXSID == "DTXSID0022436" & Assay == "ACEA_ER_80hr", c(DTXSID, Assay, ChemicalName, Endpoint, Response, ResponseUnit) ) |>
+	arrange(Endpoint)
 ```
 
 ## Session Info
