@@ -1,0 +1,17 @@
+@startuml
+hide empty members
+hide circle
+skinparam classAttributeIconSize 0
+class _HitcallEndpoint_ as "<(HitcallEndpoint)>"
+_HitcallEndpoint_ : {field} a BAO:0000179
+class _Endpoint_ as "<(Endpoint)>"
+_HitcallEndpoint_ -up-|> _Endpoint_
+class _Chemical_Entity_ as "<(Chemical_Entity)>"
+_HitcallEndpoint_ -down-> _Chemical_Entity_ : IAO:0000136
+_HitcallEndpoint_ : {field} SIO:has-value "(HitcallResponse)"
+_HitcallEndpoint_ : {field} rdfs:label "hitcall"
+class _Measure_Group_ as "<(Measure_Group)>"
+_Measure_Group_ : {field} a BAO:0000040
+_Measure_Group_ -down-> _Chemical_Entity_ : RO:0000057
+_Measure_Group_ -down-> _HitcallEndpoint_ : OBI:0000299
+@enduml

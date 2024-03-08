@@ -2,7 +2,22 @@
 hide empty members
 hide circle
 skinparam classAttributeIconSize 0
-class _HitcallEndpoint_ as "<(HitcallEndpoint)>"
-_HitcallEndpoint_ : {field} <http://semanticscience.org/resource/SIO_has-value> "(HitcallResponse)"
-_HitcallEndpoint_ : {field} rdfs:label "hitcall"
+class _Assay_InvitroDB_ as "<(Assay_InvitroDB)>"
+_Assay_InvitroDB_ : {field} a BAO:0000015
+class _NCBIGene_ as "<(NCBIGene)>"
+_Assay_InvitroDB_ -down-> _NCBIGene_ : iceprop:assay_entrez_gene_id
+class _MechanisticTarget_NCIm_Term_ as "<(MechanisticTarget_NCIm_Term)>"
+_Assay_InvitroDB_ -down-> _MechanisticTarget_NCIm_Term_ : iceprop:throughMechanisticTarget_NCIm\nncim:C1708327
+class _Assay_ as "<(Assay)>"
+_Assay_InvitroDB_ -up-|> _Assay_
+class _Measure_Group_ as "<(Measure_Group)>"
+_Assay_InvitroDB_ -down-> _Measure_Group_ : BAO:0000209
+_Assay_InvitroDB_ : {field} dce:source "InvitroDB"
+_Assay_InvitroDB_ : {field} iceprop:assay_invitro_assay_format "(AssayInvitroAssayFormat_InvitroDB)"
+_Assay_InvitroDB_ : {field} iceprop:assay_source "(AssaySource_InvitroDB)"
+_Assay_InvitroDB_ : {field} iceprop:assay_species "(AssaySpecies_InvitroDB)"
+_Assay_InvitroDB_ : {field} iceprop:assay_tissue "(AssayTissue_InvitroDB)"
+_Assay_InvitroDB_ : {field} iceprop:mayInformOn "(ICE_MOA)"
+_Assay_InvitroDB_ : {field} iceprop:throughMechanisticTarget "(ICE_MT)"
+_Assay_InvitroDB_ : {field} invitrodb:assayID "(AssayID_InvitroDB)"
 @enduml
