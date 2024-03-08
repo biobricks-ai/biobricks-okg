@@ -27,6 +27,7 @@ stages/ice.rml.ttl: model/ice.rml.ttl    \
 		| grep -v 'ERROR StatusConsoleListener'   \
 		> stages/ice.rml.ttl
 
+PLANTUML_FORMAT := svg
 plantuml-generate: okg-ml.yaml
 	./vendor/biobricks-okg-tool/bin/okg.pl yaml plantuml --file okg-ml.yaml --output-dir puml
-	find puml -type f -name '*.puml' -exec plantuml {} \;
+	find puml -type f -name '*.puml' -exec plantuml -t$(PLANTUML_FORMAT) {} \;
