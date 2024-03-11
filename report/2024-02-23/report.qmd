@@ -14,11 +14,11 @@ pacman::p_load(here, remotes, dplyr, stringr, readr, reshape2, ggplot2, ComplexU
 if (!require("SPARQL")) remotes::install_github('cran/SPARQL')
 pacman::p_load(SPARQL)
 
-setwd( here::here() )
+setwd( ifelse(exists('wd'), wd, here::here() ) )
 knitr::opts_knit$set(
-    root.dir = here::here()
+    root.dir = getwd()
 )
-Sys.setenv(HERE=here::here())
+Sys.setenv(HERE=getwd())
 ```
 
 
