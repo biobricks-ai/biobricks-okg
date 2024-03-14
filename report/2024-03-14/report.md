@@ -44,7 +44,7 @@ Cons:
     HDT is not usable directly for most languages so must be converted back to
     a text format like N-Triples if trying to use without `hdt-java` library.
 - [**DataOps**]
-    Currently using very large graphs such as Uniprot (specifically in
+    Currently using very large graphs such as UniProt (specifically in
     HDT format) with Jena Fuseki is quite slow. But for most datasets this is
     not a problem as most graphs are not that large.
 
@@ -79,6 +79,17 @@ Cons:
 
 Future development:
 
+- [**Data engineer**]
+    Need to create a repository of SPARQL queries to answer questions. Existing
+    examples of this at endpoints for other datasets are:
+      - [PubChemRDF](https://pubchem.ncbi.nlm.nih.gov/docs/rdf-use-cases)
+      - [UniProt](https://sparql.uniprot.org/.well-known/sparql-examples/)
+      - [OrthoDB](https://sparql.orthodb.org/)
+      - [WikiPathways](https://sparql.wikipathways.org/), [Query repo](https://github.com/wikipathways/SPARQLQueries)
+
+    This can be distributed with the individual bricks for queries related to
+    data within the brick itself and in another repository for queries that
+    integrate multiple data sources.
 - [**DataOps**]
     Need to set up improved loading which keeps track of data that has changed
     so that old data can be removed and replaced with new data (possible to
@@ -88,6 +99,8 @@ Future development:
     URLs for a particular version of the ontology.
 
 ## LLM for SPARQL generation
+
+Description:
 
 - Frontend to the SPARQL endpoint that allows for a natural language
   interface that feels more like "question answering".
