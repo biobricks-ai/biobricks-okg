@@ -29,6 +29,8 @@ Pros:
 - [**Data scientist**]
     Can download original data.
 - [**Data scientist**]
+    Able to pin a specific version of the data for a given project.
+- [**Data scientist**]
     Possible to immediately load these data into a Jena Fuseki SPARQL endpoint
     for local querying without having to wait for database indexing (this exists
     via the `make db-fuseki-up` Makefile target).
@@ -56,6 +58,13 @@ Future development:
 - [**Data owner**, **Data engineer**]
     May need more coordination to prepare for updates to the data and schema
     changes.
+- [**Data engineer**]
+    Improve the generation of documentation for the schema. It needs more
+    information than what what is in the PlantUML output. A good example is
+    the PubChemRDF documentation
+    ([1](https://pubchem.ncbi.nlm.nih.gov/docs/rdf-intro#section=PubChemRDF-Graphs),
+    [2](https://pubchem.ncbi.nlm.nih.gov/docs/rdf-intro#section=Ontology-based-Data-Integration),
+    [3](https://pubchem.ncbi.nlm.nih.gov/docs/rdf-uri)).
 
 ## SPARQL endpoint
 
@@ -73,6 +82,9 @@ Pros:
 
 Cons:
 
+- [**Data scientist**]
+     Requires learning / writing SPARQL.
+
 - [**DataOps**]
     Datasets can not be used immediately. Need to be loaded and indexed first.
     This can take a while.
@@ -82,10 +94,10 @@ Future development:
 - [**Data engineer**]
     Need to create a repository of SPARQL queries to answer questions. Existing
     examples of this at endpoints for other datasets are:
-      - [PubChemRDF](https://pubchem.ncbi.nlm.nih.gov/docs/rdf-use-cases)
-      - [UniProt](https://sparql.uniprot.org/.well-known/sparql-examples/)
-      - [OrthoDB](https://sparql.orthodb.org/)
-      - [WikiPathways](https://sparql.wikipathways.org/), [Query repo](https://github.com/wikipathways/SPARQLQueries)
+     * [PubChemRDF](https://pubchem.ncbi.nlm.nih.gov/docs/rdf-use-cases),
+     * [UniProt](https://sparql.uniprot.org/.well-known/sparql-examples/),
+     * [OrthoDB](https://sparql.orthodb.org/),
+     * [WikiPathways](https://sparql.wikipathways.org/) ([Query repo](https://github.com/wikipathways/SPARQLQueries)).
 
     This can be distributed with the individual bricks for queries related to
     data within the brick itself and in another repository for queries that
@@ -104,6 +116,7 @@ Description:
 
 - Frontend to the SPARQL endpoint that allows for a natural language
   interface that feels more like "question answering".
+- Currently the approach uses the [SPARQL Query Template](https://community.openlinksw.com/t/using-sparql-query-templates-to-fine-tune-chatgpts-large-language-model-llm/3842) prompting approach.
 
 Pros:
 
@@ -126,3 +139,22 @@ Future development:
 
 - [**DataOps**]
      Automatically create the prompts and knowledge base for the LLM.
+     A repository of SPARQL queries and list of ontologies uses will help with
+     generating this.
+
+# Use case ideas
+
+There are several potential use cases recorded as issues:
+
+- [Developmental toxicity of substance X · Issue #14 · biobricks-ai/biobricks-okg · GitHub](https://github.com/biobricks-ai/biobricks-okg/issues/14)
+- [Mapping of Modes of Action · Issue #15 · biobricks-ai/biobricks-okg · GitHub](https://github.com/biobricks-ai/biobricks-okg/issues/15)
+
+Take existing methods in regulatory toxicology and perform part of the data
+analysis using the knowledge graph.
+
+- read-across frameworks
+  * [Exploring Current Read-across Applications and Needs Among Selected U.S. Federal Agencies - PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6814248/)
+- chemical similarity and fingerprinting methods
+  * Some of these can be computed on-the-fly so do not need to be stored on
+    disk. This might require some way of presenting a virtual knowledge graph (and
+    using federation)?
