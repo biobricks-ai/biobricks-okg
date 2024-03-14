@@ -17,6 +17,10 @@ services:
       - DBA_PASSWORD=dba
       # Add '/data' to `DirsAllowed` in `virtuoso.ini` file
       - 'VIRT_Parameters_DirsAllowed=., ../vad, /usr/share/proj, /data'
+      # Set buffers. See
+      # <https://vos.openlinksw.com/owiki/wiki/VOS/VirtRDFPerformanceTuning>
+      - "VIRT_Parameters_NumberOfBuffers=${DB_VIRTUOSO_Parameters_NumberOfBuffers:-10000}"
+      - "VIRT_Parameters_MaxDirtyBuffers=${DB_VIRTUOSO_Parameters_MaxDirtyBuffers:-6000}"
     ports:
       - "1111:1111"
       - "${DB_VIRTUOSO_HTTP_PORT:-8890}:8890"
