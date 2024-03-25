@@ -1,0 +1,101 @@
+## DESCRIPTION
+##
+## - Search for compound by synonym.
+## - Filters those that are a kind of cheminf:CHEMINF_000061 (identifying descriptor).
+##
+## Computes the MD5 sum of the ?name to find the synonym via a database
+## specific extension for db:Virtuoso.
+##
+## @param ?name name or other identifying descriptor to search for.
+##
+## @return the PubChem CID (compound ID, ?compound) and Preferred IUPAC Name (?iupac_name)
+##
+## @graphdb db:Virtuoso
+
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sio:     <http://semanticscience.org/resource/>
+PREFIX cheminf: <http://semanticscience.org/resource/>
+
+PREFIX pubchem:      <http://rdf.ncbi.nlm.nih.gov/pubchem/>
+PREFIX pccompound:   <http://rdf.ncbi.nlm.nih.gov/pubchem/compound/>
+PREFIX pcsynonym:    <http://rdf.ncbi.nlm.nih.gov/pubchem/synonym/>
+PREFIX pcdescriptor: <http://rdf.ncbi.nlm.nih.gov/pubchem/descriptor/>
+
+SELECT
+  ?compound
+  ?iupac_name
+  ( GROUP_CONCAT(?name;separator=", ") AS ?names  )
+WHERE {
+  VALUES ( ?name             )
+     {   ( 'aspirin'              )
+         ( 'acetylsalicylic acid' )
+
+         ( 'acetaminophen'        )
+         ( 'Tylenol'              )
+
+         ( 'methanol'             )
+         ( 'MeOH'                 )
+
+         ( 'ethanol'              )
+
+         ( '2-phenylphenol'       )
+         ( 'o-phenylphenol'       )
+
+         ( 'biphenyl'             )
+         ( 'lemonene'             )
+
+         # DTXSID: PubChemRDF data has rdf:type for both a chemical database identifier and a
+         # molecular entity name.
+         ( 'DTXSID8031077'        )
+
+         # CAS RN has rdf:type for only cheminf:CHEMINF_000446 (CAS registry
+         # number) which is a rdf:subClassOf cheminf:CHEMINF_000464 (chemical database identifier).
+         ( '58-08-2'              )
+     }
+
+  # Convert to synonym IRI per
+  # <https://pubchem.ncbi.nlm.nih.gov/docs/rdf-uri>.
+  #
+  # <blockquote>
+  #   The URI for the depositor-provided synonyms was constructed
+  #   based on MD5 hash values, after first converting chemical names
+  #   to lower-case.
+  # </blockquote>
+  BIND(IRI(
+    CONCAT(
+      STR(pcsynonym:MD5_),
+      bif:md5(LCASE(?name)) ) ) AS ?synonym)
+
+  GRAPH pubchem:synonym {
+    ?synonym
+      sio:SIO_000011 ?compound ;
+      sio:SIO_000300 ?name     .
+  }
+
+  # Outside of GRAPH { } because the property path needs to work on
+  # the union of the graphs.
+  FILTER EXISTS {
+    # cheminf:CHEMINF_000043 (molecular entity name)
+    # cheminf:CHEMINF_000061 (identifying descriptor)
+    #
+    # Relation:
+    #   cheminf:CHEMINF_000043 rdfs:subClassOf cheminf:CHEMINF_000061 .
+    BIND( cheminf:CHEMINF_000043 AS ?cls_cheminf_name    )
+    BIND( cheminf:CHEMINF_000061 AS ?cls_cheminf_id_desc )
+    ?synonym
+        a/rdfs:subClassOf*  ?cls_cheminf_id_desc .
+  }
+
+  # cheminf:CHEMINF_000382 (Preferred IUPAC Name)
+  BIND( cheminf:CHEMINF_000382 AS ?cls_iupac_name )
+  ?compound
+    sio:SIO_000008
+      [
+        a              ?cls_iupac_name ;
+        sio:SIO_000300 ?iupac_name     ;
+      ].
+
+  FILTER( STRSTARTS(STR(?compound), STR(pccompound:)) )
+  FILTER( STRSTARTS(STR(?synonym) , STR(pcsynonym:) ) )
+}
+GROUP BY ?compound ?iupac_name
