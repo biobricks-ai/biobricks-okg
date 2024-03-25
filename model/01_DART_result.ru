@@ -88,3 +88,5 @@ WHERE
     )
   }
 }
+
+# vim: ft=sparql

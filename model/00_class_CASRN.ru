@@ -39,3 +39,5 @@ WHERE
     )
   }
 }
+
+# vim: ft=sparql

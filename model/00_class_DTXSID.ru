@@ -38,3 +38,5 @@ INSERT {
     )
   }
 }
+
+# vim: ft=sparql

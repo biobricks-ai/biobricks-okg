@@ -1,3 +1,4 @@
 fuseki_config.ttl  -diff linguist-generated=true
 puml/*.puml        -diff linguist-generated=true
 stages/*.rml.ttl   -diff linguist-generated=true
+model/*.ru         linguist-language=SPARQL
