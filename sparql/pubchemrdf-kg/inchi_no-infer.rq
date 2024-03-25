@@ -1,0 +1,42 @@
+## DESCRIPTION
+##
+## Finds the InChI for a given compound name (?name).
+##
+## @param ?name compound name
+##
+## @return
+##
+##  ?compound [IRI]     PubChem Compound ID (CID)
+##  ?inchi    [literal] InChI descriptor
+
+PREFIX rdfs:       <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sio:        <http://semanticscience.org/resource/>
+PREFIX cheminf:    <http://semanticscience.org/resource/>
+PREFIX pubchem:    <http://rdf.ncbi.nlm.nih.gov/pubchem/>
+PREFIX pccompound: <http://rdf.ncbi.nlm.nih.gov/pubchem/compound/>
+PREFIX pcsynonym:  <http://rdf.ncbi.nlm.nih.gov/pubchem/synonym/>
+
+SELECT
+  ?compound
+  ?name
+  ?inchi
+WHERE {
+  # INPUT
+  BIND( 'aspirin' AS ?name )
+
+  # InChI descriptor
+  BIND( cheminf:CHEMINF_000113 AS ?cls_cheminf_inchi )
+
+  GRAPH pubchem:synonym {
+    ?synonym sio:SIO_000300 ?name     ;
+             sio:SIO_000011 ?compound .
+  }
+
+  #  cheminf:CHEMINF_000396 rdfs:subClassOf cheminf:CHEMINF_000113 .
+  ?compound sio:SIO_000008 [
+    a/rdfs:subClassOf* ?cls_cheminf_inchi ;
+    sio:SIO_000300     ?inchi             ;
+  ].
+}
+LIMIT 1

@@ -1,0 +1,90 @@
+## DESCRIPTION
+##
+## Given a chemical name (?name), retrieves multiple attributes for a chemical
+## at once including the
+##
+##   - InChI descriptor
+##   - InChIKey
+##   - DrugBank identifier
+##
+## Uses db:Virtuoso extensions
+##   - for computing MD5 and
+##   - for enabling inference.
+##
+## @graphdb db:Virtuoso
+
+# Enables inference in db:Virtuoso.
+DEFINE input:inference 'urn:ontology'
+
+PREFIX rdfs:       <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sio:        <http://semanticscience.org/resource/>
+PREFIX pubchem:    <http://rdf.ncbi.nlm.nih.gov/pubchem/>
+PREFIX pccompound: <http://rdf.ncbi.nlm.nih.gov/pubchem/compound/>
+PREFIX pcsynonym:  <http://rdf.ncbi.nlm.nih.gov/pubchem/synonym/>
+PREFIX cheminf:    <http://semanticscience.org/resource/>
+PREFIX CHEBI:      <http://purl.obolibrary.org/obo/CHEBI_>
+
+SELECT
+  "PubChem Compound" AS ?cid_label
+  ?compound
+  "PubChem Synonym"  AS ?synonym_label
+  ?synonym
+
+  ?cls_cheminf_name_lbl       ?name
+  ?cls_cheminf_inchi_lbl      ?inchi
+  ?cls_cheminf_inchiKey_lbl   ?inchiKey
+  ?cls_cheminf_drugbankID_lbl ?drugbankID
+WHERE {
+  # INPUT
+  VALUES ( ?name           )
+     {   ( 'aspirin'       )
+         #( 'acetaminophen' )
+         #( 'tylenol'       )
+     }
+
+  # Compute MD5 in db:Virtuoso.
+  BIND(IRI(
+    CONCAT(
+      STR(pcsynonym:MD5_),
+      bif:md5(LCASE(?name)) ) ) AS ?synonym)
+
+  BIND( cheminf:CHEMINF_000043 AS ?cls_cheminf_name        )
+  BIND( cheminf:CHEMINF_000113 AS ?cls_cheminf_inchi       )
+  BIND( cheminf:CHEMINF_000059 AS ?cls_cheminf_inchiKey    )
+  BIND( cheminf:CHEMINF_000406 AS ?cls_cheminf_drugbankID  )
+
+  ?cls_cheminf_name       rdfs:label ?cls_cheminf_name_lbl       .
+  ?cls_cheminf_inchi      rdfs:label ?cls_cheminf_inchi_lbl      .
+  ?cls_cheminf_inchiKey   rdfs:label ?cls_cheminf_inchiKey_lbl   .
+  ?cls_cheminf_drugbankID rdfs:label ?cls_cheminf_drugbankID_lbl .
+
+  GRAPH pubchem:synonym {
+    ?synonym
+      sio:SIO_000011 ?compound               ;
+      a              ?cls_cheminf_name       ;
+      sio:SIO_000300 ?name                   .
+  }
+
+  ?compound
+    sio:SIO_000008
+      #[
+      #  a              ?cls_cheminf_name       ;
+      #  sio:SIO_000300 ?name                   ;
+      #],
+      [
+        a              ?cls_cheminf_inchi      ;
+        sio:SIO_000300 ?inchi                  ;
+      ],
+      [
+        a              ?cls_cheminf_inchiKey   ;
+        sio:SIO_000300 ?inchiKey               ;
+      ],
+      [
+        a              ?cls_cheminf_drugbankID ;
+        sio:SIO_000300 ?drugbankID             ;
+      ].
+
+  FILTER( STRSTARTS(STR(?compound), STR(pccompound:)) )
+}
+LIMIT 1

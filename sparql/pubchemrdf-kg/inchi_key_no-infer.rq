@@ -1,0 +1,85 @@
+## DESCRIPTION
+##
+## Finds the InChIKey for a given compound name.
+##
+## @param ?name [literal] molecular entity name
+##
+## @return ?inchiKey [literal] InChIKey identifier
+##
+## @graphdb db:All
+##
+## No inference used for this query.
+##
+## NOTE: using Virtuoso inference when manual inference operations are utilised makes the
+## query take too long.
+
+PREFIX rdfs:       <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sio:        <http://semanticscience.org/resource/>
+PREFIX cheminf:    <http://semanticscience.org/resource/>
+PREFIX pubchem:    <http://rdf.ncbi.nlm.nih.gov/pubchem/>
+PREFIX pccompound: <http://rdf.ncbi.nlm.nih.gov/pubchem/compound/>
+PREFIX pcsynonym:  <http://rdf.ncbi.nlm.nih.gov/pubchem/synonym/>
+
+SELECT ?inchiKey
+WHERE {
+  # INPUT
+  BIND( 'aspirin' AS ?name )
+
+  GRAPH pubchem:synonym {
+    ?synonym sio:SIO_000300 ?name     ;
+             sio:SIO_000011 ?compound .
+  }
+
+  # Manual owl:inverseOf
+  #
+  # In SIO ontology:
+  #
+  #  sio:SIO_000008 owl:inverseOf sio:SIO_000011 .
+  #
+  # Data contains:
+  #
+  #   ?inchiKeyAttribute sio:SIO_000011 ?compound .
+  #
+  # but not
+  #
+  #   ?compound          sio:SIO_000008 ?inchiKeyAttribute .
+
+  ?compound ^sio:SIO_000011 ?inchiKeyAttribute .
+
+  # Manual transitive rdfs:subClassOf
+  #
+  # Searches for InChIKey identifier or its subclasses.
+
+  # InChIKey identifier
+  BIND( cheminf:CHEMINF_000059 AS ?cls_cheminf_inchiKey       )
+  ?inchiKeyAttribute a/rdfs:subClassOf* ?cls_cheminf_inchiKey ;
+                     sio:SIO_000300     ?inchiKey             .
+}
+LIMIT 1
+
+##############################
+## Alternatively:
+##
+## This uses the attribute property and its inverse throughout, not just in the
+## single location where it is explicit.
+##
+# SELECT ?inchiKey
+# WHERE {
+#   # INPUT
+#   BIND( 'aspirin' AS ?name )
+#
+#   # InChIKey identifier
+#   BIND( cheminf:CHEMINF_000059 AS ?cls_cheminf_inchiKey       )
+#
+#   GRAPH pubchem:synonym {
+#     ?synonym sio:SIO_000300                 ?name     ;
+#              ^sio:SIO_000008|sio:SIO_000011 ?compound .
+#   }
+#
+#   ?compound sio:SIO_000008|^sio:SIO_000011 [
+#     a/rdfs:subClassOf* ?cls_cheminf_inchiKey ;
+#     sio:SIO_000300     ?inchiKey             ;
+#   ].
+# }
+# LIMIT 1
