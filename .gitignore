@@ -23,3 +23,5 @@ stages/*.gen.ini
 
 # for Docker Compose
 docker-graph-volumes.json
+
+/puml/*.png

@@ -20,3 +20,6 @@ PLANTUML_FORMAT := svg
 plantuml-generate: okg-ml.yaml
 	./vendor/biobricks-okg-tool/bin/okg.pl yaml plantuml --file okg-ml.yaml --output-dir puml
 	find puml -type f -name '*.puml' -exec plantuml -t$(PLANTUML_FORMAT) {} \;
+
+plantuml-convert-svg-to-png:
+	find puml -type f -name '*.svg' | parallel 'inkscape {} --export-filename {.}.png'
