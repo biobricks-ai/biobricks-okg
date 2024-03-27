@@ -2,6 +2,8 @@
 
 set -eu
 
+# $ gem install rdf-normalize
+
 INPUT="$1"
 BASE="$2"
 ( \
