@@ -8,7 +8,7 @@ class _Endpoint_ as "<(Endpoint)>"
 _HitcallEndpoint_ -up-|> _Endpoint_
 class _Chemical_Entity_ as "<(Chemical_Entity)>"
 _HitcallEndpoint_ -down-> _Chemical_Entity_ : IAO:0000136
-_HitcallEndpoint_ : {field} SIO:has-value "(HitcallResponse)"
+_HitcallEndpoint_ : {field} SIO:000300 "(HitcallResponse)"
 _HitcallEndpoint_ : {field} rdfs:label "hitcall"
 class _Measure_Group_ as "<(Measure_Group)>"
 _Measure_Group_ : {field} a BAO:0000040

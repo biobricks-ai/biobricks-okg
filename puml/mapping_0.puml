@@ -6,27 +6,27 @@ class _Assay_ as "<(Assay)>"
 _Assay_ : {field} a BAO:0000015 # (bioassay)
 class _Measure_Group_ as "<(Measure_Group)>"
 _Assay_ -down-> _Measure_Group_ : BAO:0000209\n(has measure group)
-_Measure_Group_ : {field} a BAO:0000040 # (measure group)
-class _Endpoint_ as "<(Endpoint)>"
-_Measure_Group_ -down-> _Endpoint_ : OBI:0000299\n(has specified output)
 class _Chemical_Entity_ as "<(Chemical_Entity)>"
-_Measure_Group_ -down-> _Chemical_Entity_ : RO:0000057\n(has participant)
-_Endpoint_ : {field} a BAO:0000179 # (result)
-_Endpoint_ -down-> _Chemical_Entity_ : IAO:0000136
-_Endpoint_ : {field} ExO:0000055 "(Route)" # [route]
-_Endpoint_ : {field} SIO:has-unit "(Response_Unit)"
-_Endpoint_ : {field} SIO:has-value "(Response)"
-class _CAS_RN_ as "<(CAS_RN)>"
-_CAS_RN_ : {field} a CHEMINF:000446 # (CAS registry number)
-_CAS_RN_ : {field} dce:source "CAS"
-_CAS_RN_ : {field} rdfs:label "(Chemical_Name)"
 _Chemical_Entity_ : {field} a CHEMINF:000000, biolink:ChemicalEntity
-_Chemical_Entity_ -down-> _Measure_Group_ : RO:0000056\n(participates in)
+class _CAS_RN_ as "<(CAS_RN)>"
 _Chemical_Entity_ -down-> _CAS_RN_ : EDAM:has_identifier
 class _DSSTOX_SID_ as "<(DSSTOX_SID)>"
 _Chemical_Entity_ -down-> _DSSTOX_SID_ : EDAM:has_identifier
+_Chemical_Entity_ -down-> _Measure_Group_ : RO:0000056\n(participates in)
 _Chemical_Entity_ : {field} rdfs:label "(Chemical_Name)"
+_CAS_RN_ : {field} a CHEMINF:000446 # (CAS registry number)
+_CAS_RN_ : {field} dce:source "CAS"
+_CAS_RN_ : {field} rdfs:label "(Chemical_Name)"
+_Measure_Group_ : {field} a BAO:0000040 # (measure group)
+class _Endpoint_ as "<(Endpoint)>"
+_Measure_Group_ -down-> _Endpoint_ : OBI:0000299\n(has specified output)
+_Measure_Group_ -down-> _Chemical_Entity_ : RO:0000057\n(has participant)
 _DSSTOX_SID_ : {field} a CHEMINF:000568 # (DSSTOX substance identifier)
 _DSSTOX_SID_ : {field} dce:source "CompTox"
 _DSSTOX_SID_ : {field} rdfs:label "(Chemical_Name)"
+_Endpoint_ : {field} a BAO:0000179 # (result)
+_Endpoint_ -down-> _Chemical_Entity_ : IAO:0000136\n(is about)
+_Endpoint_ : {field} ExO:0000055 "(Route)" # [route]
+_Endpoint_ : {field} SIO:000221 "(Response_Unit)" # [has unit]
+_Endpoint_ : {field} SIO:000300 "(Response)" # [has value]
 @enduml

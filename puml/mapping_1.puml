@@ -4,14 +4,14 @@ hide circle
 skinparam classAttributeIconSize 0
 class _Assay_InvitroDB_ as "<(Assay_InvitroDB)>"
 _Assay_InvitroDB_ : {field} a BAO:0000015
-class _NCBIGene_ as "<(NCBIGene)>"
-_Assay_InvitroDB_ -down-> _NCBIGene_ : iceprop:assay_entrez_gene_id
-class _MechanisticTarget_NCIm_Term_ as "<(MechanisticTarget_NCIm_Term)>"
-_Assay_InvitroDB_ -down-> _MechanisticTarget_NCIm_Term_ : iceprop:throughMechanisticTarget_NCIm\nncim:C1708327
-class _Assay_ as "<(Assay)>"
-_Assay_InvitroDB_ -up-|> _Assay_
 class _Measure_Group_ as "<(Measure_Group)>"
 _Assay_InvitroDB_ -down-> _Measure_Group_ : BAO:0000209
+class _NCBIGene_ as "<(NCBIGene)>"
+_Assay_InvitroDB_ -down-> _NCBIGene_ : iceprop:assay_entrez_gene_id
+class _Assay_ as "<(Assay)>"
+_Assay_InvitroDB_ -up-|> _Assay_
+class _MechanisticTarget_NCIm_Term_ as "<(MechanisticTarget_NCIm_Term)>"
+_Assay_InvitroDB_ -down-> _MechanisticTarget_NCIm_Term_ : ncim:C1708327\niceprop:throughMechanisticTarget_NCIm
 _Assay_InvitroDB_ : {field} dce:source "InvitroDB"
 _Assay_InvitroDB_ : {field} iceprop:assay_invitro_assay_format "(AssayInvitroAssayFormat_InvitroDB)"
 _Assay_InvitroDB_ : {field} iceprop:assay_source "(AssaySource_InvitroDB)"

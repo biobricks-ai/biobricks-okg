@@ -4,15 +4,18 @@
 @prefix CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_> .
 @prefix EDAM: <http://edamontology.org/> .
 @prefix ExO: <http://purl.obolibrary.org/obo/ExO_> .
+@prefix IAO: <http://purl.obolibrary.org/obo/IAO_> .
 @prefix OBI: <http://purl.obolibrary.org/obo/OBI_> .
 @prefix RO: <http://purl.obolibrary.org/obo/RO_> .
 @prefix SIO: <http://semanticscience.org/resource/SIO_> .
+@prefix biolink: <https://w3id.org/biolink/vocab/> .
 @prefix dce: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno: <https://w3id.org/function/ontology#> .
 @prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
 @prefix iceprop: <https://ice.ntp.niehs.nih.gov/property/> .
+@prefix invitrodb: <https://comptox.epa.gov/property/> .
 @prefix ncbigene: <https://www.ncbi.nlm.nih.gov/gene/> .
 @prefix ncim: <https://identifiers.org/umls:> .
 @prefix puml: <http://plantuml.com/ontology#> .
@@ -31,12 +34,52 @@
 	rml:source "data-source/tox21/tox21.parquet" ;
 	a rml:LogicalSource .
 
+</ls_tox21_data-source_tox21_tox21_aggregated.parquet>
+	dce:source "tox21" ;
+	dce:title "data-source/tox21/tox21_aggregated.parquet" ;
+	rml:referenceFormulation ql:CSV ;
+	rml:source "data-source/tox21/tox21_aggregated.parquet" ;
+	a rml:LogicalSource .
+
 </ls_tox21_data-source_tox21_tox21lib.parquet>
 	dce:source "tox21" ;
 	dce:title "data-source/tox21/tox21lib.parquet" ;
 	rml:referenceFormulation ql:CSV ;
 	rml:source "data-source/tox21/tox21lib.parquet" ;
 	a rml:LogicalSource .
+
+[]
+	rml:logicalSource </ls_tox21_data-source_tox21_tox21.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rml:reference "SAMPLE_NAME"
+		] ;
+		rr:predicate rdfs:label
+	] , [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CAS}"
+	] .
+
+[]
+	rml:logicalSource </ls_tox21_data-source_tox21_tox21_aggregated.parquet> ;
+	a rr:TriplesMap ;
+	rr:predicateObjectMap [
+		rr:objectMap [
+			rr:constant "CAS"
+		] ;
+		rr:predicate dce:source
+	] ;
+	rr:subjectMap [
+		rr:class CHEMINF:000446 ;
+		rr:template "http://identifiers.org/cas/{CAS}"
+	] .
 
 []
 	rml:logicalSource </ls_tox21_data-source_tox21_tox21lib.parquet> ;
