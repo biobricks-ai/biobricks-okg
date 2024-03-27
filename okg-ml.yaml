@@ -18512,8 +18512,8 @@ mappings:
 
     <(Endpoint)>
       IAO:0000136   <(Chemical_Entity)> ; # (is about)
-      SIO:has-value "(Response)"        ;
-      SIO:has-unit  "(Response_Unit)"   ;
+      SIO:000300    "(Response)"        ; # (has value)
+      SIO:000221    "(Response_Unit)"   ; # (has unit)
       ExO:0000055   "(Route)"           . # route
 
     <(CAS_RN)>
@@ -18535,6 +18535,8 @@ mappings:
     BAO:0000015    a puml:Inline; skos:prefLabel "bioassay".
     CHEMINF:000446 a puml:Inline; skos:prefLabel "CAS registry number".
     CHEMINF:000568 a puml:Inline; skos:prefLabel "DSSTOX substance identifier".
+    SIO:000300     a puml:Inline; skos:prefLabel "has value".
+    SIO:000221     a puml:Inline; skos:prefLabel "has unit".
   - >-
     <(Assay_InvitroDB)>
       puml:up-tri    <(Assay)>  .
@@ -18572,10 +18574,12 @@ mappings:
     <(HitcallEndpoint)>
       IAO:0000136   <(Chemical_Entity)>      ; # (is about)
       rdfs:label    "hitcall"                ;
-      SIO:has-value "(HitcallResponse)"      .
+      SIO:000300    "(HitcallResponse)"      . # (has value)
 
     OBI:0000299    a puml:Inline; skos:prefLabel "has specified output".
     RO:0000057     a puml:Inline; skos:prefLabel "has participant".
+    SIO:000300     a puml:Inline; skos:prefLabel "has value".
+    SIO:000221     a puml:Inline; skos:prefLabel "has unit".
 
 prefixes:
   BAO:
