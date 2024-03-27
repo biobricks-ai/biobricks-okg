@@ -18524,6 +18524,7 @@ mappings:
       rdfs:label "(Chemical_Name)";
       dce:source "CompTox"        .
 
+    IAO:0000136    a puml:Inline; skos:prefLabel "is about".
     ExO:0000055    a puml:Inline; skos:prefLabel "route".
     RO:0000056     a puml:Inline; skos:prefLabel "participates in".
     BAO:0000209    a puml:Inline; skos:prefLabel "has measure group".
