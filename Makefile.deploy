@@ -17,7 +17,7 @@ endef
 
 MESSAGE += $(DEPLOY_MESSAGE)
 
-tailscale-funnel-bg: docker-compose.yml
+tailscale-funnel-bg: docker-compose.yml bin-guard-tailscale bin-guard-jq bin-guard-cpanel_json_xs
 	tailscale funnel --bg $$(                                              \
 		docker compose config --format json                            \
 			| jq -r '                                              \
@@ -25,8 +25,8 @@ tailscale-funnel-bg: docker-compose.yml
 			      | map(select( .target == 8080 )).[0].published'  \
 	)
 
-tailscale-funnel-status:
+tailscale-funnel-status: bin-guard-tailscale
 	tailscale funnel status
 
-tailscale-funnel-reset:
+tailscale-funnel-reset: bin-guard-tailscale
 	tailscale funnel reset
