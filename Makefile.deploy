@@ -19,10 +19,12 @@ MESSAGE += $(DEPLOY_MESSAGE)
 
 tailscale-funnel-bg: docker-compose.yml bin-guard-tailscale bin-guard-jq bin-guard-cpanel_json_xs
 	tailscale funnel --bg $$(                                              \
-		docker compose config --format json                            \
+		docker compose config --format yaml                            \
+			| cpanel_json_xs -f yaml -t json                       \
 			| jq -r '                                              \
-	                      .services."reverse-proxy".ports                  \
-			      | map(select( .target == 8080 )).[0].published'  \
+			      .services."reverse-proxy".ports                  \
+			      | map(select( .target == "8080" ))               \
+			      | .[0].published '                               \
 	)
 
 tailscale-funnel-status: bin-guard-tailscale
