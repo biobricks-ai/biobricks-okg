@@ -32,8 +32,6 @@
               apache-jena
               apache-jena-fuseki
               jq
-              (lib.hiPrio pkgs.parallel-full) # prefer GNU Parallel over `moreutils`
-              moreutils
             ];
             env = oldAttrs.env // {
               JENA_HOME = "${apache-jena}";
