@@ -45,4 +45,4 @@ COPY --from=builder /app /app
 
 WORKDIR /work
 
-ENV PATH /app/bin:$PATH
+ENV PATH=/app/bin:$PATH

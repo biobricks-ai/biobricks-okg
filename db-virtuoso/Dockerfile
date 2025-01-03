@@ -13,13 +13,13 @@ libtest2-suite-perl \
 FROM virtuoso-base AS db
 ARG APT_PKGS_RUN
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	$APT_PKGS_RUN
 
 COPY --from=hdt-cpp /app /hdt-cpp
-ENV LD_LIBRARY_PATH /hdt-cpp/lib:$LD_LIBRARY_PATH
-ENV PATH /hdt-cpp/bin:$PATH
+ENV LD_LIBRARY_PATH=/hdt-cpp/lib:$LD_LIBRARY_PATH
+ENV PATH=/hdt-cpp/bin:$PATH
 
 FROM db as tester
 ARG APT_PKGS_TEST
