@@ -21,7 +21,7 @@ COPY --from=hdt-cpp /app /hdt-cpp
 ENV LD_LIBRARY_PATH=/hdt-cpp/lib:$LD_LIBRARY_PATH
 ENV PATH=/hdt-cpp/bin:$PATH
 
-FROM db as tester
+FROM db AS tester
 ARG APT_PKGS_TEST
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
