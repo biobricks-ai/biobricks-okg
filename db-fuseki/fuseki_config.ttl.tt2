@@ -27,7 +27,6 @@ C<< [E<0x25># ... E<0x25>] >>
 @prefix :        <#> .
 @prefix fuseki:  <http://jena.apache.org/fuseki#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
 @prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
@@ -63,65 +62,44 @@ hdt:HDTGraph rdfs:subClassOf ja:Graph .
 <#dataset> rdf:type ja:RDFDataset ;
     rdfs:label "Dataset" ;
 
-[%- USE brick_path = Directory('brick/') -%]
+[%- USE yaml = YAML;
+    config = yaml.undumpfile('graphs.yaml');
 
-    # HGNC {{{
-[% TRY -%]
-[% USE hgnc_path = Directory('data-source/internal-hgnc-kg') -%]
-[% hgnc_graphName = INCLUDE graphFromFile file="graph-meta/hgnc.graph" -%]
-[% INCLUDE hdtgraph graphName=hgnc_graphName dir=hgnc_path FILTER indent(4) %]
-[% CATCH -%]
-    # Could not load hgnc
-[% END -%]
-    # }}}
+    # Process each graph from the config
+    FOREACH name IN config.graphs.keys.sort;
+        graph = config.graphs.$name;
+        NEXT IF graph.enabled.defined && !graph.enabled;
 
-    # ICE {{{
-[% TRY -%]
-[% ice_graphName = INCLUDE graphFromFile file="graph-meta/ice.graph" -%]
-[% INCLUDE hdtgraph graphName=ice_graphName dir=brick_path nameFilter='ice' keepInMemory_nameFilter='(*ACCEPT)' FILTER indent(4) %]
-[% CATCH -%]
-    # Could not load ice
-[% END -%]
-    # }}}
+        # Get Fuseki settings
+        nameFilter = graph.fuseki.defined && graph.fuseki.nameFilter.defined
+            ? graph.fuseki.nameFilter
+            : config.settings.fuseki.defaultNameFilter;
 
-    # MeSH {{{
-[% TRY -%]
-[% USE mesh_path = Directory('data-source/mesh-kg') -%]
-[% mesh_kg_graphName = INCLUDE graphFromFile file="graph-meta/mesh-kg.graph" -%]
-[% INCLUDE hdtgraph graphName=mesh_kg_graphName dir=mesh_path FILTER indent(4) %]
-[% CATCH -%]
-    # Could not load mesh-kg
+        keepInMemory_nameFilter = graph.fuseki.defined && graph.fuseki.keepInMemory_nameFilter.defined
+            ? graph.fuseki.keepInMemory_nameFilter
+            : config.settings.fuseki.defaultKeepInMemory_nameFilter;
+-%]
+[% FOREACH src IN graph.source;
+        NEXT IF !src.exists('path');  # Skip non-path sources (e.g. URLs)
+%]
+[% IF loop.first -%]
+    # [% graph.name %] {{{
 [% END -%]
+[%-
+        USE dir = Directory(src.path);
+        # Use hdtgraph block for both single files and directories
+        INCLUDE hdtgraph
+            graphName = graph.iri
+            dir = dir
+            nameFilter = nameFilter
+            keepInMemory_nameFilter = keepInMemory_nameFilter
+        FILTER indent(4)
+-%]
+    [% IF loop.last %]
     # }}}
-
-    # Tox21 {{{
-[% TRY -%]
-[% USE tox21_path = Directory('data-source/internal-tox21-kg') -%]
-[% tox21_graphName = INCLUDE graphFromFile file="graph-meta/tox21.graph" -%]
-[% INCLUDE hdtgraph graphName=tox21_graphName dir=tox21_path FILTER indent(4) %]
-[% CATCH -%]
-    # Could not load tox21
+    [% END -%]
+[%    END; -%]
 [% END -%]
-    # }}}
-
-    # ToxCast {{{
-[% TRY -%]
-[% toxcast_graphName = INCLUDE graphFromFile file="graph-meta/toxcast.graph" -%]
-[% INCLUDE hdtgraph graphName=toxcast_graphName dir=brick_path nameFilter='toxcast' FILTER indent(4) %]
-[% CATCH -%]
-    # Could not load toxcast
-[% END -%]
-    # }}}
-
-    # UniProt {{{
-[% TRY -%]
-[% USE uniprot_path = Directory('data-source/uniprot-kg') -%]
-[% uniprot_kg_graphName = INCLUDE graphFromFile file="graph-meta/uniprot-kg.graph" -%]
-[% INCLUDE hdtgraph graphName=uniprot_kg_graphName dir=uniprot_path FILTER indent(4) %]
-[% CATCH -%]
-    # Could not load uniprot-kg
-[% END -%]
-    # }}}
 
     .
 
@@ -209,41 +187,6 @@ ja:namedGraph [
    [%- END -%]
 [% END -%]
 [% END %]
-[%# }}} %]
-[%- BLOCK graphFromFile #{{{
--%]
-[%#- graphFromFile docs {{{
-
-=head1 BLOCK graphFromFile
-
-=head2 SYNOPSIS
-
-  # toxcast_graphName contains contents of file C<stages/toxcast.graph> (a
-  # single line file containing an IRI) with newline removed
-  toxcast_graphName = INCLUDE graphFromFile file="stages/toxcast.graph"
-
-=head2 DESCRIPTION
-
-Read file contents to obtain named graph IRI.
-
-=head2 PARAMETERS
-
-=head3 C<file>
-
-Type: String
-
-[B<Required>]
-
-The file name that is used for reading. It should only contain a single line
-with an IRI.
-
-=cut
-
-}}}
-%]
-[%- input = INSERT "$file" -%]
-[%- input.trim -%]
-[%- END -%]
 [%# }}} %]
 [% # Modelines {{{
 # Modeline for generated file.
