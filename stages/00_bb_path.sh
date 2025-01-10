@@ -12,23 +12,8 @@ eval $( $localpath/vendor/biobricks-script-lib/activate.sh )
 datapath="$localpath/data-source"
 echo "Data path: $datapath"
 mkdir -p $datapath
-cd $datapath;
 
-# Define brick names to process
-brick_names='
-	bindingdb
-	chembl
-	ctdbase
-	hgnc
-	ice
-	mesh-kg
-	tox21
-	toxcast
-	toxrefdb
-	uniprot-kg
-'
-
-biobrick-setup-source --output-dir $datapath $brick_names
+biobrick-setup-source --output-dir $datapath --pull-all-deps
 
 ### Temporary set up for tox21 and hgnc
 for d in tox21 hgnc; do
