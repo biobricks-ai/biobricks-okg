@@ -38,8 +38,7 @@ stages:
       - stages/tox21.rml.ttl
       - stages/toxcast.rml.ttl
     outs:
-      - raw:
-          push: false
+      - raw
   build:
     cmd: stages/03_build.sh
     deps:
