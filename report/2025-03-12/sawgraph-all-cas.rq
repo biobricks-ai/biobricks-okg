@@ -1,0 +1,18 @@
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+PREFIX BAO: <http://www.bioassayontology.org/bao#BAO_>
+PREFIX RO: <http://purl.obolibrary.org/obo/RO_>
+PREFIX EDAM: <http://edamontology.org/>
+PREFIX CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
+
+PREFIX contaminoso: <http://sawgraph.spatialai.org/v1/contaminoso#>
+
+PREFIX CAS:     <http://identifiers.org/cas/>
+
+SELECT DISTINCT ?substance ?cas WHERE {
+  # the SAWGRAPH part
+  ?substance
+         contaminoso:casNumber   ?cas         ;  # find the substance with that CAS ID
+}
