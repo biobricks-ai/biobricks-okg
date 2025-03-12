@@ -1,0 +1,32 @@
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+PREFIX BAO: <http://www.bioassayontology.org/bao#BAO_>
+PREFIX RO: <http://purl.obolibrary.org/obo/RO_>
+PREFIX EDAM: <http://edamontology.org/>
+PREFIX CHEMINF: <http://purl.obolibrary.org/obo/CHEMINF_>
+
+PREFIX contaminoso: <http://sawgraph.spatialai.org/v1/contaminoso#>
+
+PREFIX CAS:     <http://identifiers.org/cas/>
+
+SELECT * WHERE {
+  # the BioBricks ICE part
+  ?assay
+	a           BAO:0000015            ;  # find a bioassay
+	BAO:0000209 ?measuregroup          .  # find one of its measure groups
+  ?chemical
+        ^RO:0000057         ?measuregroup  ;  # find a chemical participating in it
+        EDAM:has_identifier ?id            .  # get the ID of that chemical
+  ?id   a                   CHEMINF:000446 .  # make sure that ID is a CAS registry number
+
+  # here's *a* link between BioBricks and SAWGRAPH
+  bind(replace(strafter(str(?id),str(CAS:)),"-","") as ?cas) # strip off the URL prefix to get just that number, and strip off hyphens because that's what SAWGRAPH does
+
+  # the SAWGRAPH part
+  ?substance
+         contaminoso:casNumber   ?cas         ;  # find the substance with that CAS ID
+         ^contaminoso:ofSubstance ?observation.  # look for observations of that substance
+}
+LIMIT 10
