@@ -11,14 +11,9 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hdt-java = {
-      url = "github:insilica/nix-hdt-java";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, dev-shell, biobricks-script-lib, hdt-java }:
+  outputs = { self, nixpkgs, flake-utils, dev-shell, biobricks-script-lib }:
     flake-utils.lib.eachDefaultSystem (system:
       with import nixpkgs { inherit system; }; {
         devShells.default = dev-shell.devShells.${system}.default.overrideAttrs
@@ -34,7 +29,6 @@
                 ]); in {
             buildInputs = oldAttrs.buildInputs ++ [
               perlEnv
-              hdt-java.packages.${system}.default
               apache-jena
               apache-jena-fuseki
               jq
