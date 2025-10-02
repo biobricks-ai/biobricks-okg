@@ -1,0 +1,48 @@
+graph:
+  biobricks-aopwiki:
+    '@inherit': common.yaml
+    homepage: https://github.com/biobricks-ai/aopwikirdf-kg
+    title: BioBricks AOP-Wiki
+    description: >
+      BioBricks AOP-Wiki is an open knowledge graph for Adverse Outcome Pathways
+      from the AOP-Wiki.
+
+  biobricks-ice:
+    '@inherit': common.yaml
+    homepage: https://github.com/biobricks-ai/biobricks-okg
+    title: BioBricks ICE
+    description: >
+      BioBricks ICE (Integrated Chemical Environment) is an open knowledge graph
+      for cheminformatics and chemical safety data from EPA's CompTox database.
+
+  biobricks-mesh:
+    '@inherit': common.yaml
+    homepage: https://github.com/biobricks-ai/mesh-kg
+    title: BioBricks MeSH
+    description: >
+      BioBricks MeSH is an open knowledge graph of Medical Subject Headings (MeSH)
+      biomedical vocabulary.
+
+  biobricks-pubchem-annotations:
+    '@inherit': common.yaml
+    homepage: https://github.com/biobricks-ai/pubchem-annotations-kg
+    title: BioBricks PubChem Annotations
+    description: >
+      BioBricks PubChem Annotations is an open knowledge graph of chemical
+      annotations from PubChem.
+
+  biobricks-tox21:
+    '@inherit': common.yaml
+    homepage: https://github.com/biobricks-ai/biobricks-okg
+    title: BioBricks Tox21
+    description: >
+      BioBricks Tox21 is an open knowledge graph for Tox21 toxicology
+      screening data.
+
+  biobricks-toxcast:
+    '@inherit': common.yaml
+    homepage: https://github.com/biobricks-ai/biobricks-okg
+    title: BioBricks ToxCast
+    description: >
+      BioBricks ToxCast is an open knowledge graph for EPA ToxCast
+      high-throughput screening data.
