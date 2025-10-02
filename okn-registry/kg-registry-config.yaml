@@ -46,3 +46,14 @@ graph:
     description: >
       BioBricks ToxCast is an open knowledge graph for EPA ToxCast
       high-throughput screening data.
+
+  spoke-rdf:
+    '@inherit': common.yaml
+    homepage: https://github.com/biobricks-ai/spoke-rdf
+    title: SPOKE RDF
+    frink-options:
+      lakefs-repo: spoke-rdf
+    description: >
+      SPOKE RDF is an RDF version of SPOKE (Scalable Precision Medicine Open Knowledge
+      Engine), a biomedical knowledge graph integrating data from multiple sources
+      for precision medicine.
