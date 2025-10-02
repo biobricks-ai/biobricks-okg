@@ -58,8 +58,12 @@ funding: [% funding %]
 sparql: https://frink.apps.renci.org/[% shortname %]/sparql
 tpf: https://frink.apps.renci.org/ldf/[% shortname %]
 frink-options:
-  lakefs-repo: [% shortname %]-kg
-  documentation-path: [% shortname %]-kg
+  lakefs-repo: [% ${'frink-options'}.item('lakefs-repo') || shortname _ '-kg' %]
+  documentation-path: [%
+    ${'frink-options'}.item('documentation-path')
+    || ${'frink-options'}.item('lakefs-repo')
+    || shortname _ '-kg'
+  %]
 contact:
   email: [% contact.email %]
   github: "[% contact.github %]"
