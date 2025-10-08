@@ -6,6 +6,28 @@ graph:
     description: >
       BioBricks AOP-Wiki is an open knowledge graph for Adverse Outcome Pathways
       from the AOP-Wiki.
+    body: |
+      ```
+      provenance:
+        - derivedFrom:
+            label: AOPWikiRDF
+            uri: https://github.com/marvinm2/AOPWikiRDF
+            kind: RDF
+            license:
+              software:
+                label: MIT License
+                spdx: MIT
+                uri: https://github.com/marvinm2/AOPWikiRDF/blob/master/LICENSE
+            derivedFrom:
+              label: AOPWiki
+              kind: XML
+              uri: https://aopwiki.org/
+              license:
+                data:
+                  label: Creative Commons Attribution Share Alike
+                  spdx: CC-BY-SA-1.0
+                  uri: https://aopwiki.org/handbooks/5#content-licensing-40
+      ```
 
   biobricks-ice:
     '@inherit': common.yaml
@@ -14,6 +36,21 @@ graph:
     description: >
       BioBricks ICE (Integrated Chemical Environment) is an open knowledge graph
       for cheminformatics and chemical safety data from EPA's CompTox database.
+    body: |
+      ```
+      provenance:
+        - derivedFrom:
+            label: NICEATM ICE
+            uri: https://ice.ntp.niehs.nih.gov/
+            kind: Database
+            license:
+              data:
+                label: Public Domain
+                spdx: CC0-1.0
+                uri: https://ice.ntp.niehs.nih.gov/DATASETDESCRIPTION
+                note: >
+                  All data in ICE are publicly available with no restrictions on use.
+      ```
 
   biobricks-mesh:
     '@inherit': common.yaml
@@ -22,6 +59,19 @@ graph:
     description: >
       BioBricks MeSH is an open knowledge graph of Medical Subject Headings (MeSH)
       biomedical vocabulary.
+    body: |
+      ```
+      provenance:
+        - derivedFrom:
+            label: NLM Medical Subject Headings (MeSH)
+            uri: https://www.nlm.nih.gov/mesh/
+            kind: RDF
+            license:
+              data:
+                label: Public Domain
+                spdx: CC0-1.0
+                uri: https://www.nlm.nih.gov/databases/download/terms_and_conditions_mesh.html
+      ```
 
   biobricks-pubchem-annotations:
     '@inherit': common.yaml
@@ -30,6 +80,20 @@ graph:
     description: >
       BioBricks PubChem Annotations is an open knowledge graph of chemical
       annotations from PubChem.
+    body: |
+      ```
+      provenance:
+        - derivedFrom:
+            label: PubChem Annotations subset
+            uri: https://pubchem.ncbi.nlm.nih.gov/source/#type=Annotations
+            kind: Database
+            license:
+              data:
+                label: Multiple
+                note: >
+                  Each annotation comes from a different data source with its
+                  own licensing.
+      ```
 
   biobricks-tox21:
     '@inherit': common.yaml
@@ -38,6 +102,19 @@ graph:
     description: >
       BioBricks Tox21 is an open knowledge graph for Tox21 toxicology
       screening data.
+    body: |
+      ```
+      provenance:
+        - derivedFrom:
+            label: Tox21 Public Data
+            uri: https://tripod.nih.gov/pubdata/
+            kind: Database
+            license:
+              data:
+                label: Public Domain
+                spdx: CC0-1.0
+                uri: https://tox21.gov/overview/operational-model/
+      ```
 
   biobricks-toxcast:
     '@inherit': common.yaml
@@ -46,6 +123,18 @@ graph:
     description: >
       BioBricks ToxCast is an open knowledge graph for EPA ToxCast
       high-throughput screening data.
+    body: |
+      ```
+      provenance:
+        - derivedFrom:
+            label: EPA ToxCast
+            uri: https://www.epa.gov/comptox-tools/exploring-toxcast-data
+            kind: Database
+            license:
+              data:
+                label: Public Domain
+                spdx: CC0-1.0
+      ```
 
   spoke-rdf:
     '@inherit': common.yaml
@@ -57,3 +146,13 @@ graph:
       SPOKE RDF is an RDF version of SPOKE (Scalable Precision Medicine Open Knowledge
       Engine), a biomedical knowledge graph integrating data from multiple sources
       for precision medicine.
+    body: |
+      ```
+      provenance:
+        - derivedFrom:
+            label: SPOKE (Scalable Precision Medicine Open Knowledge Engine)
+            uri: https://spoke.ucsf.edu/
+            data-source-uri: lakefs://spoke-kg/647ad9cce7c22a557446d72995f971c004b9ec97bcee43262ce43638721f1eb0/SPOKE.rdf
+            kind: Neo4j Database
+            license: ~
+      ```
