@@ -1,5 +1,5 @@
 # Note: GNU Makefile
-ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+ROOT_DIR := $(patsubst %/,%,$(dir $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 ### Platform helper
 MKDIR_P := mkdir -p
