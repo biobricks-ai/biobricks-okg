@@ -70,6 +70,10 @@ contact:
   label: "[% contact.label %]"
 ---
 [% description | wrap(80) -%]
+[% IF body %]
+
+[% body -%]
+[% END -%]
 EOF
 
 sub main {
