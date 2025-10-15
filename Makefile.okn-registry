@@ -1,0 +1,8 @@
+
+# OKN Registry generation target
+.PHONY: okn-registry-generate
+okn-registry-generate: env-guard-OKN_REGISTRY_PATH env-guard-OKN_REGISTRY_INCLUDE_DIR
+	perl ./okn-registry/generate-registry.pl \
+		--config=okn-registry/kg-registry-config.yaml \
+		--okn-registry=$(OKN_REGISTRY_PATH) \
+		--include=$(OKN_REGISTRY_INCLUDE_DIR)
