@@ -1,0 +1,86 @@
+{
+  "@context": "../../context/source.context.jsonld",
+  "@type": "dcat:Dataset",
+  "@id": "https://biobricks.ai/bricks/biobricks-okg",
+  "dcterms:title": "BioBricks Open Knowledge Graph (biobricks-okg)",
+  "dcterms:description": "An integrated RDF/HDT open knowledge graph for BioBricks.ai, assembled with RML/Morph-KGC mappings over a set of upstream BioBricks source bricks. Its declared dependencies (.bb/dependencies.txt) are: bindingdb, chembl, ctdbase, hgnc, ice, mesh-kg, tox21, toxcast, toxrefdb and uniprot-kg. The repository's own MIT LICENSE covers the mapping/build code, not the aggregated third-party data. Because the graph combines these sources, its redistribution terms are governed by the most restrictive component -- notably CTD (ctdbase), which prohibits commercial use without a separate license, and ChEMBL, which is share-alike (CC BY-SA).",
+  "dcterms:license": [
+    "https://ctdbase.org/about/legal.jsp -- CTD custom data-usage terms: commercial license required (any reproduction or use for commercial purpose is prohibited without prior written permission)",
+    "https://creativecommons.org/licenses/by-sa/3.0/"
+  ],
+  "dcterms:creator": "BioBricks.ai",
+  "dcterms:publisher": "BioBricks.ai",
+  "biobricks:licenseName": "Mixed; governed by CTD restricted terms (+ ChEMBL CC BY-SA)",
+  "biobricks:licenseClass": "restricted",
+  "biobricks:merckCommercialUse": "prohibited",
+  "biobricks:licenseEvidence": [
+    {
+      "source": ".bb/dependencies.txt (this repo)",
+      "quote": "biobricks-ai/bindingdb ... chembl ... ctdbase ... hgnc ... ice ... mesh-kg ... tox21 ... toxcast ... toxrefdb ... uniprot-kg",
+      "confidence": "high"
+    },
+    {
+      "source": "LICENSE (this repo)",
+      "quote": "MIT License  Copyright (c) 2023 biobricks-ai ... Permission is hereby granted, free of charge ... (covers the build/mapping code, not the aggregated third-party data)",
+      "confidence": "high"
+    },
+    {
+      "source": "https://ctdbase.org/about/legal.jsp",
+      "quote": "Any reproduction or use for commercial purpose is prohibited without the prior express written permission ... Commercial users should direct licensing-related questions [to Catalyst Research].",
+      "confidence": "high"
+    }
+  ],
+  "biobricks:reviewed": false,
+  "biobricks:reviewNotes": "Determined by the BioBricks licensing-provenance annotation agent (Claude, slice items[144:150]). biobricks-okg integrates ~10 upstream bricks via RML. The repo LICENSE (MIT) applies only to the mapping code. The aggregated DATA is governed by its most restrictive constituent: CTD (Comparative Toxicogenomics Database) explicitly prohibits commercial reproduction/use without prior written permission and a separate commercial license, and ChEMBL is CC BY-SA 3.0 (share-alike). Therefore the combined graph is classed restricted with commercial use prohibited. HUMAN REVIEW: confirm CTD (ctdbase) data is materially present in the shipped graph; if a CTD-free build were produced, the governing class would relax to share-alike (ChEMBL CC BY-SA) rather than restricted. Verify licenses of the other constituents (bindingdb CC BY, uniprot CC BY 4.0, tox21/toxcast/ice US-gov, hgnc, toxrefdb, mesh).",
+  "prov:wasDerivedFrom": [
+    {
+      "@type": "dcat:Dataset",
+      "@id": "https://ctdbase.org/",
+      "dcterms:title": "Comparative Toxicogenomics Database (CTD)",
+      "dcterms:license": {
+        "@id": "https://ctdbase.org/about/legal.jsp",
+        "dcterms:title": "CTD data usage terms (non-commercial; commercial use requires separate license)"
+      },
+      "dcterms:publisher": "MDI Biological Laboratory / NC State University"
+    },
+    {
+      "@type": "dcat:Dataset",
+      "@id": "https://www.ebi.ac.uk/chembl/",
+      "dcterms:title": "ChEMBL",
+      "dcterms:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dcterms:publisher": "EMBL-EBI"
+    },
+    {
+      "@type": "dcat:Dataset",
+      "@id": "https://www.bindingdb.org/",
+      "dcterms:title": "BindingDB",
+      "dcterms:license": "https://creativecommons.org/licenses/by/4.0/",
+      "dcterms:publisher": "BindingDB"
+    },
+    {
+      "@type": "dcat:Dataset",
+      "@id": "https://ice.ntp.niehs.nih.gov/",
+      "dcterms:title": "ICE (Integrated Chemical Environment), NIEHS/NTP",
+      "dcterms:license": {
+        "@id": "https://ice.ntp.niehs.nih.gov/",
+        "dcterms:title": "License not stated"
+      },
+      "dcterms:publisher": "NIEHS / NTP"
+    },
+    {
+      "@type": "dcat:Dataset",
+      "@id": "https://www.uniprot.org/",
+      "dcterms:title": "UniProt",
+      "dcterms:license": "https://creativecommons.org/licenses/by/4.0/",
+      "dcterms:publisher": "UniProt Consortium"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "prov:wasAssociatedWith": "BioBricks licensing-provenance annotation agent (Claude, slice items[144:150])",
+    "prov:endedAtTime": {
+      "@type": "xsd:dateTime",
+      "@value": "2026-08-05T00:00:00Z"
+    }
+  }
+}
