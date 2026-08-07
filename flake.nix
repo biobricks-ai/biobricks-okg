@@ -2,17 +2,18 @@
   description = "biobricks-okg BioBrick";
 
   inputs = {
+    self.submodules = true;
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     flake-utils.url = "github:numtide/flake-utils";
     dev-shell.url = "github:biobricks-ai/dev-shell";
-    hdt-java = {
-      url = "github:insilica/nix-hdt-java";
+    biobricks-script-lib = {
+      url = "path:./vendor/biobricks-script-lib";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, dev-shell, hdt-java }:
+  outputs = { self, nixpkgs, flake-utils, dev-shell, biobricks-script-lib }:
     flake-utils.lib.eachDefaultSystem (system:
       with import nixpkgs { inherit system; }; {
         devShells.default = dev-shell.devShells.${system}.default.overrideAttrs
@@ -28,14 +29,19 @@
                 ]); in {
             buildInputs = oldAttrs.buildInputs ++ [
               perlEnv
-              hdt-java.packages.${system}.default
               apache-jena
               apache-jena-fuseki
               jq
-            ];
+            ] ++ biobricks-script-lib.packages.${system}.buildInputs;
+
             env = oldAttrs.env // {
               JENA_HOME = "${apache-jena}";
             };
+
+            shellHook = ''
+              # Activate biobricks-script-lib environment
+              eval $(${biobricks-script-lib.packages.${system}.activateScript})
+            '';
           });
       });
 }
