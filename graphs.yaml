@@ -1,18 +1,73 @@
-- name: hgnc
-  iri: https://www.genenames.org/
-  path: data-source/internal-hgnc-kg
-- name: ice
-  iri: https://ice.ntp.niehs.nih.gov/
-  path: brick/ice.hdt
-- name: mesh-kg
-  iri: https://nlmpubs.nlm.nih.gov/projects/mesh/rdf/mesh.nt.gz
-  path: data-source/mesh-kg
-- name: tox21
-  iri: https://tripod.nih.gov/tox21/pubdata/
-  path: data-source/internal-tox21-kg
-- name: toxcast
-  iri: https://www.epa.gov/chemical-research/toxicity-forecasting
-  path: brick/toxcast.hdt
-- name: uniprot-kg
-  iri: https://www.uniprot.org/
-  path: data-source/uniprot-kg
+graphs:
+  hgnc:
+    name: HGNC
+    iri: https://www.genenames.org/
+    source:
+      - path: data-source/internal-hgnc-kg
+
+  ice:
+    name: ICE
+    iri: https://ice.ntp.niehs.nih.gov/
+    source:
+      - path: brick/
+    fuseki:
+      keepInMemory_nameFilter: "ice"
+      nameFilter: "ice"
+
+  mesh-kg:
+    name: MeSH
+    iri: https://nlmpubs.nlm.nih.gov/projects/mesh/rdf/mesh.nt.gz
+    source:
+      - path: data-source/mesh-kg
+
+  tox21:
+    name: Tox21
+    iri: https://tripod.nih.gov/tox21/pubdata/
+    source:
+      #- path: brick/
+      - path: data-source/internal-tox21-kg
+    fuseki:
+      nameFilter: "tox21"
+
+  toxcast:
+    name: ToxCast
+    iri: https://www.epa.gov/chemical-research/toxicity-forecasting
+    source:
+      - path: brick/
+    fuseki:
+      nameFilter: "toxcast"
+
+  uniprot-kg:
+    name: UniProt
+    iri: https://www.uniprot.org/
+    source:
+      - path: data-source/uniprot-kg
+    enabled: false
+
+  # SPARQL LOAD <http://www.bioassayontology.org/bao/bao_complete.owl>;
+  # <http://www.bioassayontology.org/bao/bao_complete.owl>
+  # https://www.ebi.ac.uk/ols4/ontologies/bao
+  bao:
+    iri: https://www.ebi.ac.uk/ols4/ontologies/bao
+    source:
+      url: http://www.bioassayontology.org/bao/bao_complete.owl
+    virtuoso:
+      type: sparql_load
+
+  # <http://semanticchemistry.github.io/semanticchemistry/ontology/cheminf.owl>
+  # https://www.ebi.ac.uk/ols4/ontologies/cheminf
+  cheminf:
+    iri: https://www.ebi.ac.uk/ols4/ontologies/cheminf
+    source:
+      url: http://semanticchemistry.github.io/semanticchemistry/ontology/cheminf.owl
+    virtuoso:
+      type: sparql_load
+
+settings:
+  virtuoso:
+    compression: bzip2
+    tmpdir: _tmp
+
+  fuseki:
+    defaultKeepInMemory_nameFilter: "(*FAIL)"
+    defaultNameFilter: "(*ACCEPT)"
